@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3 Statistical Data Analysis | Doing statistics in R</title>
+  <meta name="description" content="Intro to Stats with R" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3 Statistical Data Analysis | Doing statistics in R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Intro to Stats with R" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3 Statistical Data Analysis | Doing statistics in R" />
+  
+  <meta name="twitter:description" content="Intro to Stats with R" />
+  
+
+<meta name="author" content="Mario Recker" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="data-wrangling-and-visualisation.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<script language="javascript"> 
+    function toggle(id) {
+        var ele = document.getElementById("toggleText" + id);
+        var text = document.getElementById("displayText" + id);
+        var buttonText = text.innerHTML.replace("Show: ", "");
+        buttonText = buttonText.replace("Hide: ", "");
+        if(ele.style.display == "block") {
+            ele.style.display = "none";
+            text.innerHTML = "Show: " + buttonText;
+        } else {
+            ele.style.display = "block";
+            text.innerHTML = "Hide: " + buttonText;
+        }
+    } 
+</script>
+
+<script language="javascript">
+    function openCode(evt, codeName, id) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent" + id);
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks" + id);
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(codeName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
+
+<script language="javascript">
+    function hide(id){
+        document.getElementById(id).style.display = "none";
+    }
+</script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#workshop-structure"><i class="fa fa-check"></i>Workshop structure</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="general-introduction-to-rrstudio.html"><a href="general-introduction-to-rrstudio.html"><i class="fa fa-check"></i><b>1</b> General introduction to R/RStudio</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="general-introduction-to-rrstudio.html"><a href="general-introduction-to-rrstudio.html#setting-up-an-r-session"><i class="fa fa-check"></i><b>1.1</b> Setting up an R session</a></li>
+<li class="chapter" data-level="1.2" data-path="general-introduction-to-rrstudio.html"><a href="general-introduction-to-rrstudio.html#r-packages"><i class="fa fa-check"></i><b>1.2</b> R packages</a></li>
+<li class="chapter" data-level="1.3" data-path="general-introduction-to-rrstudio.html"><a href="general-introduction-to-rrstudio.html#variables-vectors-and-data-frames-in-r"><i class="fa fa-check"></i><b>1.3</b> Variables, vectors and data frames in R</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="general-introduction-to-rrstudio.html"><a href="general-introduction-to-rrstudio.html#data-frames"><i class="fa fa-check"></i><b>1.3.1</b> Data frames</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="general-introduction-to-rrstudio.html"><a href="general-introduction-to-rrstudio.html#functions-in-r"><i class="fa fa-check"></i><b>1.4</b> Functions in R</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="general-introduction-to-rrstudio.html"><a href="general-introduction-to-rrstudio.html#custom-functions"><i class="fa fa-check"></i><b>1.4.1</b> Custom functions</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="general-introduction-to-rrstudio.html"><a href="general-introduction-to-rrstudio.html#basic-plotting-in-r"><i class="fa fa-check"></i><b>1.5</b> Basic plotting in R</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="general-introduction-to-rrstudio.html"><a href="general-introduction-to-rrstudio.html#scatter-plot"><i class="fa fa-check"></i><b>1.5.1</b> Scatter plot</a></li>
+<li class="chapter" data-level="1.5.2" data-path="general-introduction-to-rrstudio.html"><a href="general-introduction-to-rrstudio.html#line-graph"><i class="fa fa-check"></i><b>1.5.2</b> Line graph</a></li>
+<li class="chapter" data-level="1.5.3" data-path="general-introduction-to-rrstudio.html"><a href="general-introduction-to-rrstudio.html#combined-graph"><i class="fa fa-check"></i><b>1.5.3</b> Combined graph</a></li>
+<li class="chapter" data-level="1.5.4" data-path="general-introduction-to-rrstudio.html"><a href="general-introduction-to-rrstudio.html#barplot"><i class="fa fa-check"></i><b>1.5.4</b> Barplot</a></li>
+<li class="chapter" data-level="1.5.5" data-path="general-introduction-to-rrstudio.html"><a href="general-introduction-to-rrstudio.html#boxplots"><i class="fa fa-check"></i><b>1.5.5</b> Boxplots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="data-wrangling-and-visualisation.html"><a href="data-wrangling-and-visualisation.html"><i class="fa fa-check"></i><b>2</b> Data wrangling and visualisation</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="data-wrangling-and-visualisation.html"><a href="data-wrangling-and-visualisation.html#introduction"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="data-wrangling-and-visualisation.html"><a href="data-wrangling-and-visualisation.html#loading-and-saving-data"><i class="fa fa-check"></i><b>2.2</b> Loading and saving data</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="data-wrangling-and-visualisation.html"><a href="data-wrangling-and-visualisation.html#save-load-data-as-an-r-object"><i class="fa fa-check"></i><b>2.2.1</b> Save / load data as an R object</a></li>
+<li class="chapter" data-level="2.2.2" data-path="data-wrangling-and-visualisation.html"><a href="data-wrangling-and-visualisation.html#save-load-as-a-csv-file"><i class="fa fa-check"></i><b>2.2.2</b> Save / load as a CSV file</a></li>
+<li class="chapter" data-level="2.2.3" data-path="data-wrangling-and-visualisation.html"><a href="data-wrangling-and-visualisation.html#handling-excel-files"><i class="fa fa-check"></i><b>2.2.3</b> Handling Excel files</a></li>
+<li class="chapter" data-level="2.2.4" data-path="data-wrangling-and-visualisation.html"><a href="data-wrangling-and-visualisation.html#cheatsheet"><i class="fa fa-check"></i><b>2.2.4</b> Cheatsheet</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="data-wrangling-and-visualisation.html"><a href="data-wrangling-and-visualisation.html#visualisation-using-ggplot2"><i class="fa fa-check"></i><b>2.3</b> Visualisation using <code>ggplot2</code></a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="data-wrangling-and-visualisation.html"><a href="data-wrangling-and-visualisation.html#aesthetics"><i class="fa fa-check"></i><b>2.3.1</b> Aesthetics</a></li>
+<li class="chapter" data-level="2.3.2" data-path="data-wrangling-and-visualisation.html"><a href="data-wrangling-and-visualisation.html#geoms"><i class="fa fa-check"></i><b>2.3.2</b> Geoms</a></li>
+<li class="chapter" data-level="2.3.3" data-path="data-wrangling-and-visualisation.html"><a href="data-wrangling-and-visualisation.html#labels"><i class="fa fa-check"></i><b>2.3.3</b> Labels</a></li>
+<li class="chapter" data-level="2.3.4" data-path="data-wrangling-and-visualisation.html"><a href="data-wrangling-and-visualisation.html#faceting"><i class="fa fa-check"></i><b>2.3.4</b> Faceting</a></li>
+<li class="chapter" data-level="2.3.5" data-path="data-wrangling-and-visualisation.html"><a href="data-wrangling-and-visualisation.html#statistical-transformation"><i class="fa fa-check"></i><b>2.3.5</b> Statistical transformation</a></li>
+<li class="chapter" data-level="2.3.6" data-path="data-wrangling-and-visualisation.html"><a href="data-wrangling-and-visualisation.html#scales"><i class="fa fa-check"></i><b>2.3.6</b> Scales</a></li>
+<li class="chapter" data-level="2.3.7" data-path="data-wrangling-and-visualisation.html"><a href="data-wrangling-and-visualisation.html#assigning-plots-to-objects"><i class="fa fa-check"></i><b>2.3.7</b> Assigning plots to objects</a></li>
+<li class="chapter" data-level="2.3.8" data-path="data-wrangling-and-visualisation.html"><a href="data-wrangling-and-visualisation.html#putting-it-all-together"><i class="fa fa-check"></i><b>2.3.8</b> Putting it all together</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="data-wrangling-and-visualisation.html"><a href="data-wrangling-and-visualisation.html#data-wrangling"><i class="fa fa-check"></i><b>2.4</b> Data wrangling</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="data-wrangling-and-visualisation.html"><a href="data-wrangling-and-visualisation.html#tidy-data"><i class="fa fa-check"></i><b>2.4.1</b> Tidy data</a></li>
+<li class="chapter" data-level="2.4.2" data-path="data-wrangling-and-visualisation.html"><a href="data-wrangling-and-visualisation.html#filter-rows"><i class="fa fa-check"></i><b>2.4.2</b> Filter rows</a></li>
+<li class="chapter" data-level="2.4.3" data-path="data-wrangling-and-visualisation.html"><a href="data-wrangling-and-visualisation.html#sort-rows"><i class="fa fa-check"></i><b>2.4.3</b> Sort rows</a></li>
+<li class="chapter" data-level="2.4.4" data-path="data-wrangling-and-visualisation.html"><a href="data-wrangling-and-visualisation.html#select-columns"><i class="fa fa-check"></i><b>2.4.4</b> Select columns</a></li>
+<li class="chapter" data-level="2.4.5" data-path="data-wrangling-and-visualisation.html"><a href="data-wrangling-and-visualisation.html#grouping-and-summarising"><i class="fa fa-check"></i><b>2.4.5</b> Grouping and summarising</a></li>
+<li class="chapter" data-level="2.4.6" data-path="data-wrangling-and-visualisation.html"><a href="data-wrangling-and-visualisation.html#reshaping-datasets"><i class="fa fa-check"></i><b>2.4.6</b> Reshaping datasets</a></li>
+<li class="chapter" data-level="2.4.7" data-path="data-wrangling-and-visualisation.html"><a href="data-wrangling-and-visualisation.html#mutate"><i class="fa fa-check"></i><b>2.4.7</b> Mutate</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="statistical-data-analysis.html"><a href="statistical-data-analysis.html"><i class="fa fa-check"></i><b>3</b> Statistical Data Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="statistical-data-analysis.html"><a href="statistical-data-analysis.html#preamble"><i class="fa fa-check"></i>Preamble</a></li>
+<li class="chapter" data-level="" data-path="statistical-data-analysis.html"><a href="statistical-data-analysis.html#what-is-a-statistical-model"><i class="fa fa-check"></i>What is a statistical model?</a></li>
+<li class="chapter" data-level="" data-path="statistical-data-analysis.html"><a href="statistical-data-analysis.html#descriptive-vs.-inferential-statistics"><i class="fa fa-check"></i>Descriptive vs. inferential statistics</a></li>
+<li class="chapter" data-level="3.1" data-path="statistical-data-analysis.html"><a href="statistical-data-analysis.html#descriptive-statistics"><i class="fa fa-check"></i><b>3.1</b> Descriptive statistics</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="statistical-data-analysis.html"><a href="statistical-data-analysis.html#univariate-analysis"><i class="fa fa-check"></i><b>3.1.1</b> Univariate analysis</a></li>
+<li class="chapter" data-level="3.1.2" data-path="statistical-data-analysis.html"><a href="statistical-data-analysis.html#multivariate-analysis"><i class="fa fa-check"></i><b>3.1.2</b> Multivariate analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="statistical-data-analysis.html"><a href="statistical-data-analysis.html#linear-models-lm"><i class="fa fa-check"></i><b>3.2</b> Linear Models (LM)</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="statistical-data-analysis.html"><a href="statistical-data-analysis.html#simple-linear-regression"><i class="fa fa-check"></i><b>3.2.1</b> Simple linear regression</a></li>
+<li class="chapter" data-level="3.2.2" data-path="statistical-data-analysis.html"><a href="statistical-data-analysis.html#linear-regression-in-r"><i class="fa fa-check"></i><b>3.2.2</b> Linear regression in R</a></li>
+<li class="chapter" data-level="3.2.3" data-path="statistical-data-analysis.html"><a href="statistical-data-analysis.html#model-checking"><i class="fa fa-check"></i><b>3.2.3</b> Model checking</a></li>
+<li class="chapter" data-level="3.2.4" data-path="statistical-data-analysis.html"><a href="statistical-data-analysis.html#prediction"><i class="fa fa-check"></i><b>3.2.4</b> Prediction</a></li>
+<li class="chapter" data-level="3.2.5" data-path="statistical-data-analysis.html"><a href="statistical-data-analysis.html#multiple-linear-regression"><i class="fa fa-check"></i><b>3.2.5</b> Multiple linear regression</a></li>
+<li class="chapter" data-level="3.2.6" data-path="statistical-data-analysis.html"><a href="statistical-data-analysis.html#categorical-explanatory-variables"><i class="fa fa-check"></i><b>3.2.6</b> Categorical explanatory variables</a></li>
+<li class="chapter" data-level="3.2.7" data-path="statistical-data-analysis.html"><a href="statistical-data-analysis.html#interactions"><i class="fa fa-check"></i><b>3.2.7</b> Interactions</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="statistical-data-analysis.html"><a href="statistical-data-analysis.html#mixed-effect-models-mem"><i class="fa fa-check"></i><b>3.3</b> Mixed Effect Models (MEM)</a></li>
+<li class="chapter" data-level="3.4" data-path="statistical-data-analysis.html"><a href="statistical-data-analysis.html#generalised-linear-models-glm"><i class="fa fa-check"></i><b>3.4</b> Generalised Linear Models (GLM)</a></li>
+<li class="chapter" data-level="3.5" data-path="statistical-data-analysis.html"><a href="statistical-data-analysis.html#survival-analysis"><i class="fa fa-check"></i><b>3.5</b> Survival Analysis</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="statistical-data-analysis.html"><a href="statistical-data-analysis.html#kaplan-meier"><i class="fa fa-check"></i><b>3.5.1</b> Kaplan Meier</a></li>
+<li class="chapter" data-level="3.5.2" data-path="statistical-data-analysis.html"><a href="statistical-data-analysis.html#cox-models"><i class="fa fa-check"></i><b>3.5.2</b> Cox Models</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Doing statistics in R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="statistical-data-analysis" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">3</span> Statistical Data Analysis<a href="statistical-data-analysis.html#statistical-data-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="preamble" class="section level2 unnumbered hasAnchor">
+<h2>Preamble<a href="statistical-data-analysis.html#preamble" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The focus of this part of the workshop is how to fit statistical models in R. We will not go into underlying mathematics but instead introduce key concepts in statistical data analysis and how to do this in R. The internet is full of free and useful tutorials and resources related to statistics and statistical modelling in R. If you prefer physical books instead of computer screens, here is a list of recommendations:</p>
+<ul>
+<li><a href="https://www.wiley.com/en-gb/Statistics%3A+An+Introduction+using+R-p-9780470022986">Statistics: An Introduction using R</a></li>
+<li><a href="https://www.crcpress.com/Linear-Models-with-R/Faraway/p/book/9781439887332">Linear models with R</a></li>
+<li><a href="http://www.stat.columbia.edu/~gelman/arm/">Data Analysis Using Regression and Multilevel/Hierarchical Models</a></li>
+<li><a href="http://www-bcf.usc.edu/~gareth/ISL/">An Introduction to Statistical Learning</a></li>
+<li><a href="https://www.springer.com/gb/book/9780387874579">Mixed Effects Models and Extensions in Ecology with R</a></li>
+<li><a href="https://www.amazon.co.uk/Extending-Linear-Model-Generalized-Nonparametric/dp/158488424X">Extending the Linear Model with R</a></li>
+</ul>
+</div>
+<div id="what-is-a-statistical-model" class="section level2 unnumbered hasAnchor">
+<h2>What is a statistical model?<a href="statistical-data-analysis.html#what-is-a-statistical-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Now that we are experts in handling and visualising data in R, we can enter the beautiful world of <em>statistical data analysis</em> or <em>statistical modelling</em>. But first we need to answer the simple question: <strong>what is a statistical model</strong>? Here is one definition:</p>
+<blockquote>
+<p>A statistical model is a mathematical model that embodies a set of statistical assumptions concerning the generation of sample data and similar data from a larger population. It represents, often in considerably idealized form, the data-generating process. (taken from Wikipedia)</p>
+</blockquote>
+<p>and another one:</p>
+<blockquote>
+<p>Statistical modeling helps data scientists approach data analysis in a strategic manner, providing intuitive visualizations that aid in identifying relationships between variables and making predictions. (taken from heavy.ai)</p>
+</blockquote>
+<p>At this point this may not make much sense to you, but hopefully things should become clearer as we go along with this part of the workshop. In fact, we have already tapped into some of these concepts in the previous sections.</p>
+</div>
+<div id="descriptive-vs.-inferential-statistics" class="section level2 unnumbered hasAnchor">
+<h2>Descriptive vs. inferential statistics<a href="statistical-data-analysis.html#descriptive-vs.-inferential-statistics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The first thing we need to do is clarify the distinction between <em>descriptive</em> and <em>inferential</em> statistics. In simple terms, the former deals with the quantitative and/or visual <em>description</em> of a sample taken from the population, whereas the latter tries to make <em>inferences</em> about the properties of a population based on this sample. And this is an important point to remember: we usually never know the entire state of the population (or the underlying probability distribution that generated the data), we only have access to a (usually significantly smaller) sample of it. And statistics will help us to get a sense of how well this sample might represent the population and hence the uncertainty attached to any inferences we wish to make about it.</p>
+<p><span class="math inline">\(~\)</span></p>
+</div>
+<div id="descriptive-statistics" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Descriptive statistics<a href="statistical-data-analysis.html#descriptive-statistics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>As defined earlier, descriptive statistics is concerned with the quantitative and/or visual description of a data sample. Here we distinguish two cases: (i) a univariate analysis, where we describe a single variable, for example by its central tendency (e.g. mean or median) and dispersal (e.g. variance or quartiles), and (ii) multivariate analysis, where our data sample consist of more than one variable and where we are interested in the relationship between pairs of variables (e.g. correlation or covariance).</p>
+<div id="univariate-analysis" class="section level3 hasAnchor" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> Univariate analysis<a href="statistical-data-analysis.html#univariate-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>You are probably already familiar with most of the concepts dealt with in this section. We therefore only briefly touch upon some of them, showing how to do generate descriptive statistics in R. But first of all we will load required libraries and generate some data we wish to analyse.</p>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="statistical-data-analysis.html#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb151-2"><a href="statistical-data-analysis.html#cb151-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb151-3"><a href="statistical-data-analysis.html#cb151-3" aria-hidden="true" tabindex="-1"></a><span class="co"># set a seed for random number generator</span></span>
+<span id="cb151-4"><a href="statistical-data-analysis.html#cb151-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">31072023</span>)</span>
+<span id="cb151-5"><a href="statistical-data-analysis.html#cb151-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb151-6"><a href="statistical-data-analysis.html#cb151-6" aria-hidden="true" tabindex="-1"></a><span class="co"># generate random data from a normal distribution</span></span>
+<span id="cb151-7"><a href="statistical-data-analysis.html#cb151-7" aria-hidden="true" tabindex="-1"></a>normSample <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">50</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb151-8"><a href="statistical-data-analysis.html#cb151-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb151-9"><a href="statistical-data-analysis.html#cb151-9" aria-hidden="true" tabindex="-1"></a><span class="co"># generate random data from a Poisson distribution</span></span>
+<span id="cb151-10"><a href="statistical-data-analysis.html#cb151-10" aria-hidden="true" tabindex="-1"></a>poisSample <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="dv">50</span>, <span class="at">lambda =</span> <span class="dv">4</span>)</span>
+<span id="cb151-11"><a href="statistical-data-analysis.html#cb151-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb151-12"><a href="statistical-data-analysis.html#cb151-12" aria-hidden="true" tabindex="-1"></a><span class="co"># generate random data from an exponential distribution</span></span>
+<span id="cb151-13"><a href="statistical-data-analysis.html#cb151-13" aria-hidden="true" tabindex="-1"></a>expSample <span class="ot">&lt;-</span> <span class="fu">rexp</span>(<span class="dv">50</span>, <span class="at">rate =</span> <span class="fl">0.2</span>)</span>
+<span id="cb151-14"><a href="statistical-data-analysis.html#cb151-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb151-15"><a href="statistical-data-analysis.html#cb151-15" aria-hidden="true" tabindex="-1"></a><span class="co"># put into a data.frame for later use</span></span>
+<span id="cb151-16"><a href="statistical-data-analysis.html#cb151-16" aria-hidden="true" tabindex="-1"></a>sampleDF <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Normal =</span> normSample,</span>
+<span id="cb151-17"><a href="statistical-data-analysis.html#cb151-17" aria-hidden="true" tabindex="-1"></a>                       <span class="at">Poisson =</span> poisSample,</span>
+<span id="cb151-18"><a href="statistical-data-analysis.html#cb151-18" aria-hidden="true" tabindex="-1"></a>                       <span class="at">Exponential =</span> expSample)</span></code></pre></div>
+<p>Without going into any further detail, let’s have a quick look at the data and see how they are distributed.<a name="densities"></a></p>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="statistical-data-analysis.html#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the density dsirtibutions</span></span>
+<span id="cb152-2"><a href="statistical-data-analysis.html#cb152-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sampleDF) <span class="sc">+</span></span>
+<span id="cb152-3"><a href="statistical-data-analysis.html#cb152-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> Normal, <span class="at">fill =</span> <span class="st">&#39;Normal&#39;</span>), <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb152-4"><a href="statistical-data-analysis.html#cb152-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> Poisson, <span class="at">fill =</span> <span class="st">&#39;Poisson&#39;</span>), <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb152-5"><a href="statistical-data-analysis.html#cb152-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> Exponential, <span class="at">fill =</span> <span class="st">&#39;Exponential&#39;</span>), <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb152-6"><a href="statistical-data-analysis.html#cb152-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">&#39;Distribution&#39;</span>) <span class="sc">+</span></span>
+<span id="cb152-7"><a href="statistical-data-analysis.html#cb152-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;top&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/densities-1.png" style="display: block; margin: auto;" /></p>
+<div id="mean-vs.-median" class="section level4 unnumbered hasAnchor">
+<h4><strong>Mean vs. median</strong><a href="statistical-data-analysis.html#mean-vs.-median" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>As you will know, the mean and the mediam are two very different statistics. The first is the average value of a data sample, i.e. <span class="math inline">\(\mu = 1/n \sum y_i\)</span> (with <span class="math inline">\(y_i\)</span> being individual data points or values of your sample), whereas the median separates the lower half and upper half of a data sample (i.e. is the value in the middle if you were to order all values form smallest to biggest). How much these two differ, however, depends on how the data is distributed. To demonstrates this, let’s calculate both and compare for different distributions</p>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="statistical-data-analysis.html#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sample based on normal distribution</span></span>
+<span id="cb153-2"><a href="statistical-data-analysis.html#cb153-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">c</span>(<span class="fu">mean</span>(normSample), <span class="fu">median</span>(normSample)))</span></code></pre></div>
+<pre><code>## [1] 9.863772 9.811931</code></pre>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="statistical-data-analysis.html#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sample based on normal distribution</span></span>
+<span id="cb155-2"><a href="statistical-data-analysis.html#cb155-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">c</span>(<span class="fu">mean</span>(poisSample), <span class="fu">median</span>(poisSample)))</span></code></pre></div>
+<pre><code>## [1] 4.46 4.50</code></pre>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="statistical-data-analysis.html#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sample based on normal distribution</span></span>
+<span id="cb157-2"><a href="statistical-data-analysis.html#cb157-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">c</span>(<span class="fu">mean</span>(expSample), <span class="fu">median</span>(expSample)))</span></code></pre></div>
+<pre><code>## [1] 5.446247 3.070014</code></pre>
+<p>We can see that for the first two samples, both the mean and median are fairly similar. For the sample based on an exponential distribution, however, they are very different. In order to understand why this is the case, we have to look at how the data in each data sample are spread. Specifically, we will look at the <em>variance / standard deviation</em>, <em>interquartile range</em>, <em>skewness</em> and <em>kurtosis</em>.</p>
+</div>
+<div id="standard-deviation" class="section level4 hasAnchor" number="3.1.1.1">
+<h4><span class="header-section-number">3.1.1.1</span> Standard deviation<a href="statistical-data-analysis.html#standard-deviation" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The standard deviation (SD) is a measure of the dispersal of a set of values and how much these values vary from the sample mean. A low standard variation means that most values are close to the mean, whereas a high standrad deviation means that values are spread far way from the mean (which in itself should give you an indication of the usefulness of using the mean to describe your samples in the first case). Relatedly, the variance is the square of the standard deviation. Mathematically, the standard deviation, usually denoted <span class="math inline">\(\sigma^2\)</span>, is given as
+<span class="math display">\[ \sigma^2 = \frac{1}{n} \sum (y_i - \mu)^2 \]</span></p>
+<p>However, it is much easier to understand visually, here demonstrated by two normal distributions with the same mean but one with SD=1 and one with SD=4</p>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="statistical-data-analysis.html#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">SD1 =</span> <span class="fu">rnorm</span>(<span class="dv">10000</span>, <span class="at">sd =</span> <span class="dv">1</span>),</span>
+<span id="cb159-2"><a href="statistical-data-analysis.html#cb159-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">SD4 =</span> <span class="fu">rnorm</span>(<span class="dv">10000</span>, <span class="at">sd =</span> <span class="dv">4</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb159-3"><a href="statistical-data-analysis.html#cb159-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb159-4"><a href="statistical-data-analysis.html#cb159-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> SD1, <span class="at">fill =</span> <span class="st">&#39;SD=1&#39;</span>), <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb159-5"><a href="statistical-data-analysis.html#cb159-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> SD4, <span class="at">fill =</span> <span class="st">&#39;SD=4&#39;</span>), <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb159-6"><a href="statistical-data-analysis.html#cb159-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">&#39;blue&#39;</span>, <span class="at">linetype =</span> <span class="st">&#39;dashed&#39;</span>) <span class="sc">+</span></span>
+<span id="cb159-7"><a href="statistical-data-analysis.html#cb159-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;&#39;</span>,</span>
+<span id="cb159-8"><a href="statistical-data-analysis.html#cb159-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">fill =</span> <span class="st">&#39;&#39;</span>) <span class="sc">+</span></span>
+<span id="cb159-9"><a href="statistical-data-analysis.html#cb159-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;top&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-114-1.png" style="display: block; margin: auto;" /></p>
+<p>Now let’s return to our previous data and compare the spread of each of our sample and see if this might have an influence on the observed difference between the mean and the median.</p>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="statistical-data-analysis.html#cb160-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sample based on normal distribution</span></span>
+<span id="cb160-2"><a href="statistical-data-analysis.html#cb160-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">c</span>(<span class="fu">mean</span>(normSample), <span class="fu">median</span>(normSample), <span class="fu">sd</span>(normSample)))</span></code></pre></div>
+<pre><code>## [1] 9.863772 9.811931 1.091936</code></pre>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="statistical-data-analysis.html#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sample based on normal distribution</span></span>
+<span id="cb162-2"><a href="statistical-data-analysis.html#cb162-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">c</span>(<span class="fu">mean</span>(poisSample), <span class="fu">median</span>(poisSample), <span class="fu">sd</span>(poisSample)))</span></code></pre></div>
+<pre><code>## [1] 4.460000 4.500000 1.991922</code></pre>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="statistical-data-analysis.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sample based on normal distribution</span></span>
+<span id="cb164-2"><a href="statistical-data-analysis.html#cb164-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">c</span>(<span class="fu">mean</span>(expSample), <span class="fu">median</span>(expSample), <span class="fu">sd</span>(expSample)))</span></code></pre></div>
+<pre><code>## [1] 5.446247 3.070014 6.942839</code></pre>
+<p>This is interesting. The standard deviation of the sample based on the Poisson distribution is twice as high as the one based on the normal distribution, and the one based on the exponential distribution even seven times as high. Based on this, it is unlikely to explain our previous observations.</p>
+</div>
+<div id="interquartile-range" class="section level4 unnumbered hasAnchor">
+<h4><strong>Interquartile range</strong><a href="statistical-data-analysis.html#interquartile-range" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Another measure of the spread of data is the so-called interquartile range, or IQR for short. The IQR is defined as the difference between the 75th percentile (third quartile, or Q3) and the 25th percentiles of the data (lower quartile, or Q1). Therefore, the IQR = Q3 − Q1. In simpler terms, the Q1 is the median of the <span class="math inline">\(n\)</span> smallest values and Q3 is the median of the <span class="math inline">\(n\)</span> largest values.</p>
+<p>We have already come across quartiles when we produced box-and-whisker plots, where the boxes show the median (Q2) and interquartile range (Q1 and Q3) and the lower and upper whiskers are defined as <span class="math inline">\(Q1 - 1.5 \times IQR\)</span> and <span class="math inline">\(Q3 + 1.5 \times IQR\)</span>, respectively.</p>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="statistical-data-analysis.html#cb166-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sampleDF) <span class="sc">+</span></span>
+<span id="cb166-2"><a href="statistical-data-analysis.html#cb166-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> Normal), <span class="at">fill =</span> <span class="st">&#39;green&#39;</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb166-3"><a href="statistical-data-analysis.html#cb166-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">2</span>, <span class="at">y =</span> Poisson), <span class="at">fill =</span> <span class="st">&#39;blue&#39;</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb166-4"><a href="statistical-data-analysis.html#cb166-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">3</span>, <span class="at">y =</span> Exponential), <span class="at">fill =</span> <span class="st">&#39;red&#39;</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb166-5"><a href="statistical-data-analysis.html#cb166-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), </span>
+<span id="cb166-6"><a href="statistical-data-analysis.html#cb166-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;Normal&#39;</span>, <span class="st">&#39;Poisson&#39;</span>, <span class="st">&#39;Exponential&#39;</span>)) <span class="sc">+</span></span>
+<span id="cb166-7"><a href="statistical-data-analysis.html#cb166-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;Distribution&#39;</span>,</span>
+<span id="cb166-8"><a href="statistical-data-analysis.html#cb166-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">&#39;Value&#39;</span>) <span class="sc">+</span></span>
+<span id="cb166-9"><a href="statistical-data-analysis.html#cb166-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-116-1.png" style="display: block; margin: auto;" /></p>
+<p>From this we can already see that the IQR for the Poisson sample is bigger than the normal one, and the exponential one even bigger. In R we can easily calculate the IQR as</p>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="statistical-data-analysis.html#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sample based on normal distribution</span></span>
+<span id="cb167-2"><a href="statistical-data-analysis.html#cb167-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">c</span>(<span class="fu">mean</span>(normSample), <span class="fu">median</span>(normSample), <span class="fu">sd</span>(normSample), <span class="fu">IQR</span>(normSample)))</span></code></pre></div>
+<pre><code>## [1] 9.863772 9.811931 1.091936 1.571149</code></pre>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="statistical-data-analysis.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sample based on normal distribution</span></span>
+<span id="cb169-2"><a href="statistical-data-analysis.html#cb169-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">c</span>(<span class="fu">mean</span>(poisSample), <span class="fu">median</span>(poisSample), <span class="fu">sd</span>(poisSample), <span class="fu">IQR</span>(poisSample)))</span></code></pre></div>
+<pre><code>## [1] 4.460000 4.500000 1.991922 3.000000</code></pre>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="statistical-data-analysis.html#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sample based on normal distribution</span></span>
+<span id="cb171-2"><a href="statistical-data-analysis.html#cb171-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">c</span>(<span class="fu">mean</span>(expSample), <span class="fu">median</span>(expSample), <span class="fu">sd</span>(expSample), <span class="fu">IQR</span>(expSample)))</span></code></pre></div>
+<pre><code>## [1] 5.446247 3.070014 6.942839 4.804575</code></pre>
+<p>The keen observer will have also noted that the difference between Q1 and Q2 for the exponential sample is much smaller than the difference between Q2 and Q3. That is, looking at the interquartile range cam indicate <em>skewness</em> of the data, as well as potential outliers i.e. data points that are below <span class="math inline">\(Q1 - 1.5 \times IQR\)</span> or above <span class="math inline">\(Q3 + 1.5 \times IQR\)</span>.</p>
+</div>
+<div id="skewness" class="section level4 unnumbered hasAnchor">
+<h4><strong>Skewness</strong><a href="statistical-data-analysis.html#skewness" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Skewness tells us whether the data is symmetric or asymmetrically distributed, an we can distinguish between a <em>positive skew</em>, where the right tail of the distribution is longer, and <em>negative skew</em>, where the left tail is longer.</p>
+<div class="panel panel-default">
+<div class="panel-heading">
+Question
+</div>
+<div class="panel-body">
+Just from looking at the data distributions plotted <a href="#densities">above</a>, which samples are skewed, and if they are skewed, are they left or right skewed?
+</div>
+</div>
+<button id="displayTextunnamed-chunk-119" onclick="javascript:toggle(&#39;unnamed-chunk-119&#39;);">
+Show: Solution
+</button>
+<div id="toggleTextunnamed-chunk-119" style="display: none">
+<div class="panel panel-default">
+<div class="panel-heading panel-heading1">
+Solution
+</div>
+<div class="panel-body">
+The samples based on the normal distribution are not skewed but are symmetrically distributed around the mean. Both the samples based on the Poisson and exponential distribution show a <em>positive skew</em>, which is more pronounced in the exponential one.
+</div>
+</div>
+</div>
+<p>The R library <code>moments</code> provides useful functions to measure the shape of a distribution. Let’s use this here and see whether it agrees with our assessment <em>by eye</em></p>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="statistical-data-analysis.html#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="co"># if you do not have this library, install it with install.packages(&quot;moments&quot;)</span></span>
+<span id="cb173-2"><a href="statistical-data-analysis.html#cb173-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(moments)</span>
+<span id="cb173-3"><a href="statistical-data-analysis.html#cb173-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb173-4"><a href="statistical-data-analysis.html#cb173-4" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate skewness of normal-based samples</span></span>
+<span id="cb173-5"><a href="statistical-data-analysis.html#cb173-5" aria-hidden="true" tabindex="-1"></a><span class="fu">skewness</span>(normSample)</span></code></pre></div>
+<pre><code>## [1] 0.258172</code></pre>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="statistical-data-analysis.html#cb175-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate skewness of normal-based samples</span></span>
+<span id="cb175-2"><a href="statistical-data-analysis.html#cb175-2" aria-hidden="true" tabindex="-1"></a><span class="fu">skewness</span>(poisSample)</span></code></pre></div>
+<pre><code>## [1] 0.4429934</code></pre>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="statistical-data-analysis.html#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate skewness of normal-based samples</span></span>
+<span id="cb177-2"><a href="statistical-data-analysis.html#cb177-2" aria-hidden="true" tabindex="-1"></a><span class="fu">skewness</span>(expSample)</span></code></pre></div>
+<pre><code>## [1] 3.448168</code></pre>
+<p>The results are (almost) as expected. In fact, we see that the samples based on the exponential distribution are by far the most skewed. And this offers one explanation for why the mean and median differs so much: although the bulk of the data lies on the left hand side, the long tail to the right has a significant effect on the mean, such that it is no longer representative of the average value of a data sampled from this distribution (i.e. most values would be smaller than the mean).</p>
+<p>Note, although the skewness for the samples based on the normal distribution is also positive, the value is very small. The same goes for the ones based on the Poisson distribution. What shall we do with this information? I.e. is there evidence that the they are all skewed and hence sufficiently different from a normal distribution? Thankfully the <code>moments</code> package provides us with the tool to check this statistically, which we will demonstrate when talking about <em>kurtosis</em>.</p>
+</div>
+<div id="kurtosis" class="section level4 unnumbered hasAnchor">
+<h4><strong>Kurtosis</strong><a href="statistical-data-analysis.html#kurtosis" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The kurtosis of a distribution is a measure of whether or not it is heavy-tailed or light-tailed <em>relative to a normal distribution</em>:</p>
+<ul>
+<li>the kurtosis of a normal distribution is 3</li>
+<li>if the kurtosis is &lt;3, this means that it has fewer and less extreme outliers than the normal distribution</li>
+<li>if the kurtosis is &gt;3, this means that it has more outliers than the normal distribution.</li>
+</ul>
+<blockquote>
+<p><strong>Note:</strong> some formulars substract 3 from the kurtosis, resulting in either negative or positive values (with the normal distribution being 0)</p>
+</blockquote>
+<p>The <code>moments</code> package also provides the functionality to calculate the kurtosis of a data sample. For our data this looks like</p>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="statistical-data-analysis.html#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate skewness of normal-based samples</span></span>
+<span id="cb179-2"><a href="statistical-data-analysis.html#cb179-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kurtosis</span>(normSample)</span></code></pre></div>
+<pre><code>## [1] 2.175165</code></pre>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="statistical-data-analysis.html#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate skewness of normal-based samples</span></span>
+<span id="cb181-2"><a href="statistical-data-analysis.html#cb181-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kurtosis</span>(poisSample)</span></code></pre></div>
+<pre><code>## [1] 3.083975</code></pre>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="statistical-data-analysis.html#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate skewness of normal-based samples</span></span>
+<span id="cb183-2"><a href="statistical-data-analysis.html#cb183-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kurtosis</span>(expSample)</span></code></pre></div>
+<pre><code>## [1] 17.42198</code></pre>
+<p>Once again, the last data sample stands out by having a kurtosis much greater than 3, meaning it has far more outliers than would be expected if the data came from a normal distribution.</p>
+<p>As mentioned earlier, <code>moments</code> offers a statistical test (the so-called Jarque-Bera Normality Test), which compare a given data sample to a normal distribution, with the <strong>Null Hypothesis (H<span class="math inline">\(_0\)</span>)</strong> being that the data has a skewness and kurtosis that matches a normal distribution. Let’s put this to the test for our three samples.</p>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="statistical-data-analysis.html#cb185-1" aria-hidden="true" tabindex="-1"></a><span class="co"># samples based on normal distribution</span></span>
+<span id="cb185-2"><a href="statistical-data-analysis.html#cb185-2" aria-hidden="true" tabindex="-1"></a><span class="fu">jarque.test</span>(normSample)</span></code></pre></div>
+<pre><code>## 
+##  Jarque-Bera Normality Test
+## 
+## data:  normSample
+## JB = 1.9728, p-value = 0.3729
+## alternative hypothesis: greater</code></pre>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="statistical-data-analysis.html#cb187-1" aria-hidden="true" tabindex="-1"></a><span class="co"># samples based on Poisson distribution</span></span>
+<span id="cb187-2"><a href="statistical-data-analysis.html#cb187-2" aria-hidden="true" tabindex="-1"></a><span class="fu">jarque.test</span>(poisSample)</span></code></pre></div>
+<pre><code>## 
+##  Jarque-Bera Normality Test
+## 
+## data:  poisSample
+## JB = 1.6501, p-value = 0.4382
+## alternative hypothesis: greater</code></pre>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="statistical-data-analysis.html#cb189-1" aria-hidden="true" tabindex="-1"></a><span class="co"># samples based on exponential distribution</span></span>
+<span id="cb189-2"><a href="statistical-data-analysis.html#cb189-2" aria-hidden="true" tabindex="-1"></a><span class="fu">jarque.test</span>(expSample)</span></code></pre></div>
+<pre><code>## 
+##  Jarque-Bera Normality Test
+## 
+## data:  expSample
+## JB = 532.4, p-value &lt; 2.2e-16
+## alternative hypothesis: greater</code></pre>
+<p>And this provides evidence that the data sample based on the exponential distribution is statistically different from the normal distribution. On the other hand, there is no evidence to support our hypothesis that the sample based on the Poisson distribution is different from a normal distribution.</p>
+<div class="panel panel-default">
+<div class="panel-heading">
+Question
+</div>
+<div class="panel-body">
+What is your explanation for this unexpected finding?
+</div>
+</div>
+<button id="displayTextunnamed-chunk-124" onclick="javascript:toggle(&#39;unnamed-chunk-124&#39;);">
+Show: Solution
+</button>
+<div id="toggleTextunnamed-chunk-124" style="display: none">
+<div class="panel panel-default">
+<div class="panel-heading panel-heading1">
+Solution
+</div>
+<div class="panel-body">
+<p>There are two parts to this. The first one is that the size of the sample is too small to detect a (statistically significant) difference. The second part is that this example clearly highlight some of the dangers of null hypothesis testing and overreliance on P values. To convince yourself that this is the case, create a new data set but increase the sample size to 150, for example, and rerun the test.</p>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="statistical-data-analysis.html#cb191-1" aria-hidden="true" tabindex="-1"></a>poisSample2 <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="dv">150</span>, <span class="at">lambda =</span> <span class="dv">4</span>)</span>
+<span id="cb191-2"><a href="statistical-data-analysis.html#cb191-2" aria-hidden="true" tabindex="-1"></a><span class="fu">jarque.test</span>(expSample)</span></code></pre></div>
+<pre><code>## 
+##  Jarque-Bera Normality Test
+## 
+## data:  expSample
+## JB = 532.4, p-value &lt; 2.2e-16
+## alternative hypothesis: greater</code></pre>
+Et voila!
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="multivariate-analysis" class="section level3 hasAnchor" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> Multivariate analysis<a href="statistical-data-analysis.html#multivariate-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In a multivariate analysis we are usually interested in the relationship between pairs of variables. Here we will briefly go through three commonly used methods to examine how two or more variables are related: contingency tables, Pearson correlation and Spearman rank correlation.</p>
+<div id="contingency-tables" class="section level4 unnumbered hasAnchor">
+<h4><strong>Contingency tables</strong><a href="statistical-data-analysis.html#contingency-tables" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Contingency tables are types of tables that display the frequency distribution of two variables against each other. As an example, say we had data from a clinical trial where patients were given either a treatment or a placebo and we are interested in how many people recovered from a disease within 5 days. In each arm we had 100 individuals and in the treatment group 73 individuals recovered and in the placebo group 64. In table format this would thus look like this</p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+teatment
+</th>
+<th style="text-align:center;">
+recovered
+</th>
+<th style="text-align:center;">
+disease
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+drug A
+</td>
+<td style="text-align:center;">
+73
+</td>
+<td style="text-align:center;">
+27
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+placebo
+</td>
+<td style="text-align:center;">
+64
+</td>
+<td style="text-align:center;">
+36
+</td>
+</tr>
+</tbody>
+</table>
+<p>We can see that there were more individuals who recovered in the treatment arm of the study. But how do we know that this was not due to chance? To answer this question we have to briefly tap into inferential statistics. And two common methods to provide functions to perform statistical tests on contingency tables: <strong>Pearson’s chi-squared test</strong> and <strong>Fisher’s exact test</strong>. We are not going into the details of where they differ but only mention that Fisher’s exact test is non-parametric, typically defined on a 2 x 2 contingency table, and, importantly, works with small sample sizes. The chi-squared (or <span class="math inline">\(\chi^2\)</span>) test, on the other hand, works on more than one variables but usualy requires larger sample sizes.</p>
+<div id="pearsons-chi-squared-test" class="section level5 unnumbered hasAnchor">
+<h5><strong>Pearson’s chi-squared test</strong><a href="statistical-data-analysis.html#pearsons-chi-squared-test" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>Perform a chi-squared test in R is straightforward using the <code>chisq.test()</code> function.</p>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="statistical-data-analysis.html#cb193-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define our contingency table</span></span>
+<span id="cb193-2"><a href="statistical-data-analysis.html#cb193-2" aria-hidden="true" tabindex="-1"></a>trial <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">recovered =</span> <span class="fu">c</span>(<span class="dv">73</span>, <span class="dv">64</span>),</span>
+<span id="cb193-3"><a href="statistical-data-analysis.html#cb193-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">disease =</span> <span class="fu">c</span>(<span class="dv">27</span>, <span class="dv">36</span>))</span>
+<span id="cb193-4"><a href="statistical-data-analysis.html#cb193-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb193-5"><a href="statistical-data-analysis.html#cb193-5" aria-hidden="true" tabindex="-1"></a><span class="co"># add row names (not necessary)</span></span>
+<span id="cb193-6"><a href="statistical-data-analysis.html#cb193-6" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(trial) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;drug A&#39;</span>, <span class="st">&#39;placebo&#39;</span>)</span>
+<span id="cb193-7"><a href="statistical-data-analysis.html#cb193-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb193-8"><a href="statistical-data-analysis.html#cb193-8" aria-hidden="true" tabindex="-1"></a><span class="co"># run test</span></span>
+<span id="cb193-9"><a href="statistical-data-analysis.html#cb193-9" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(trial)</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
+## 
+## data:  trial
+## X-squared = 1.483, df = 1, p-value = 0.2233</code></pre>
+<p>Because data can come in different formats, here we provide an example of how to create a simple contingency table if your data only had the recorded outcome, for example as <em>recovered / not recovered</em> or recovered <em>yes / no</em>, stored in two columns, one for the treatment arm and one for the placebo arm.</p>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="statistical-data-analysis.html#cb195-1" aria-hidden="true" tabindex="-1"></a><span class="co"># recorded outcome recovered yes / no</span></span>
+<span id="cb195-2"><a href="statistical-data-analysis.html#cb195-2" aria-hidden="true" tabindex="-1"></a>trialData <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">drug =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&#39;recovered&#39;</span>,<span class="dv">73</span>), <span class="fu">rep</span>(<span class="st">&#39;not recovered&#39;</span>, <span class="dv">27</span>)),</span>
+<span id="cb195-3"><a href="statistical-data-analysis.html#cb195-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">placebo =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&#39;recovered&#39;</span>,<span class="dv">64</span>), <span class="fu">rep</span>(<span class="st">&#39;not recovered&#39;</span>, <span class="dv">36</span>)))</span>
+<span id="cb195-4"><a href="statistical-data-analysis.html#cb195-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb195-5"><a href="statistical-data-analysis.html#cb195-5" aria-hidden="true" tabindex="-1"></a><span class="co"># first turn into &quot;tidy&quot; format</span></span>
+<span id="cb195-6"><a href="statistical-data-analysis.html#cb195-6" aria-hidden="true" tabindex="-1"></a>trialData <span class="ot">&lt;-</span> trialData <span class="sc">%&gt;%</span></span>
+<span id="cb195-7"><a href="statistical-data-analysis.html#cb195-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gather</span>(treatment, outcome, drug<span class="sc">:</span>placebo)</span>
+<span id="cb195-8"><a href="statistical-data-analysis.html#cb195-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb195-9"><a href="statistical-data-analysis.html#cb195-9" aria-hidden="true" tabindex="-1"></a><span class="co"># create a contingency table</span></span>
+<span id="cb195-10"><a href="statistical-data-analysis.html#cb195-10" aria-hidden="true" tabindex="-1"></a>contTable <span class="ot">&lt;-</span> <span class="fu">table</span>(trialData)</span>
+<span id="cb195-11"><a href="statistical-data-analysis.html#cb195-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb195-12"><a href="statistical-data-analysis.html#cb195-12" aria-hidden="true" tabindex="-1"></a><span class="co"># perform chi-sq test </span></span>
+<span id="cb195-13"><a href="statistical-data-analysis.html#cb195-13" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(contTable)</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
+## 
+## data:  contTable
+## X-squared = 1.483, df = 1, p-value = 0.2233</code></pre>
+</div>
+<div id="fishers-exact-test" class="section level5 unnumbered hasAnchor">
+<h5><strong>Fisher’s exact test</strong><a href="statistical-data-analysis.html#fishers-exact-test" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>Fisher’s exact test work in a very similar way and directly on a 2 x 2 contingency table. For large sample sizes you will notice that both test give you similar test statistics, but as mentioned, it is more powerful when sample sizes are small.</p>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="statistical-data-analysis.html#cb197-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run Fisher&#39;s exact test on previously defined contingency matrix</span></span>
+<span id="cb197-2"><a href="statistical-data-analysis.html#cb197-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fisher.test</span>(contTable)</span></code></pre></div>
+<pre><code>## 
+##  Fisher&#39;s Exact Test for Count Data
+## 
+## data:  contTable
+## p-value = 0.2232
+## alternative hypothesis: true odds ratio is not equal to 1
+## 95 percent confidence interval:
+##  0.3438828 1.2516078
+## sample estimates:
+## odds ratio 
+##  0.6589328</code></pre>
+<p>As you will have noticed, this test works on and also reports odds ratio, which is a handy “side effect” of using this function.</p>
+</div>
+</div>
+<div id="pearson-correlation" class="section level4 unnumbered hasAnchor">
+<h4><strong>Pearson correlation</strong><a href="statistical-data-analysis.html#pearson-correlation" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The aim of the <em>Pearson correlation coefficient</em>, or most commonly referred to simply as <em>correlation coefficient</em>, is to establish a line of best fit through a dataset of two variables and measure how far away the data are from the expected values (the best fit line). Values range between +1 (perfect positive correlation) to -1 (perfect negative correlation), and any value in between. Here are some examples</p>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-129-1.png" style="display: block; margin: auto;" /></p>
+<p>To calculate the correlation coefficient in R between two vectors <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> we simply call the <code>cor(x,y)</code> function. And if we are further interested in whether the correlation (or lack of it) is statistically significant we can use the <code>cor.test(x,y)</code> function.</p>
+<div class="panel panel-default">
+<div class="panel-heading">
+Task
+</div>
+<div class="panel-body">
+Create a data.frame with two simulated (artifical) data samples. Plot this data using <code>ggplot</code> and add a linear regression line (remember <code>geom_smooth()</code>?). Then test whether there is a correlation between the two variables and if so, test whether this is statistically significant.
+</div>
+</div>
+<button id="displayTextunnamed-chunk-131" onclick="javascript:toggle(&#39;unnamed-chunk-131&#39;);">
+Show: Solution
+</button>
+<div id="toggleTextunnamed-chunk-131" style="display: none">
+<div class="panel panel-default">
+<div class="panel-heading panel-heading1">
+Solution
+</div>
+<div class="panel-body">
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="statistical-data-analysis.html#cb200-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sample from uniform distribution</span></span>
+<span id="cb200-2"><a href="statistical-data-analysis.html#cb200-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">50</span>, <span class="dv">1</span>, <span class="dv">5</span>)</span>
+<span id="cb200-3"><a href="statistical-data-analysis.html#cb200-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb200-4"><a href="statistical-data-analysis.html#cb200-4" aria-hidden="true" tabindex="-1"></a><span class="co"># assume linear relationship between x and y plus some Gaussian noise</span></span>
+<span id="cb200-5"><a href="statistical-data-analysis.html#cb200-5" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fl">2.3</span><span class="sc">*</span>x <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">50</span>,<span class="dv">0</span>,<span class="dv">1</span>)</span>
+<span id="cb200-6"><a href="statistical-data-analysis.html#cb200-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb200-7"><a href="statistical-data-analysis.html#cb200-7" aria-hidden="true" tabindex="-1"></a><span class="co"># create data.frame</span></span>
+<span id="cb200-8"><a href="statistical-data-analysis.html#cb200-8" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)</span>
+<span id="cb200-9"><a href="statistical-data-analysis.html#cb200-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb200-10"><a href="statistical-data-analysis.html#cb200-10" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb200-11"><a href="statistical-data-analysis.html#cb200-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb200-12"><a href="statistical-data-analysis.html#cb200-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb200-13"><a href="statistical-data-analysis.html#cb200-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&#39;lm&#39;</span>, <span class="at">se=</span>F)</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-200-1.png" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="statistical-data-analysis.html#cb202-1" aria-hidden="true" tabindex="-1"></a><span class="co"># test for correlation</span></span>
+<span id="cb202-2"><a href="statistical-data-analysis.html#cb202-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(x,y)</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  x and y
+## t = 14.795, df = 48, p-value &lt; 2.2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.8386875 0.9456033
+## sample estimates:
+##       cor 
+## 0.9056209</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div id="spearmans-rank-correlation" class="section level4 unnumbered hasAnchor">
+<h4><strong>Spearman’s rank correlation</strong><a href="statistical-data-analysis.html#spearmans-rank-correlation" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>In comparison to Pearson’s correlation, Spearman’s rank correlation is a non-parametric measure of how the <em>ranking</em> of two variables are correlated. In fact, the Spearman correlation is equal to the Pearson correlation between the rank values of two variables. So instead of comparing the values, here we compare their ranks, or their indices when ordered from smallest to largest. As before, the values for Spearman’s rho (<span class="math inline">\(\rho\)</span>) can range from -1 to +1. Without providing any more detail, here is an example of how to calculate Spearman’s rho in R</p>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="statistical-data-analysis.html#cb204-1" aria-hidden="true" tabindex="-1"></a>Age <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">9</span>, <span class="dv">11</span>, <span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">6</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>)</span>
+<span id="cb204-2"><a href="statistical-data-analysis.html#cb204-2" aria-hidden="true" tabindex="-1"></a>OD <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">478</span>, <span class="dv">755</span>, <span class="dv">399</span>, <span class="dv">512</span>, <span class="dv">458</span>, <span class="dv">444</span>, <span class="dv">716</span>, <span class="dv">399</span>, <span class="dv">491</span>, <span class="dv">456</span>)</span>
+<span id="cb204-3"><a href="statistical-data-analysis.html#cb204-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb204-4"><a href="statistical-data-analysis.html#cb204-4" aria-hidden="true" tabindex="-1"></a><span class="co"># use the same function as before but define method = &#39;spearman&#39;</span></span>
+<span id="cb204-5"><a href="statistical-data-analysis.html#cb204-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(Age, OD, <span class="at">method =</span> <span class="st">&#39;spearman&#39;</span>)</span></code></pre></div>
+<pre><code>## [1] 0.8597561</code></pre>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="statistical-data-analysis.html#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="co"># and test for significance</span></span>
+<span id="cb206-2"><a href="statistical-data-analysis.html#cb206-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(Age, OD, <span class="at">method =</span> <span class="st">&#39;spearman&#39;</span>)</span></code></pre></div>
+<pre><code>## Warning in cor.test.default(Age, OD, method = &quot;spearman&quot;): Cannot compute exact
+## p-value with ties</code></pre>
+<pre><code>## 
+##  Spearman&#39;s rank correlation rho
+## 
+## data:  Age and OD
+## S = 23.14, p-value = 0.001424
+## alternative hypothesis: true rho is not equal to 0
+## sample estimates:
+##       rho 
+## 0.8597561</code></pre>
+<div class="panel panel-default">
+<div class="panel-heading">
+Task
+</div>
+<div class="panel-body">
+Compare the two correlation coefficients for different data.
+</div>
+</div>
+</div>
+<div id="correlation-vs.-causation" class="section level4 unnumbered hasAnchor">
+<h4><strong>Correlation vs. causation</strong><a href="statistical-data-analysis.html#correlation-vs.-causation" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>Beware:</strong> even a very high correlation between two variables does not infer causality - causality can only be inferred through careful experimental design in a well-controlled setting. A good example how looking purely at correlation can be misleading is this one (taken from <a href="https://tylervigen.com/spurious-correlations">Spurious Correlations</a>)</p>
+<div class="figure">
+<img src="images/bedsheet_correlation.png" alt="" />
+<p class="caption"><span class="math inline">\(\rho = 0.947\)</span>!</p>
+</div>
+<p><span class="math inline">\(~\)</span></p>
+</div>
+</div>
+</div>
+<div id="linear-models-lm" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Linear Models (LM)<a href="statistical-data-analysis.html#linear-models-lm" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="simple-linear-regression" class="section level3 hasAnchor" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Simple linear regression<a href="statistical-data-analysis.html#simple-linear-regression" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In situations when analysing data, we are interested in exploring the relationship between a single response variable and one or multiple explanatory variables (predictors). This can be done by fitting a linear model. In fact, we have already come across this in earlier sections of this workshop; here we will provide more information on what is unde the hood and how to do perform linear modelling in R.</p>
+<p>The term <em>linear</em> in linear models refers to the fact that there is a <em>linear</em>, or straight line, relationship between a predictor, <span class="math inline">\(x\)</span>, and the response <span class="math inline">\(y\)</span>. In other words, we can write
+<span class="math display">\[ y = \beta_0 + \beta_1 x \]</span>
+where <span class="math inline">\(\beta_0\)</span> is the so-called <em>intercept</em>, i.e. the value of <span class="math inline">\(y\)</span> when <span class="math inline">\(x=0\)</span>, and <span class="math inline">\(\beta_1\)</span> is the <em>gradient</em>, which describes by how much <span class="math inline">\(y\)</span> varies with increasing or decreasing values of <span class="math inline">\(x\)</span>.</p>
+<p><img src="_main_files/figure-html/unnamed-chunk-134-1.png" style="display: block; margin: auto;" /></p>
+<p>What can be seen form the above graph is that the data points are not all on top of the regression line but spread above and below it. What this means is that an individual data point, <span class="math inline">\(y_i\)</span>, can be described by the linear relationship
+<span class="math display">\[y_i = \beta_0 + \beta_1 x_i + \epsilon_i\]</span>
+where <span class="math inline">\(\epsilon_i\)</span> is the deviation, or (residual) error, between the best line fit and the actually observed value <span class="math inline">\(y_i\)</span>.</p>
+<p>One on the key assumptions of a linear model is that all the <span class="math inline">\(\epsilon_i\)</span>’s are normally distributed with a mean of 0 and some standard deviation <span class="math inline">\(\sigma\)</span>. In mathematical terms, the linear regression model is therefore defined as
+<span class="math display">\[
+\begin{align}
+y_i &amp;= \beta_0 + \beta_1 x_i + \epsilon_i \\
+\epsilon_i &amp;\sim \mathcal{N}(0, \sigma^2)
+\end{align}
+\]</span></p>
+<p><span class="math inline">\(\epsilon\)</span> is also commonly referred as the <strong>noise</strong> term. This is because the response variable has usually some uncertainty associated with it (e.g quantifying gene expression using microarrays or RNA-seq, etc.).</p>
+<p>The general idea behind linear regression is to find the best fit line which minimises, or absorbs, the total (residual) noise. We are not going into the mathematical intricacies but rather show you how this is done in R, together with the general workflow of linear regression</p>
+<ol style="list-style-type: decimal">
+<li>infer the model parameters <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span></li>
+<li>check the model fit</li>
+<li>interpret the significance of the estimated parameters</li>
+</ol>
+</div>
+<div id="linear-regression-in-r" class="section level3 hasAnchor" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> Linear regression in R<a href="statistical-data-analysis.html#linear-regression-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To show you how easy it is to linear regression in R we first create a fake dataset, which contains data of the height and weight of <span class="math inline">\(N=100\)</span> individuals randomly sampled from a population</p>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="statistical-data-analysis.html#cb209-1" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb209-2"><a href="statistical-data-analysis.html#cb209-2" aria-hidden="true" tabindex="-1"></a>height <span class="ot">&lt;-</span> <span class="fu">runif</span>(N, <span class="at">min =</span> <span class="dv">135</span>, <span class="at">max =</span> <span class="dv">195</span>)</span>
+<span id="cb209-3"><a href="statistical-data-analysis.html#cb209-3" aria-hidden="true" tabindex="-1"></a>weight <span class="ot">&lt;-</span> <span class="fl">0.48</span> <span class="sc">*</span> height <span class="sc">+</span> <span class="fu">rnorm</span>(N, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">7</span>)</span>
+<span id="cb209-4"><a href="statistical-data-analysis.html#cb209-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb209-5"><a href="statistical-data-analysis.html#cb209-5" aria-hidden="true" tabindex="-1"></a>sampleData <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">height =</span> height,</span>
+<span id="cb209-6"><a href="statistical-data-analysis.html#cb209-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">weight =</span> weight) </span>
+<span id="cb209-7"><a href="statistical-data-analysis.html#cb209-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb209-8"><a href="statistical-data-analysis.html#cb209-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sampleData, <span class="fu">aes</span>(<span class="at">x =</span> height, <span class="at">y =</span> weight)) <span class="sc">+</span></span>
+<span id="cb209-9"><a href="statistical-data-analysis.html#cb209-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb209-10"><a href="statistical-data-analysis.html#cb209-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;height (cm)&#39;</span>,</span>
+<span id="cb209-11"><a href="statistical-data-analysis.html#cb209-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">&#39;weight (kg)&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-135-1.png" style="display: block; margin: auto;" /></p>
+<p>Judging by eye we would be confident to declare that there is a (linear) relationship between the height and weight of an individual. So let’s fit a linear regression model and check whether this is indeed the case (in a statistical sense). To do this in R we will use the <code>lm()</code> function (please read the documentation for full details). This function requires a <strong>formular</strong> that describes the relationship between the predictor or explanatory variable (here height) and the response variable (here weight), which is given in the form <code>response ~ explanatory</code>, or in our case <code>weight ~ height</code>. With this, R will try to fit the following model
+<span class="math display">\[ weight_i = \beta_0 + \beta_1 \times height_i + \epsilon_i \]</span></p>
+<p>And here is how this is done</p>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="statistical-data-analysis.html#cb210-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit linear model and assign to object &#39;fit&#39;</span></span>
+<span id="cb210-2"><a href="statistical-data-analysis.html#cb210-2" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(weight <span class="sc">~</span> height, <span class="at">data =</span> sampleData)</span>
+<span id="cb210-3"><a href="statistical-data-analysis.html#cb210-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb210-4"><a href="statistical-data-analysis.html#cb210-4" aria-hidden="true" tabindex="-1"></a><span class="co"># print output</span></span>
+<span id="cb210-5"><a href="statistical-data-analysis.html#cb210-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = weight ~ height, data = sampleData)
+## 
+## Coefficients:
+## (Intercept)       height  
+##      8.8537       0.4204</code></pre>
+<p>The output of interest are the two numbers <code>(Intercept)</code>= 8.8537, which is our <span class="math inline">\(\beta_0\)</span> term, and <code>weight</code>= 0.4204, which is our <span class="math inline">\(\beta_1\)</span> term.</p>
+<p>So far so good; but how do we get the regression line? There are, in principle, two ways: either we calculate this by hand using the beta-terms we just obtained, or we use the <code>predict()</code> function (please see R documentation for further details).</p>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="statistical-data-analysis.html#cb212-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define the x-range for our regression line</span></span>
+<span id="cb212-2"><a href="statistical-data-analysis.html#cb212-2" aria-hidden="true" tabindex="-1"></a>bestFit <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">height =</span> <span class="fu">c</span>(<span class="dv">135</span>, <span class="dv">195</span>))</span>
+<span id="cb212-3"><a href="statistical-data-analysis.html#cb212-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb212-4"><a href="statistical-data-analysis.html#cb212-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Option 1: calculate the y-values by hand</span></span>
+<span id="cb212-5"><a href="statistical-data-analysis.html#cb212-5" aria-hidden="true" tabindex="-1"></a>bestFit[<span class="st">&quot;weight&quot;</span>] <span class="ot">&lt;-</span> <span class="fl">5.0613</span> <span class="sc">+</span> <span class="fl">0.4471</span> <span class="sc">*</span> bestFit<span class="sc">$</span>height</span>
+<span id="cb212-6"><a href="statistical-data-analysis.html#cb212-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb212-7"><a href="statistical-data-analysis.html#cb212-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Option 2: use the predict() function</span></span>
+<span id="cb212-8"><a href="statistical-data-analysis.html#cb212-8" aria-hidden="true" tabindex="-1"></a>bestFit[<span class="st">&quot;weight&quot;</span>] <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit, <span class="at">newdata =</span> bestFit)</span>
+<span id="cb212-9"><a href="statistical-data-analysis.html#cb212-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb212-10"><a href="statistical-data-analysis.html#cb212-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sampleData, <span class="fu">aes</span>(<span class="at">x=</span>height, <span class="at">y=</span>weight)) <span class="sc">+</span></span>
+<span id="cb212-11"><a href="statistical-data-analysis.html#cb212-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb212-12"><a href="statistical-data-analysis.html#cb212-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data=</span>bestFit, <span class="fu">aes</span>(<span class="at">x=</span>height, <span class="at">y=</span>weight), <span class="at">col =</span> <span class="st">&#39;blue&#39;</span>, <span class="at">linewidth =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-137-1.png" style="display: block; margin: auto;" /></p>
+<blockquote>
+<p><strong>Note:</strong> this is essentially what <code>geom_smooth(method = 'lm')</code> would have done for us!</p>
+</blockquote>
+<div id="using-the-summary-function" class="section level4 hasAnchor" number="3.2.2.1">
+<h4><span class="header-section-number">3.2.2.1</span> <strong>Using the <code>summary()</code> function</strong><a href="statistical-data-analysis.html#using-the-summary-function" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Above the called <code>print(fit)</code> to obtain the fitted parameters of our model. However, if you check carefully in the <em>Environment</em> tab in RStudio, you will see that <code>fit</code> contains a lot more information. And this can be summarised in a much more informative fashion using the <code>summary()</code> function</p>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="statistical-data-analysis.html#cb213-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = weight ~ height, data = sampleData)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -13.2130  -5.0512  -0.6079   4.6114  24.7020 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  8.85369    7.45411   1.188    0.238    
+## height       0.42043    0.04554   9.232 5.63e-15 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 7.234 on 98 degrees of freedom
+## Multiple R-squared:  0.4651, Adjusted R-squared:  0.4597 
+## F-statistic: 85.23 on 1 and 98 DF,  p-value: 5.627e-15</code></pre>
+<p>Let’s go through this line-by-line</p>
+<ul>
+<li><p><strong>Call</strong> <br>
+This just states the arguments that were passed to the <code>lm()</code> function. Remember it’s <code>response ~ explanatory</code>.</p></li>
+<li><p><strong>Residuals</strong> <br>
+Some basic stats about the residuals (i.e the differences between the model fit and the observed data points). It is easier to plot a histogram of the residuals (shown in the next section), but these basic stats can already give us an indication of whether we have a symmetric distribution with zero mean (i.e we want the median to be close to zero, the third quartile (Q3) to be roughly equal to -Q1 (first quartile) and the max to be approximately -min).</p></li>
+<li><p><strong>Coefficients</strong> <br></p>
+<ul>
+<li><p><code>Estimate</code> <br>
+<code>(Intercept)</code>= 8.8537 and <code>weight</code>= 0.4204 kg/cm are our regression parameters.</p></li>
+<li><p><code>Std. Error</code> <br>
+The standard errors for the two inferred parameters. They tells us how confident we are in our estimates: if the standard error is comparable or greater than the actual parameter estimate itself then that point estimate should not be trusted. We can also show the confidence intervals for the model parameters to highlight their uncertainty using the <code>confint()</code> function:</p></li>
+</ul>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="statistical-data-analysis.html#cb215-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(fit, <span class="at">levels=</span><span class="fl">0.95</span>)</span></code></pre></div>
+<pre><code>##                 2.5 %    97.5 %
+## (Intercept) -5.938749 23.646134
+## height       0.330056  0.510808</code></pre>
+<ul>
+<li><code>t value</code> and <code>Pr(&gt;|t|)</code> <br>
+This is the result of a hypothesis testing against the null hypothesis that the coefficient is zero.</li>
+</ul></li>
+<li><p><strong>Residual standard error</strong> <br>
+The square root of the residual sum of squares / degrees of freedom (here 98 = 100 (data points) - 2 (parameters needed for the regression line))</p></li>
+<li><p><strong>Multiple R-squared</strong> <br>
+The <span class="math inline">\(R^2\)</span> statistic, which is also referred to as as the coefficient of determination is the proportion of the total variation that is explained by the regression, i.e. <br></p>
+<center>
+<p><strong>total variation</strong> = <strong>regression</strong> (explained) variation + <strong>residual</strong> (unexplained) variation</p>
+</center>
+<p><br>
+In regression with a single explanatory variable, this is the same as the Pearson correlation coefficient squared.</p></li>
+<li><p><strong>F-statistic</strong> <br>
+The F-statistic can be used to assess whether the amount of variation explained by the regression (<span class="math inline">\(M_1\)</span>) is statistically significantly different compared to the null model (<span class="math inline">\(M_0\)</span>), which in this case corresponds just taking the mean of the data. Large values of the F-statistic correspond to cases where the model fit is better for the more complex model compared to the null model. This test can be used to generate a P-value to assess whether the model fit is statistically significantly better given a pre-defined level of significance.</p></li>
+</ul>
+</div>
+</div>
+<div id="model-checking" class="section level3 hasAnchor" number="3.2.3">
+<h3><span class="header-section-number">3.2.3</span> Model checking<a href="statistical-data-analysis.html#model-checking" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The next step in linear (or any statistical) modelling is the concept of <strong>model checking</strong>. In theory, we could fit any model to our data simply by changing our assumptions about how the response and predictor variables are related. What we would like to do, however, is to make <strong>robust</strong> inferences, and for this we must check our model, which essentially boils down to checking whether our assumptions are reasonable.</p>
+<p>The main assumption in our model was that the residuals (the differences between the data points and the regression line) are normally distributed around 0. We can easily check whether this is the case</p>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="statistical-data-analysis.html#cb217-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(fit<span class="sc">$</span>residuals)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-140-1.png" style="display: block; margin: auto;" /></p>
+<p>We can see that the residuals are fairly evenly distributed and centered around 0, which is a good sign!</p>
+<p>R also provides us with some easy tools for further model diagnostics, which can be called simply through</p>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="statistical-data-analysis.html#cb218-1" aria-hidden="true" tabindex="-1"></a><span class="co">#setting up a 2x2 plot grid</span></span>
+<span id="cb218-2"><a href="statistical-data-analysis.html#cb218-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb218-3"><a href="statistical-data-analysis.html#cb218-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb218-4"><a href="statistical-data-analysis.html#cb218-4" aria-hidden="true" tabindex="-1"></a><span class="co"># plot model diagnostics</span></span>
+<span id="cb218-5"><a href="statistical-data-analysis.html#cb218-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit, <span class="at">pch =</span> <span class="dv">20</span>, <span class="at">cex =</span> <span class="fl">0.5</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-141-1.png" style="display: block; margin: auto;" />
+What do these plot tell us about the model fit, though?</p>
+<div id="residuals-vs-fitted" class="section level4 unnumbered hasAnchor">
+<h4><strong>Residuals vs Fitted</strong><a href="statistical-data-analysis.html#residuals-vs-fitted" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The first plot, <em>Residuals vs Fitted</em>, checks that the variance is constant along the fitted line and that there is no systematic pattern whereby the errors get bigger or smaller as dependent on the fitted values. In our case, everything seems to be OK, but here are some (extreme) examples where this is not the case:</p>
+<p><img src="images/02-funnel.png" width="600px" style="display: block; margin: auto;" /></p>
+</div>
+<div id="normal-q-q" class="section level4 unnumbered hasAnchor">
+<h4><strong>Normal Q-Q</strong><a href="statistical-data-analysis.html#normal-q-q" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>A Q–Q plot, or <em>quantile-quantile</em> plot, compares two probability distributions by plotting their quantiles against each other. If the two distributions are similar, then the points should fall approximately on the identity line <span class="math inline">\(y = x\)</span>. In our case, we are plotting the quantiles of the residuals against their <em>assumed</em> distribution, which is the Normal distribution, and see that there is nothing to worry about (which we should know already from the histogram above).</p>
+<p>Here is an example when things go wrong (i.e. when our linear assumption is violated):</p>
+<p><img src="_main_files/figure-html/unnamed-chunk-143-1.png" style="display: block; margin: auto;" /></p>
+</div>
+<div id="scale-location" class="section level4 unnumbered hasAnchor">
+<h4><strong>Scale-Location</strong><a href="statistical-data-analysis.html#scale-location" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The scale location graph is very similar to the first plot but on a different scale.</p>
+</div>
+<div id="residuals-vs-leverage" class="section level4 unnumbered hasAnchor">
+<h4><strong>Residuals vs Leverage</strong><a href="statistical-data-analysis.html#residuals-vs-leverage" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The last plot examines the influence of individual data points on our inference. Ideally, all points should equally contribute to the fit. In some cases we might find outliers, which have an above <em>leverage</em> on the fitted line, which can be measured by *Cook’s distance’. An extreme example is shown here</p>
+<p><img src="_main_files/figure-html/unnamed-chunk-144-1.png" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="prediction" class="section level3 hasAnchor" number="3.2.4">
+<h3><span class="header-section-number">3.2.4</span> Prediction<a href="statistical-data-analysis.html#prediction" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Making predictions about unknown or unobserved data is the key benefit of statistical modelling. In fact, we have already used this to overlay a regression line onto our data by using the <code>predict()</code> function. Going back to our original example, let’s say we want to know the <em>average</em> weight for an individual who is 187cm tall. Note, the <code>predict()</code> function requires the new (to be predicted) data to be provided as a data.frame.</p>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="statistical-data-analysis.html#cb219-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(fit, <span class="fu">data.frame</span>(<span class="at">height=</span><span class="dv">187</span>))</span></code></pre></div>
+<pre><code>##        1 
+## 87.47447</code></pre>
+<p>Remember that our inference comes with a degree of uncertainties (because we can never know the true relationship based on a random sample from a population). A useful feature of the <code>predict()</code> function is that it can not only provide point estimates but also the <strong>confidence</strong> or <strong>prediction</strong> interval. Let’ say we are intereted in the 95% confidence interval for our prediction</p>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="statistical-data-analysis.html#cb221-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(fit, <span class="fu">data.frame</span>(<span class="at">height=</span><span class="dv">187</span>), <span class="at">interval =</span> <span class="st">&#39;confidence&#39;</span>, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div>
+<pre><code>##        fit      lwr      upr
+## 1 87.47447 84.86624 90.08271</code></pre>
+<p>and to obtain the 96% prediction interval</p>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="statistical-data-analysis.html#cb223-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(fit, <span class="fu">data.frame</span>(<span class="at">height=</span><span class="dv">187</span>), <span class="at">interval =</span> <span class="st">&#39;prediction&#39;</span>, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div>
+<pre><code>##        fit      lwr      upr
+## 1 87.47447 72.88477 102.0642</code></pre>
+<p>As you can see, the prediction interval is significantly larger than the confidence interval.</p>
+<div id="confidence-vs-prediction-interval" class="section level5 hasAnchor" number="3.2.4.0.1">
+<h5><span class="header-section-number">3.2.4.0.1</span> <strong>Confidence vs prediction interval</strong><a href="statistical-data-analysis.html#confidence-vs-prediction-interval" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>The <em>confidence interval</em> corresponds to the uncertainty surrounding our estimate of an <strong>average individual</strong>; it represents the uncertainty in the mean (i.e. in our case the regression line): <span class="math inline">\(y = \beta_0 + \beta_1 x\)</span>. In contrast, the <em>prediction interval</em> corresponds to the uncertainty surrounding an <strong>Individual observation</strong>.</p>
+<p>Here we show you how both intervals can be computed and added to your (linear) regression line. Although these are often not shown they are important for conveying uncertainties.</p>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="statistical-data-analysis.html#cb225-1" aria-hidden="true" tabindex="-1"></a>newheight <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">height =</span> <span class="fu">seq</span>(<span class="fu">min</span>(sampleData<span class="sc">$</span>height), <span class="fu">max</span>(sampleData<span class="sc">$</span>height), <span class="at">length.out=</span><span class="dv">100</span>))</span>
+<span id="cb225-2"><a href="statistical-data-analysis.html#cb225-2" aria-hidden="true" tabindex="-1"></a>newdata <span class="ot">&lt;-</span> <span class="fu">cbind</span>(newheight, <span class="fu">predict</span>(fit, <span class="at">newdata =</span> newheight, <span class="at">interval =</span> <span class="st">&#39;confidence&#39;</span>, <span class="at">level =</span> <span class="fl">0.95</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb225-3"><a href="statistical-data-analysis.html#cb225-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">weight =</span> fit)</span>
+<span id="cb225-4"><a href="statistical-data-analysis.html#cb225-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb225-5"><a href="statistical-data-analysis.html#cb225-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> height, <span class="at">y =</span> weight)) <span class="sc">+</span></span>
+<span id="cb225-6"><a href="statistical-data-analysis.html#cb225-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> sampleData) <span class="sc">+</span></span>
+<span id="cb225-7"><a href="statistical-data-analysis.html#cb225-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_ribbon</span>(<span class="at">data =</span> newdata, <span class="fu">aes</span>(<span class="at">ymin=</span>lwr, <span class="at">ymax=</span>upr), <span class="at">fill =</span> <span class="st">&#39;grey&#39;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb225-8"><a href="statistical-data-analysis.html#cb225-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data =</span> newdata, <span class="at">col =</span> <span class="st">&#39;blue&#39;</span>, <span class="at">linewidth=</span><span class="dv">1</span>) </span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-148-1.png" style="display: block; margin: auto;" /></p>
+<p>… and now compare this to what <code>geom_smooth()</code> produces</p>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="statistical-data-analysis.html#cb226-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sampleData, <span class="fu">aes</span>(<span class="at">x =</span> height, <span class="at">y =</span> weight)) <span class="sc">+</span></span>
+<span id="cb226-2"><a href="statistical-data-analysis.html#cb226-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb226-3"><a href="statistical-data-analysis.html#cb226-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&#39;lm&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-149-1.png" style="display: block; margin: auto;" /></p>
+<p>They are the same - so now you know what <code>geom_smooth()</code> actually does!</p>
+<div class="panel panel-default">
+<div class="panel-heading">
+Task
+</div>
+<div class="panel-body">
+Produce a similar graph but now plot the 97% prediction interval instead of the confidence interval. Can you put them both in the same graph?
+</div>
+</div>
+<button id="displayTextunnamed-chunk-151" onclick="javascript:toggle(&#39;unnamed-chunk-151&#39;);">
+Show: Solution
+</button>
+<div id="toggleTextunnamed-chunk-151" style="display: none">
+<div class="panel panel-default">
+<div class="panel-heading panel-heading1">
+Solution
+</div>
+<div class="panel-body">
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="statistical-data-analysis.html#cb227-1" aria-hidden="true" tabindex="-1"></a>newheight <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">height =</span> <span class="fu">seq</span>(<span class="fu">min</span>(sampleData<span class="sc">$</span>height), <span class="fu">max</span>(sampleData<span class="sc">$</span>height), <span class="at">length.out=</span><span class="dv">100</span>))</span>
+<span id="cb227-2"><a href="statistical-data-analysis.html#cb227-2" aria-hidden="true" tabindex="-1"></a>newdata_ci <span class="ot">&lt;-</span> <span class="fu">cbind</span>(newheight, <span class="fu">predict</span>(fit, <span class="at">newdata =</span> newheight, <span class="at">interval =</span> <span class="st">&#39;confidence&#39;</span>, <span class="at">level =</span> <span class="fl">0.97</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb227-3"><a href="statistical-data-analysis.html#cb227-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">weight =</span> fit)</span>
+<span id="cb227-4"><a href="statistical-data-analysis.html#cb227-4" aria-hidden="true" tabindex="-1"></a>newdata_pi <span class="ot">&lt;-</span> <span class="fu">cbind</span>(newheight, <span class="fu">predict</span>(fit, <span class="at">newdata =</span> newheight, <span class="at">interval =</span> <span class="st">&#39;prediction&#39;</span>, <span class="at">level =</span> <span class="fl">0.97</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb227-5"><a href="statistical-data-analysis.html#cb227-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">weight =</span> fit)</span>
+<span id="cb227-6"><a href="statistical-data-analysis.html#cb227-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb227-7"><a href="statistical-data-analysis.html#cb227-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> height, <span class="at">y =</span> weight)) <span class="sc">+</span></span>
+<span id="cb227-8"><a href="statistical-data-analysis.html#cb227-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> sampleData) <span class="sc">+</span></span>
+<span id="cb227-9"><a href="statistical-data-analysis.html#cb227-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_ribbon</span>(<span class="at">data =</span> newdata_pi, <span class="fu">aes</span>(<span class="at">ymin=</span>lwr, <span class="at">ymax=</span>upr), <span class="at">fill =</span> <span class="st">&#39;grey&#39;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb227-10"><a href="statistical-data-analysis.html#cb227-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_ribbon</span>(<span class="at">data =</span> newdata_ci, <span class="fu">aes</span>(<span class="at">ymin=</span>lwr, <span class="at">ymax=</span>upr), <span class="at">fill =</span> <span class="st">&#39;red&#39;</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb227-11"><a href="statistical-data-analysis.html#cb227-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data =</span> newdata_ci, <span class="at">col =</span> <span class="st">&#39;blue&#39;</span>, <span class="at">linewidth=</span><span class="dv">1</span>) </span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-201-1.png" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="multiple-linear-regression" class="section level3 hasAnchor" number="3.2.5">
+<h3><span class="header-section-number">3.2.5</span> Multiple linear regression<a href="statistical-data-analysis.html#multiple-linear-regression" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>So far we have only considered a single explanatory variable, for example <em>height</em>. In most scenarios, however, we will have measured more than variable that could affect the outcome (response). In this case, our linear regression model extends to
+<span class="math display">\[ y_i = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + ... + \beta_n x_{ni} + \epsilon_i \]</span></p>
+Let’s make up some artificial data again to illustrate how to perform multiple linear regression in R. In this case we assume we had measure the total number of malaria episodes of 100 individuals aged between 1 and 10 living under different transmission intensities, measured as EIR and here for simplicity scaled to between 0 and 1. The model we are therefore trying to fit is
+<center>
+episodes<span class="math inline">\(_i\)</span> = <span class="math inline">\(\beta_0\)</span> + <span class="math inline">\(\beta_1\)</span>EIR<span class="math inline">\(_i\)</span> + <span class="math inline">\(\beta_2\)</span>age<span class="math inline">\(_i\)</span>
+</center>
+<p>First, create our new dataset</p>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="statistical-data-analysis.html#cb228-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create random data points for age and EIR</span></span>
+<span id="cb228-2"><a href="statistical-data-analysis.html#cb228-2" aria-hidden="true" tabindex="-1"></a>age <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>, <span class="dv">1</span>, <span class="dv">10</span>)</span>
+<span id="cb228-3"><a href="statistical-data-analysis.html#cb228-3" aria-hidden="true" tabindex="-1"></a>EIR <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb228-4"><a href="statistical-data-analysis.html#cb228-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb228-5"><a href="statistical-data-analysis.html#cb228-5" aria-hidden="true" tabindex="-1"></a><span class="co"># assume some linear relationship between episodes and age and EIR plus noise</span></span>
+<span id="cb228-6"><a href="statistical-data-analysis.html#cb228-6" aria-hidden="true" tabindex="-1"></a>episodes <span class="ot">&lt;-</span> <span class="fl">1.5</span><span class="sc">*</span>age <span class="sc">+</span> <span class="fl">4.1</span><span class="sc">*</span>EIR <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="dv">0</span>, <span class="dv">2</span>)</span>
+<span id="cb228-7"><a href="statistical-data-analysis.html#cb228-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb228-8"><a href="statistical-data-analysis.html#cb228-8" aria-hidden="true" tabindex="-1"></a><span class="co"># put into new data.frame</span></span>
+<span id="cb228-9"><a href="statistical-data-analysis.html#cb228-9" aria-hidden="true" tabindex="-1"></a>epiData <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Age =</span> age, <span class="at">Episodes =</span> episodes, <span class="at">EIR =</span> EIR)</span></code></pre></div>
+<p>As a 3D-scatterplot this looks like this</p>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="statistical-data-analysis.html#cb229-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scatterplot3d)</span>
+<span id="cb229-2"><a href="statistical-data-analysis.html#cb229-2" aria-hidden="true" tabindex="-1"></a><span class="fu">scatterplot3d</span>(EIR, age, episodes, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">ylab=</span><span class="st">&#39;Age (years)&#39;</span>, </span>
+<span id="cb229-3"><a href="statistical-data-analysis.html#cb229-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">xlab=</span><span class="st">&#39;Transmission intensity&#39;</span>, <span class="at">zlab=</span><span class="st">&#39;Malaria episodes&#39;</span>, <span class="at">color=</span><span class="st">&#39;grey&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-153-1.png" style="display: block; margin: auto;" />
+Note how we now spread our data along a third dimension, i.e. we go from 2D to 3D and from a best fit line to a best fit hyperplane. Adding more explanatory variables will effectively spread the data even further in more dimensions, which makes it much harder to make robust inferences. Another key objective in statistical modelling is therefore to find the <em>minimal adequate model</em>.</p>
+<p>To fit the model in R we use exactly the same function and terminology as before</p>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="statistical-data-analysis.html#cb230-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Episodes <span class="sc">~</span> EIR <span class="sc">+</span> Age, <span class="at">data =</span> epiData)</span></code></pre></div>
+<p>which we can project onto our 3D-scatterplot</p>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="statistical-data-analysis.html#cb231-1" aria-hidden="true" tabindex="-1"></a>hfig <span class="ot">&lt;-</span> <span class="fu">scatterplot3d</span>(EIR, age, episodes, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">ylab=</span><span class="st">&#39;Age (years)&#39;</span>, </span>
+<span id="cb231-2"><a href="statistical-data-analysis.html#cb231-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">xlab=</span><span class="st">&#39;Transmission intensity&#39;</span>, <span class="at">zlab=</span><span class="st">&#39;Malaria episodes&#39;</span>, <span class="at">color=</span><span class="st">&#39;grey&#39;</span>)</span>
+<span id="cb231-3"><a href="statistical-data-analysis.html#cb231-3" aria-hidden="true" tabindex="-1"></a>hfig<span class="sc">$</span><span class="fu">plane3d</span>(fit, <span class="at">draw_polygon=</span>T)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-155-1.png" style="display: block; margin: auto;" /></p>
+<p>Next we are interested in the actual inference, i.e. the estimated parameters and some indication whether the two predictor variables (age and EIR) have a significant effect on the response (malaria episodes)</p>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="statistical-data-analysis.html#cb232-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Episodes ~ EIR + Age, data = epiData)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5.5632 -1.4060 -0.1187  1.3122  5.0491 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.21786    0.63882   0.341    0.734    
+## EIR          3.64104    0.71490   5.093 1.73e-06 ***
+## Age          1.46793    0.08402  17.472  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.051 on 97 degrees of freedom
+## Multiple R-squared:  0.771,  Adjusted R-squared:  0.7662 
+## F-statistic: 163.3 on 2 and 97 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>As before, using the <code>summary()</code> function we get a summary of everything that’s important.</p>
+<ul>
+<li>the residuals appear symmetric and centered around 0</li>
+<li>the estimates for <span class="math inline">\(\beta_1\)</span> (EIR) and <span class="math inline">\(\beta_2\)</span> (age) are both positive and in magnitude as expected</li>
+<li>the estimate for <span class="math inline">\(\beta_0\)</span> is <span class="math inline">\(\neq 0\)</span> - what does this mean in practical terms? (we will revisit this at a later part of this workshop)</li>
+<li>the inferred effects of both EIR and age are statistically significant</li>
+<li>the adjusted R-squared value suggests that <span class="math inline">\(\sim 80\)</span>% of the variation is explained by our model</li>
+</ul>
+<p>This all seems really good, but we should still have a look at model diagnostics to see whether our model, or rather its underlying assumptions are valid.</p>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="statistical-data-analysis.html#cb234-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb234-2"><a href="statistical-data-analysis.html#cb234-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-157-1.png" style="display: block; margin: auto;" /></p>
+<p>The diagnostics all look reasonable and there is nothing that should make us doubt our model and assumed relationship between the response and explanatory variables. Note, these plots look exactly the same as in the simple linear model we have done earlier. This is because no matter how many (linear) predictors we put into our model, it is the behaviour of the residuals that we are interested in to make a statement about our model fit.</p>
+<div class="panel panel-default">
+<div class="panel-heading">
+Task
+</div>
+<div class="panel-body">
+
+<ol style="list-style-type: decimal">
+<li><p>Calculate the predicted number of episodes plus 95% cofidence intervals for a 5 year old living in a transmission setting with EIR=0.5</p></li>
+<li><p>Fit a new model <code>Episodes ~ Age</code>. Look at the total variation explained and compare this to the full model; what would you conclude from this?</p></li>
+<li><p>Fit a new model <code>Episodes ~ EIR</code>. Look at the estimate for the predictor variable and its associated P value and compare this to the ones based on the full model; what would you conclude from this?</p>
+</div>
+</div></li>
+</ol>
+<button id="displayTextunnamed-chunk-159" onclick="javascript:toggle(&#39;unnamed-chunk-159&#39;);">
+Show: Solution
+</button>
+<div id="toggleTextunnamed-chunk-159" style="display: none">
+<div class="panel panel-default">
+<div class="panel-heading panel-heading1">
+Solution
+</div>
+<div class="panel-body">
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="statistical-data-analysis.html#cb235-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(fit, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">Age=</span><span class="dv">5</span>, <span class="at">EIR=</span><span class="fl">0.5</span>))</span></code></pre></div>
+<pre><code>##        1 
+## 9.378014</code></pre>
+</div>
+</div>
+</div>
+<p><br></p>
+</div>
+<div id="categorical-explanatory-variables" class="section level3 hasAnchor" number="3.2.6">
+<h3><span class="header-section-number">3.2.6</span> Categorical explanatory variables<a href="statistical-data-analysis.html#categorical-explanatory-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>So far we have only dealt with numerical predictor variables. But what about non-numerical or categorical variables? Turns out that these are as easily dealt with as numerical one. To show how to perform linear regression with one or more categorical explanatory variables, we slightly modify our malaria episode dataset to include one extra variable: bednet, which will be an indicator of whether the child sleeps under a bednet or not.</p>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="statistical-data-analysis.html#cb237-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create random data points for age and EIR</span></span>
+<span id="cb237-2"><a href="statistical-data-analysis.html#cb237-2" aria-hidden="true" tabindex="-1"></a>bednet <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&#39;yes&#39;</span>, <span class="st">&#39;no&#39;</span>), <span class="dv">100</span>, <span class="at">replace=</span><span class="cn">TRUE</span>)</span>
+<span id="cb237-3"><a href="statistical-data-analysis.html#cb237-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb237-4"><a href="statistical-data-analysis.html#cb237-4" aria-hidden="true" tabindex="-1"></a><span class="co"># assume some linear relationship between episodes and age and EIR plus noise</span></span>
+<span id="cb237-5"><a href="statistical-data-analysis.html#cb237-5" aria-hidden="true" tabindex="-1"></a>episodes <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(bednet<span class="sc">==</span><span class="st">&#39;yes&#39;</span>, <span class="dv">0</span>, <span class="dv">2</span>) <span class="sc">+</span> <span class="fl">1.5</span><span class="sc">*</span>age <span class="sc">+</span> <span class="fl">4.1</span><span class="sc">*</span>EIR <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="dv">0</span>, <span class="dv">2</span>)</span>
+<span id="cb237-6"><a href="statistical-data-analysis.html#cb237-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb237-7"><a href="statistical-data-analysis.html#cb237-7" aria-hidden="true" tabindex="-1"></a><span class="co"># put into new data.frame</span></span>
+<span id="cb237-8"><a href="statistical-data-analysis.html#cb237-8" aria-hidden="true" tabindex="-1"></a>epiData <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Episodes =</span> episodes, </span>
+<span id="cb237-9"><a href="statistical-data-analysis.html#cb237-9" aria-hidden="true" tabindex="-1"></a>                      <span class="at">Age =</span> age, </span>
+<span id="cb237-10"><a href="statistical-data-analysis.html#cb237-10" aria-hidden="true" tabindex="-1"></a>                      <span class="at">EIR =</span> EIR,</span>
+<span id="cb237-11"><a href="statistical-data-analysis.html#cb237-11" aria-hidden="true" tabindex="-1"></a>                      <span class="at">Bednet =</span> <span class="fu">factor</span>(bednet))</span></code></pre></div>
+<p>The model we are fitting now looks very similar to the one we fitted before</p>
+<center>
+episodes<span class="math inline">\(_i\)</span> = <span class="math inline">\(\beta_0\)</span> + <span class="math inline">\(\beta_1\)</span>EIR<span class="math inline">\(_i\)</span> + <span class="math inline">\(\beta_2\)</span>age<span class="math inline">\(_i\)</span> + <span class="math inline">\(\beta_3\)</span>bednet<span class="math inline">\(_i\)</span>
+</center>
+<p><br></p>
+<p>However, <em>bednet</em> is now a <em>dummy variable</em> that takes on a value of 0 (bednet = “no”) or 1 (bednet = “yes”). So essentially we are fitting <strong>two</strong> regression lines, one for those who sleep under a bednet and one for those who do not (because the <span class="math inline">\(\beta_3\)</span> term will fall out).</p>
+<p>In terms of fitting this model in R, nothing has changed and we do not need to explicitly specify if one or more of the variables is a categorical one, the <code>lm()</code> function will take care of this for us</p>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="statistical-data-analysis.html#cb238-1" aria-hidden="true" tabindex="-1"></a>fitCat <span class="ot">&lt;-</span> <span class="fu">lm</span>(Episodes <span class="sc">~</span> EIR <span class="sc">+</span> Age <span class="sc">+</span> Bednet, <span class="at">data =</span> epiData)</span>
+<span id="cb238-2"><a href="statistical-data-analysis.html#cb238-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fitCat)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Episodes ~ EIR + Age + Bednet, data = epiData)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -3.379 -1.280  0.090  1.038  5.435 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  2.03776    0.57523   3.543 0.000614 ***
+## EIR          4.68344    0.63706   7.352 6.52e-11 ***
+## Age          1.54715    0.07706  20.076  &lt; 2e-16 ***
+## Bednetyes   -3.26666    0.37840  -8.633 1.28e-13 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.825 on 96 degrees of freedom
+## Multiple R-squared:  0.8272, Adjusted R-squared:  0.8218 
+## F-statistic: 153.1 on 3 and 96 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>As you will notice from the summary, we now get an estimate for <code>Bednetyes</code> but not for <code>Bednetno</code>, what is going on? Becauase <code>Bednet</code> can only take on two values (0/1 or no/yes), one is taken as the <em>reference case</em>. That is, the intercept can now be interpreted as the average number of episodes for 0-year old living in a setting with an EIR=0. The estimate <code>Bednetyes</code>=-3.2667 tells you how much lower the expected number of episodes is for those who do sleep under a bednet.</p>
+<div class="panel panel-default">
+<div class="panel-heading">
+Task
+</div>
+<div class="panel-body">
+Without using the <code>predict()</code> function, what is the predicted number of episodes for a 7-year old who sleeps under a bednet in a setting with an EIR of 0.8?
+</div>
+</div>
+<button id="displayTextunnamed-chunk-163" onclick="javascript:toggle(&#39;unnamed-chunk-163&#39;);">
+Show: Solution
+</button>
+<div id="toggleTextunnamed-chunk-163" style="display: none">
+<div class="panel panel-default">
+<div class="panel-heading panel-heading1">
+Solution
+</div>
+<div class="panel-body">
+<p>This can be calculated as</p>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="statistical-data-analysis.html#cb240-1" aria-hidden="true" tabindex="-1"></a>fitCat<span class="sc">$</span>coefficients[[<span class="dv">1</span>]] <span class="sc">+</span> fitCat<span class="sc">$</span>coefficients[[<span class="dv">2</span>]]<span class="sc">*</span><span class="fl">0.8</span> <span class="sc">+</span> fitCat<span class="sc">$</span>coefficients[[<span class="dv">3</span>]]<span class="sc">*</span><span class="dv">7</span> <span class="sc">+</span> fitCat<span class="sc">$</span>coefficients[[<span class="dv">4</span>]]</span></code></pre></div>
+<pre><code>## [1] 13.34791</code></pre>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>To show the effect of the extra categorical variable, we can plot the data once by ignoring the effect of <code>Bednet</code> and once by colouring in the data points by bednet use.</p>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="statistical-data-analysis.html#cb242-1" aria-hidden="true" tabindex="-1"></a><span class="co"># very useful package for arranging multiple ggplots</span></span>
+<span id="cb242-2"><a href="statistical-data-analysis.html#cb242-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb242-3"><a href="statistical-data-analysis.html#cb242-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb242-4"><a href="statistical-data-analysis.html#cb242-4" aria-hidden="true" tabindex="-1"></a><span class="co"># simply plot all data and ignore the effect of bednet use</span></span>
+<span id="cb242-5"><a href="statistical-data-analysis.html#cb242-5" aria-hidden="true" tabindex="-1"></a><span class="co"># the lm function in this case would fit the model episodes ~ age + EIR</span></span>
+<span id="cb242-6"><a href="statistical-data-analysis.html#cb242-6" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(epiData, <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> Episodes)) <span class="sc">+</span></span>
+<span id="cb242-7"><a href="statistical-data-analysis.html#cb242-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb242-8"><a href="statistical-data-analysis.html#cb242-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&#39;lm&#39;</span>, <span class="at">se=</span>F)</span>
+<span id="cb242-9"><a href="statistical-data-analysis.html#cb242-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb242-10"><a href="statistical-data-analysis.html#cb242-10" aria-hidden="true" tabindex="-1"></a><span class="co"># create new dataset for predict()</span></span>
+<span id="cb242-11"><a href="statistical-data-analysis.html#cb242-11" aria-hidden="true" tabindex="-1"></a>newdata <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(</span>
+<span id="cb242-12"><a href="statistical-data-analysis.html#cb242-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">Age =</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="at">length.out =</span> <span class="dv">10</span>),</span>
+<span id="cb242-13"><a href="statistical-data-analysis.html#cb242-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">EIR =</span> <span class="fu">rep</span>(<span class="fu">median</span>(epiData<span class="sc">$</span>EIR), <span class="dv">10</span>),</span>
+<span id="cb242-14"><a href="statistical-data-analysis.html#cb242-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">Bednet =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>)))</span>
+<span id="cb242-15"><a href="statistical-data-analysis.html#cb242-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb242-16"><a href="statistical-data-analysis.html#cb242-16" aria-hidden="true" tabindex="-1"></a>newdata <span class="ot">&lt;-</span> newdata <span class="sc">%&gt;%</span> </span>
+<span id="cb242-17"><a href="statistical-data-analysis.html#cb242-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Episodes =</span> <span class="fu">predict</span>(fitCat, newdata))</span>
+<span id="cb242-18"><a href="statistical-data-analysis.html#cb242-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb242-19"><a href="statistical-data-analysis.html#cb242-19" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> Episodes, <span class="at">col =</span> Bednet)) <span class="sc">+</span></span>
+<span id="cb242-20"><a href="statistical-data-analysis.html#cb242-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> epiData) <span class="sc">+</span></span>
+<span id="cb242-21"><a href="statistical-data-analysis.html#cb242-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data =</span> newdata, <span class="at">linewidth=</span><span class="dv">1</span>)</span>
+<span id="cb242-22"><a href="statistical-data-analysis.html#cb242-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb242-23"><a href="statistical-data-analysis.html#cb242-23" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-164-1.png" style="display: block; margin: auto;" /></p>
+<div class="panel panel-default">
+<div class="panel-heading">
+Task
+</div>
+<div class="panel-body">
+Use <code>ggplot</code> to plot <code>Episodes</code> against <code>Age</code> stratified (coloured) by <code>Bednet</code> and add regression lines using <code>geom_smooth(method = 'lm')</code>. What do you notice?
+</div>
+</div>
+<button id="displayTextunnamed-chunk-166" onclick="javascript:toggle(&#39;unnamed-chunk-166&#39;);">
+Show: Solution
+</button>
+<div id="toggleTextunnamed-chunk-166" style="display: none">
+<div class="panel panel-default">
+<div class="panel-heading panel-heading1">
+Solution
+</div>
+<div class="panel-body">
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="statistical-data-analysis.html#cb243-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(epiData, <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> Episodes, <span class="at">col =</span> Bednet)) <span class="sc">+</span></span>
+<span id="cb243-2"><a href="statistical-data-analysis.html#cb243-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb243-3"><a href="statistical-data-analysis.html#cb243-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&#39;lm&#39;</span>, <span class="at">se=</span>F)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-204-1.png" style="display: block; margin: auto;" /></p>
+This graph looks very different to the one we preduced earlier. Although it still shows higher incidence for individuals without bednets, it suggests that the slopes are different (i.e. dependent on bednet use). Why this might be is subject of the next part dealing with interactions between predictor variables.
+</div>
+</div>
+</div>
+<p><br></p>
+</div>
+<div id="interactions" class="section level3 hasAnchor" number="3.2.7">
+<h3><span class="header-section-number">3.2.7</span> Interactions<a href="statistical-data-analysis.html#interactions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Before we go on to the next big topics, <em>Mixed Effect Models</em> and <em>Generalised Linear Models</em>, we briefly show you how to consider possible interactions between two or more variables. That is, we have so far considered that the different predictors (e.g. age and EIR) had an independent effect on the response variable (e.g. episodes). There are situations where this is not the case and where the effect of one explanatory variable on the response depends on the value of another explanatory variable. We can estimate this dependency by including a so-called <em>interaction term</em> in our model.</p>
+<p>To illustrate the importance of interactions and how to deal with them in our regression model, we will look at an example where our inferences can be very misleading when not accounting for possible interaction effects.</p>
+<p>Let’s consider another made up example, in this case a disease, which we believe is influenced by temperature and rainfall. Furthermore, let’s assume rainfall is seasonal but temperature is not, such that rainfall can be represented as a categorical variable; the response variable will be disease incidence.</p>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="statistical-data-analysis.html#cb244-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create temperature and rinafall data</span></span>
+<span id="cb244-2"><a href="statistical-data-analysis.html#cb244-2" aria-hidden="true" tabindex="-1"></a>temperature <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>, <span class="dv">28</span>, <span class="dv">34</span>)</span>
+<span id="cb244-3"><a href="statistical-data-analysis.html#cb244-3" aria-hidden="true" tabindex="-1"></a>rainfall <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&#39;no&#39;</span>, <span class="st">&#39;yes&#39;</span>), <span class="dv">100</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb244-4"><a href="statistical-data-analysis.html#cb244-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb244-5"><a href="statistical-data-analysis.html#cb244-5" aria-hidden="true" tabindex="-1"></a><span class="co"># define incidence as dependent on temperature, more so in rainy season </span></span>
+<span id="cb244-6"><a href="statistical-data-analysis.html#cb244-6" aria-hidden="true" tabindex="-1"></a>incidence <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(rainfall <span class="sc">==</span> <span class="st">&#39;yes&#39;</span>, </span>
+<span id="cb244-7"><a href="statistical-data-analysis.html#cb244-7" aria-hidden="true" tabindex="-1"></a>                    <span class="dv">101</span> <span class="sc">+</span> <span class="fl">2.7</span><span class="sc">*</span>temperature <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="dv">0</span>, <span class="dv">3</span>), </span>
+<span id="cb244-8"><a href="statistical-data-analysis.html#cb244-8" aria-hidden="true" tabindex="-1"></a>                    <span class="dv">184</span> <span class="sc">+</span> <span class="fl">0.0</span><span class="sc">*</span>temperature <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="dv">0</span>, <span class="dv">3</span>))</span>
+<span id="cb244-9"><a href="statistical-data-analysis.html#cb244-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb244-10"><a href="statistical-data-analysis.html#cb244-10" aria-hidden="true" tabindex="-1"></a><span class="co"># put everything into data.frame</span></span>
+<span id="cb244-11"><a href="statistical-data-analysis.html#cb244-11" aria-hidden="true" tabindex="-1"></a>incDF <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">incidence =</span> incidence,</span>
+<span id="cb244-12"><a href="statistical-data-analysis.html#cb244-12" aria-hidden="true" tabindex="-1"></a>                    <span class="at">temperature =</span> temperature,</span>
+<span id="cb244-13"><a href="statistical-data-analysis.html#cb244-13" aria-hidden="true" tabindex="-1"></a>                    <span class="at">rainfall =</span> <span class="fu">factor</span>(rainfall))</span></code></pre></div>
+<p>Note, in this example we have created data, where temperature <em>appears</em> to have an effect but rainfall does not.</p>
+<p>If we were given this data we would usually start by visualising it, maybe with a boxplot showing the distribution of incidence for the off and on-season and a graph plotting incidence against temperature.</p>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="statistical-data-analysis.html#cb245-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(incDF, <span class="fu">aes</span>(<span class="at">x =</span> rainfall, <span class="at">y =</span> incidence, <span class="at">fill =</span> rainfall)) <span class="sc">+</span></span>
+<span id="cb245-2"><a href="statistical-data-analysis.html#cb245-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>)</span>
+<span id="cb245-3"><a href="statistical-data-analysis.html#cb245-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-4"><a href="statistical-data-analysis.html#cb245-4" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(incDF, <span class="fu">aes</span>(<span class="at">x =</span> temperature, <span class="at">y =</span> incidence)) <span class="sc">+</span></span>
+<span id="cb245-5"><a href="statistical-data-analysis.html#cb245-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb245-6"><a href="statistical-data-analysis.html#cb245-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&#39;lm&#39;</span>)</span>
+<span id="cb245-7"><a href="statistical-data-analysis.html#cb245-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-8"><a href="statistical-data-analysis.html#cb245-8" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-168-1.png" style="display: block; margin: auto;" /></p>
+<p>It would be reasonable to conclude that rainfall does not seem to have a strong effect on incidence whilst there seems to be a clear and positive correlation between temperature and incidence. Next we would put this through our statistical modelling machinery and test whether our predictions are right.</p>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="statistical-data-analysis.html#cb246-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(incidence <span class="sc">~</span> temperature <span class="sc">+</span> rainfall, <span class="at">data =</span> incDF)</span>
+<span id="cb246-2"><a href="statistical-data-analysis.html#cb246-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb246-3"><a href="statistical-data-analysis.html#cb246-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = incidence ~ temperature + rainfall, data = incDF)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -8.8694 -1.7518  0.1403  2.6131  8.4056 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 147.0397     6.6019  22.272  &lt; 2e-16 ***
+## temperature   1.2146     0.2130   5.702 1.28e-07 ***
+## rainfallyes  -0.3287     0.7309  -0.450    0.654    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 3.594 on 97 degrees of freedom
+## Multiple R-squared:  0.2517, Adjusted R-squared:  0.2363 
+## F-statistic: 16.31 on 2 and 97 DF,  p-value: 7.814e-07</code></pre>
+<p>From this analysis we would conclude that temperature has a statistically significant effect on disease incidence (<em>P</em>&lt;0.001), that rainfall does not have a statistically significant effect on disease incidence (<em>P</em>=0.91), and that would be the end of it. But what about the possibility that the effect of temperature is dependent on whether it is the on- or the off-season? That is, we are interested in the interaction term temperature <span class="math inline">\(\times\)</span> rainfall. In the <code>lm()</code> function we can do this either adding the term <code>temperature:rainfall</code> to our previous model, or use the notation <code>temperature*rainfall</code>, which is short for <code>temperature + rainfall + temperature:rainfall</code></p>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="statistical-data-analysis.html#cb248-1" aria-hidden="true" tabindex="-1"></a>fitInteraction <span class="ot">&lt;-</span> <span class="fu">lm</span>(incidence <span class="sc">~</span> temperature<span class="sc">*</span>rainfall, <span class="at">data =</span> incDF)</span>
+<span id="cb248-2"><a href="statistical-data-analysis.html#cb248-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb248-3"><a href="statistical-data-analysis.html#cb248-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fitInteraction)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = incidence ~ temperature * rainfall, data = incDF)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -8.3512 -1.1099  0.1151  1.5418  5.6447 
+## 
+## Coefficients:
+##                         Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)             198.1774     6.9041  28.704   &lt;2e-16 ***
+## temperature              -0.4415     0.2232  -1.978   0.0508 .  
+## rainfallyes             -93.4598     9.3205 -10.027   &lt;2e-16 ***
+## temperature:rainfallyes   3.0131     0.3011  10.007   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.528 on 96 degrees of freedom
+## Multiple R-squared:  0.6338, Adjusted R-squared:  0.6223 
+## F-statistic: 55.37 on 3 and 96 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>In the summary we can see one additional term: <code>temperature:rainfallyes</code>, and we see that this is highly significant (<em>P</em>&lt;0.001). On the other hand, <code>temperature</code> does not appear to be a statistically significant predictor of <code>incidence</code> anymore! Beware: this would be the wrong conclusion because of the significance of the interaction term. I.e. removing <code>temperature</code> from our model, which would also remove the interaction term, would result in a much inferior model.</p>
+<p>One other, and important, conclusion we can draw from this analysis is that interaction terms affect the <strong>slope</strong> of the regression line, which contrasts the additive effects we saw earlier and that only affected the <strong>intersect</strong>. And this also explains why adding linear regression lines with <code>geom_smooth</code> for stratified data we can get lines with different gradients.</p>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="statistical-data-analysis.html#cb250-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(incDF, <span class="fu">aes</span>(<span class="at">x =</span> temperature, <span class="at">y =</span> incidence, <span class="at">col =</span> rainfall)) <span class="sc">+</span></span>
+<span id="cb250-2"><a href="statistical-data-analysis.html#cb250-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb250-3"><a href="statistical-data-analysis.html#cb250-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&#39;lm&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-171-1.png" style="display: block; margin: auto;" /></p>
+<blockquote>
+<p><strong>Note:</strong> in this example we considered interaction between a continuous and a categorical variable. Interactions between two continuous or two categorical variables are also possible and are treated in exactly the same way in <code>lm()</code>. The only difference is the (biological) interpretation of the interaction term.</p>
+</blockquote>
+<p><span class="math inline">\(~\)</span></p>
+</div>
+</div>
+<div id="mixed-effect-models-mem" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Mixed Effect Models (MEM)<a href="statistical-data-analysis.html#mixed-effect-models-mem" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>One of the key assumptions of linear models is that the data is independent and identically distributed (i.i.d.). This means that our data sample is a true representation of the underlying population and that we have sampled without any (intentional or unintentional) bias. Sometimes this is not the case, however, meaning that there could be some systematic difference between some of our samples. We have come across a situation like this in the previous example, where samples taken during the rainy season showed a different pattern with temperature than those sampled during the off-season. We dealt with this by adding <code>rainfall</code> as a categorical variable into our model. This worked not only because there were only two possible levels for <code>rainfall</code> but also because we care about the identity of those levels, i.e. we wanted to estimate how incidence changes for <code>rainfall = yes</code> and <code>rainfall = no</code>. In other cases we might still want to account for underlying differences in our data by including a categorical variable we believe is having an influence but without caring about their identity. These variables are referred to <em>random effect</em> variables, as opposed to <em>fixed effect</em> variables that we considered so far. And models that include random and fixed effects are known as <em>mixed effect models</em> or <em>random effect models</em>.</p>
+<ul>
+<li><strong>Fixed effects</strong> are (continuous or categorical) exploratory variables that we believe have an effect on the response and that we are interested in making conclusions about. Their effects is constant (fixed) across individuals.</li>
+<li><strong>Random effects</strong> are categorical variables with many levels that are themselves drawn from a population of possible levels. Although they are believed to have an influence on the response, we are not interested in their identity.</li>
+</ul>
+<p>Here we only briefly touch upon mixed effect models and how to analyse them in R using the <code>lme4</code> package and by means of the <code>sleepstudy</code> dataset that is provided by <code>lme4</code>, which contains experimental data on the effect of sleep deprivation on reaction time. The data file has three variables</p>
+<ul>
+<li><code>Reaction</code>: average reaction time (ms)</li>
+<li><code>Days</code>: number of days of sleep deprivation</li>
+<li><code>Subject</code>: subject number on which observation was made</li>
+</ul>
+<p>You can find out more about this study through the help function <code>?sleepstudy</code>.</p>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="statistical-data-analysis.html#cb251-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load library for mixed effect modelling</span></span>
+<span id="cb251-2"><a href="statistical-data-analysis.html#cb251-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
+<span id="cb251-3"><a href="statistical-data-analysis.html#cb251-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb251-4"><a href="statistical-data-analysis.html#cb251-4" aria-hidden="true" tabindex="-1"></a><span class="co"># get a summary of the sleep study dataset</span></span>
+<span id="cb251-5"><a href="statistical-data-analysis.html#cb251-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sleepstudy)</span></code></pre></div>
+<pre><code>##     Reaction          Days        Subject   
+##  Min.   :194.3   Min.   :0.0   308    : 10  
+##  1st Qu.:255.4   1st Qu.:2.0   309    : 10  
+##  Median :288.7   Median :4.5   310    : 10  
+##  Mean   :298.5   Mean   :4.5   330    : 10  
+##  3rd Qu.:336.8   3rd Qu.:7.0   331    : 10  
+##  Max.   :466.4   Max.   :9.0   332    : 10  
+##                                (Other):120</code></pre>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="statistical-data-analysis.html#cb253-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get the number of study participants</span></span>
+<span id="cb253-2"><a href="statistical-data-analysis.html#cb253-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&quot;Number of participants: &quot;</span>,<span class="fu">length</span>(<span class="fu">unique</span>(sleepstudy<span class="sc">$</span>Subject))))</span></code></pre></div>
+<pre><code>## [1] &quot;Number of participants: 18&quot;</code></pre>
+<p>From the data summary we see that there were 10 observations made for 18 individuals. Therefore, <code>Subject</code> fits our definition of a *random effect`: we believe that there is a difference between study participants but we do not care about the individuals themselves.</p>
+<p>We can convince ourselves about the difference between study participants by plotting the data for two subjects:</p>
+<img src="_main_files/figure-html/unnamed-chunk-173-1.png" style="display: block; margin: auto;" />
+<div class="panel panel-default">
+<div class="panel-heading">
+Task
+</div>
+<div class="panel-body">
+Recreate the above graph but for all individuals in the study.
+</div>
+</div>
+<button id="displayTextunnamed-chunk-175" onclick="javascript:toggle(&#39;unnamed-chunk-175&#39;);">
+Show: Solution
+</button>
+<div id="toggleTextunnamed-chunk-175" style="display: none">
+<div class="panel panel-default">
+<div class="panel-heading panel-heading1">
+Solution
+</div>
+<div class="panel-body">
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="statistical-data-analysis.html#cb255-1" aria-hidden="true" tabindex="-1"></a>sleepstudy <span class="sc">%&gt;%</span></span>
+<span id="cb255-2"><a href="statistical-data-analysis.html#cb255-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Subject <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">308</span>, <span class="dv">309</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb255-3"><a href="statistical-data-analysis.html#cb255-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Days, <span class="at">y =</span> Reaction)) <span class="sc">+</span></span>
+<span id="cb255-4"><a href="statistical-data-analysis.html#cb255-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">col =</span> <span class="st">&#39;red&#39;</span>, <span class="at">linetype =</span> <span class="st">&#39;dashed&#39;</span>) <span class="sc">+</span></span>
+<span id="cb255-5"><a href="statistical-data-analysis.html#cb255-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb255-6"><a href="statistical-data-analysis.html#cb255-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">9</span>) <span class="sc">+</span>  <span class="co"># make scale discrete</span></span>
+<span id="cb255-7"><a href="statistical-data-analysis.html#cb255-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>Subject)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-205-1.png" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+</div>
+<p>How do we model this data? There are principally three approaches: (1) pool all the data and don’t care about individual-level differences, (2) add <code>Subject</code> as a fixed effect as well as the interaction term <code>Days:Subject</code>, and (3) treat <code>Subject</code> as a <em>random effect</em>. Here we are only going to compare (1) and (3) and leave (2) as an exercise.</p>
+<p>Before we start we need to make some minor modification to the data. First, we want to make sure that <code>Subject</code> is being treated like a categorical and not a continuous variable. Second, the first two days (day 0 and day 1) were for adaptation and training, meaning that sleep deprivation started counting at day 2 so we discard the first two days and then recode to make sure we start with day 0.</p>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="statistical-data-analysis.html#cb256-1" aria-hidden="true" tabindex="-1"></a>sleep <span class="ot">&lt;-</span> sleepstudy <span class="sc">%&gt;%</span></span>
+<span id="cb256-2"><a href="statistical-data-analysis.html#cb256-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Subject =</span> <span class="fu">factor</span>(Subject)) <span class="sc">%&gt;%</span></span>
+<span id="cb256-3"><a href="statistical-data-analysis.html#cb256-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Days =</span> Days <span class="sc">-</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb256-4"><a href="statistical-data-analysis.html#cb256-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Days<span class="sc">&gt;=</span><span class="dv">0</span>)</span></code></pre></div>
+The <code>lmer()</code> function (from the <code>lme4</code> package) uses a very similar syntax as the by now familiar <code>lm()</code> function but where the model formula now takes on the form
+<center>
+<code>response ~ fixed1 + fixed2 + ... + (ran1 + ran2 + ...| ran_factor1) + ...</code>
+</center>
+<p>That is, fixed effects (and their interactions) are entered exactly as before. New is the presence of the term <code>(ran1 + ran2 + ...| ran_factor1)</code>, which represents the random effects associated with a particular random factor. For our dataset there are three possibilities for how the random effects might influence the response, given here together with the specific formula syntax:</p>
+<ul>
+<li><em>random intercepts only</em>: <code>Response ~ Days + (1 | Subject)</code></li>
+<li><em>random slopes only</em>: <code>Response ~ Days + (0 Days | Subject)</code></li>
+<li><em>random slope and intersect</em>: <code>Response ~ Days + (Days | Subject)</code></li>
+</ul>
+<p>The most reasonable model would be the last, which allows for both the intercept and the slope to vary between individuals. So let’s fit this model</p>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="statistical-data-analysis.html#cb257-1" aria-hidden="true" tabindex="-1"></a>fit_mm <span class="ot">&lt;-</span> <span class="fu">lmer</span>(Reaction <span class="sc">~</span> Days <span class="sc">+</span> (Days<span class="sc">|</span>Subject), <span class="at">data =</span> sleep)</span>
+<span id="cb257-2"><a href="statistical-data-analysis.html#cb257-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_mm)</span></code></pre></div>
+<pre><code>## Linear mixed model fit by REML [&#39;lmerMod&#39;]
+## Formula: Reaction ~ Days + (Days | Subject)
+##    Data: sleep
+## 
+## REML criterion at convergence: 1404.1
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -4.0157 -0.3541  0.0069  0.4681  5.0732 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev. Corr
+##  Subject  (Intercept) 958.35   30.957       
+##           Days         45.78    6.766   0.18
+##  Residual             651.60   25.526       
+## Number of obs: 144, groups:  Subject, 18
+## 
+## Fixed effects:
+##             Estimate Std. Error t value
+## (Intercept)  267.967      8.266  32.418
+## Days          11.435      1.845   6.197
+## 
+## Correlation of Fixed Effects:
+##      (Intr)
+## Days -0.062</code></pre>
+<p>The model summary now contains a lot more information. Let’s highlight the two most important sections.</p>
+<div id="fixed-effects" class="section level4 hasAnchor" number="3.3.0.1">
+<h4><span class="header-section-number">3.3.0.1</span> <strong>Fixed effects</strong><a href="statistical-data-analysis.html#fixed-effects" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>There are two fixed effects: <code>(Intercept)</code> and <code>Days</code> which tell us the average reaction time without any sleep deprivation and the increase in reaction time with each day of sleep deprivation. You will notice that compared to the simpler modelling framework, <em>P</em> values are not provided anymore, and there are various reasons as to why. However, if you wish to make statements regarding the statistical significance of these estimates, you can either look at the confidence intervals (based on parametric boostrapping)</p>
+<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="statistical-data-analysis.html#cb259-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(fit_mm, <span class="at">level=</span><span class="fl">0.95</span>)</span></code></pre></div>
+<pre><code>## Computing profile confidence intervals ...</code></pre>
+<pre><code>##                   2.5 %      97.5 %
+## .sig01       19.0979934  46.3366599
+## .sig02       -0.4051073   0.8058951
+## .sig03        4.0079284  10.2487351
+## .sigma       22.4666029  29.3494509
+## (Intercept) 251.3443396 284.5904989
+## Days          7.7245247  15.1463328</code></pre>
+<p>The ones you are most interested in are the two bottom ones, and as neither crosses 0 you can be sure that the effects are statistically significant.</p>
+<p>The other option is to calculate <em>P</em> values from the <em>t</em> values (the underlying maths goes beyon the scope of this workshop)</p>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="statistical-data-analysis.html#cb262-1" aria-hidden="true" tabindex="-1"></a>tvals <span class="ot">&lt;-</span> <span class="fu">fixef</span>(fit_mm) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(<span class="fu">vcov</span>(fit_mm)))</span>
+<span id="cb262-2"><a href="statistical-data-analysis.html#cb262-2" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="fu">abs</span>(tvals)))</span></code></pre></div>
+<pre><code>## (Intercept)        Days 
+## 0.00000e+00 5.75197e-10</code></pre>
+<p>This again provides strong evidence for rejecting the null hypotheses that sleep deprivation does not effect reaction time.</p>
+</div>
+<div id="random-effects" class="section level4 hasAnchor" number="3.3.0.2">
+<h4><span class="header-section-number">3.3.0.2</span> <strong>Random effects</strong><a href="statistical-data-analysis.html#random-effects" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>This part of the summary looks more unfamiliar and explaining each part of this is beyond this workshop, as it requires more indepth knowledge about variance and covariance matrices and stats in general. So the only part you might want to take a look at is the <code>Variance</code> of the two <code>Groups</code> entries <code>Subject</code> and <code>Residual</code>. This tells you how much of the total variance in your data is being absorbed by the random effects (on slope and intercept). In this case this amounts to <span class="math inline">\(\sim 61\)</span>% (100% * (958.35 + 45.78)/(958.35 + 45.78 + 651.60)), meaning that inter-subject variation explain the majority of the ‘noise’ in your data.</p>
+<p>If we are interested in the estimated random effects, these can be pulled out using <code>ranef()</code> (similar to <code>fixef()</code> for accessing estimates of the fixed effects)</p>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="statistical-data-analysis.html#cb264-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ranef</span>(fit_mm) </span></code></pre></div>
+<pre><code>## $Subject
+##     (Intercept)        Days
+## 308  24.4992891   8.6020000
+## 309 -59.3723102  -8.1277534
+## 310 -39.4762764  -7.4292365
+## 330   1.3500428  -2.3845976
+## 331  18.4576169  -3.7477340
+## 332  30.5270040  -4.8936899
+## 333  13.3682027   0.2888639
+## 334 -18.1583020   3.8436686
+## 335 -16.9737887 -12.0702333
+## 337  44.5850842  10.1760837
+## 349 -26.6839022   2.1946699
+## 350  -5.9657957   8.1758613
+## 351  -5.5710355  -2.3718494
+## 352  46.6347253  -0.5616377
+## 369   0.9616395   1.7385130
+## 370 -18.5216778   5.6317534
+## 371  -7.3431320   0.2729282
+## 372  17.6826159   0.6623897
+## 
+## with conditional variances for &quot;Subject&quot;</code></pre>
+<div class="panel panel-default">
+<div class="panel-heading">
+Task
+</div>
+<div class="panel-body">
+
+<ol style="list-style-type: decimal">
+<li>Fit a linear regression model to the pooled data ignoring the effect of <code>Subject</code> and compare the estimated effect sizes.</li>
+<li>Fit a linear regression model using <code>Subject</code> as a categorical fixed effect and compare the estimated effect sizes</li>
+<li>Fit a mixed effect model as before but assume that <code>Subject</code> only affects the intersect. How does this compare to the previous model with random slope and intersect?
+</div>
+</div></li>
+</ol>
+<p><br></p>
+</div>
+<div id="model-checking-1" class="section level4 hasAnchor" number="3.3.0.3">
+<h4><span class="header-section-number">3.3.0.3</span> <strong>Model checking</strong><a href="statistical-data-analysis.html#model-checking-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>We need to be just as conscious of testing the assumptions of mixed effects models as we are with any other model. These assumptions include:</p>
+<ol style="list-style-type: decimal">
+<li>Within-group errors are independent and normally distributed with mean zero and variance<br />
+</li>
+<li>Within-group errors are independent of the random effects</li>
+<li>Random effects are normally distributed with mean zero</li>
+</ol>
+<p>Two commonly used plots to check these assumptions are:</p>
+<ol style="list-style-type: decimal">
+<li>A simple plot of residuals against fitted values, irrespective of random effects (note we have to do this “by hand” here):</li>
+</ol>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="statistical-data-analysis.html#cb266-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">resid</span>(fit_mm)<span class="sc">-</span><span class="fu">fitted</span>(fit_mm))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-181-1.png" style="display: block; margin: auto;" /></p>
+<ol start="2" style="list-style-type: decimal">
+<li>Plotting the residuals against the fitted values, separately for each level of the random effect, using the <code>coplot()</code> function:</li>
+</ol>
+<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="statistical-data-analysis.html#cb267-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coplot</span>(<span class="fu">resid</span>(fit_mm) <span class="sc">~</span> <span class="fu">fitted</span>(fit_mm) <span class="sc">|</span> sleep<span class="sc">$</span>Subject)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-182-1.png" style="display: block; margin: auto;" /></p>
+<p><span class="math inline">\(~\)</span></p>
+</div>
+</div>
+<div id="generalised-linear-models-glm" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Generalised Linear Models (GLM)<a href="statistical-data-analysis.html#generalised-linear-models-glm" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><span class="math inline">\(~\)</span></p>
+</div>
+<div id="survival-analysis" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> Survival Analysis<a href="statistical-data-analysis.html#survival-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="kaplan-meier" class="section level3 hasAnchor" number="3.5.1">
+<h3><span class="header-section-number">3.5.1</span> Kaplan Meier<a href="statistical-data-analysis.html#kaplan-meier" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="cox-models" class="section level3 hasAnchor" number="3.5.2">
+<h3><span class="header-section-number">3.5.2</span> Cox Models<a href="statistical-data-analysis.html#cox-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="data-wrangling-and-visualisation.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": null,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
