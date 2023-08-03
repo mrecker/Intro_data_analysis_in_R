@@ -39,7 +39,6 @@ mutate
 dealing-with-missing-data
 introduction-to-statistical-modelling-in-r
 univariate-analysis
-standard-deviation
 multivariate-analysis
 linear-models-lm
 simple-linear-regression
@@ -47,7 +46,6 @@ linear-regression-in-r
 using-the-summary-function
 model-checking
 prediction
-confidence-vs-prediction-interval
 multiple-linear-regression
 categorical-explanatory-variables
 interactions

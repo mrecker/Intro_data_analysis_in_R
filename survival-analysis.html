@@ -244,6 +244,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.1" data-path="introduction-to-statistical-modelling-in-r.html"><a href="introduction-to-statistical-modelling-in-r.html#univariate-analysis"><i class="fa fa-check"></i><b>3.1</b> Univariate analysis</a>
 <ul>
 <li class="chapter" data-level="" data-path="introduction-to-statistical-modelling-in-r.html"><a href="introduction-to-statistical-modelling-in-r.html#mean-vs.-median"><i class="fa fa-check"></i><strong>Mean vs. median</strong></a></li>
+<li class="chapter" data-level="" data-path="introduction-to-statistical-modelling-in-r.html"><a href="introduction-to-statistical-modelling-in-r.html#standard-deviation"><i class="fa fa-check"></i><strong>Standard deviation</strong></a></li>
 <li class="chapter" data-level="" data-path="introduction-to-statistical-modelling-in-r.html"><a href="introduction-to-statistical-modelling-in-r.html#interquartile-range"><i class="fa fa-check"></i><strong>Interquartile range</strong></a></li>
 <li class="chapter" data-level="" data-path="introduction-to-statistical-modelling-in-r.html"><a href="introduction-to-statistical-modelling-in-r.html#skewness"><i class="fa fa-check"></i><strong>Skewness</strong></a></li>
 <li class="chapter" data-level="" data-path="introduction-to-statistical-modelling-in-r.html"><a href="introduction-to-statistical-modelling-in-r.html#kurtosis"><i class="fa fa-check"></i><strong>Kurtosis</strong></a></li>
@@ -270,7 +271,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="linear-models-lm.html"><a href="linear-models-lm.html#scale-location"><i class="fa fa-check"></i><strong>Scale-Location</strong></a></li>
 <li class="chapter" data-level="" data-path="linear-models-lm.html"><a href="linear-models-lm.html#residuals-vs-leverage"><i class="fa fa-check"></i><strong>Residuals vs Leverage</strong></a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="linear-models-lm.html"><a href="linear-models-lm.html#prediction"><i class="fa fa-check"></i><b>4.4</b> Prediction</a></li>
+<li class="chapter" data-level="4.4" data-path="linear-models-lm.html"><a href="linear-models-lm.html#prediction"><i class="fa fa-check"></i><b>4.4</b> Prediction</a>
+<ul>
+<li class="chapter" data-level="" data-path="linear-models-lm.html"><a href="linear-models-lm.html#confidence-vs-prediction-interval"><i class="fa fa-check"></i><strong>Confidence vs prediction interval</strong></a></li>
+</ul></li>
 <li class="chapter" data-level="4.5" data-path="linear-models-lm.html"><a href="linear-models-lm.html#multiple-linear-regression"><i class="fa fa-check"></i><b>4.5</b> Multiple linear regression</a></li>
 <li class="chapter" data-level="4.6" data-path="linear-models-lm.html"><a href="linear-models-lm.html#categorical-explanatory-variables"><i class="fa fa-check"></i><b>4.6</b> Categorical explanatory variables</a></li>
 <li class="chapter" data-level="4.7" data-path="linear-models-lm.html"><a href="linear-models-lm.html#interactions"><i class="fa fa-check"></i><b>4.7</b> Interactions</a></li>
@@ -367,29 +371,29 @@ neighborhood of time <span class="math inline">\(t\)</span> divided by the proba
 <div id="calculating-survival-times-in-r" class="section level3 hasAnchor" number="7.1.3">
 <h3><span class="header-section-number">7.1.3</span> Calculating survival times in R<a href="survival-analysis.html#calculating-survival-times-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Datasets often do not readily contain survival times, or time-to-event, but rather have information of the start and end of the study or date of the event. Here, by means of an illustrative example, we briefly show you how to deal with dates in R. Imagine you had the following data, where we deliberately have two different date formats.</p>
-<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="survival-analysis.html#cb317-1" aria-hidden="true" tabindex="-1"></a>trialDF <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb317-2"><a href="survival-analysis.html#cb317-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">enrolled =</span> <span class="fu">c</span>(<span class="st">&quot;2017-05-02&quot;</span>, <span class="st">&quot;2017-05-03&quot;</span>, <span class="st">&quot;2017-05-17&quot;</span>),  <span class="co"># date patient was enrolled in study</span></span>
-<span id="cb317-3"><a href="survival-analysis.html#cb317-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">last_fup =</span> <span class="fu">c</span>(<span class="st">&quot;15/4/18&quot;</span>, <span class="st">&quot;4/7/18&quot;</span>, <span class="st">&quot;31/10/18&quot;</span>))   <span class="co"># date of last follow-up</span></span>
-<span id="cb317-4"><a href="survival-analysis.html#cb317-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb317-5"><a href="survival-analysis.html#cb317-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(trialDF)</span></code></pre></div>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="survival-analysis.html#cb322-1" aria-hidden="true" tabindex="-1"></a>trialDF <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb322-2"><a href="survival-analysis.html#cb322-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">enrolled =</span> <span class="fu">c</span>(<span class="st">&quot;2017-05-02&quot;</span>, <span class="st">&quot;2017-05-03&quot;</span>, <span class="st">&quot;2017-05-17&quot;</span>),  <span class="co"># date patient was enrolled in study</span></span>
+<span id="cb322-3"><a href="survival-analysis.html#cb322-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">last_fup =</span> <span class="fu">c</span>(<span class="st">&quot;15/4/18&quot;</span>, <span class="st">&quot;4/7/18&quot;</span>, <span class="st">&quot;31/10/18&quot;</span>))   <span class="co"># date of last follow-up</span></span>
+<span id="cb322-4"><a href="survival-analysis.html#cb322-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb322-5"><a href="survival-analysis.html#cb322-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(trialDF)</span></code></pre></div>
 <pre><code>##     enrolled last_fup
 ## 1 2017-05-02  15/4/18
 ## 2 2017-05-03   4/7/18
 ## 3 2017-05-17 31/10/18</code></pre>
 <p>You can see that the dates are currently in character format. The next step it to transform them into a date format, which we need to calculate the survival times.</p>
-<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="survival-analysis.html#cb319-1" aria-hidden="true" tabindex="-1"></a>trialDF <span class="ot">&lt;-</span> trialDF <span class="sc">%&gt;%</span> </span>
-<span id="cb319-2"><a href="survival-analysis.html#cb319-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">enrolled =</span> <span class="fu">as.Date</span>(enrolled, <span class="at">format =</span> <span class="st">&quot;%Y-%m-%d&quot;</span>),</span>
-<span id="cb319-3"><a href="survival-analysis.html#cb319-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">last_fup =</span> <span class="fu">as.Date</span>(last_fup, <span class="at">format =</span> <span class="st">&quot;%d/%m/%y&quot;</span>))</span>
-<span id="cb319-4"><a href="survival-analysis.html#cb319-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb319-5"><a href="survival-analysis.html#cb319-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(trialDF)</span></code></pre></div>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="survival-analysis.html#cb324-1" aria-hidden="true" tabindex="-1"></a>trialDF <span class="ot">&lt;-</span> trialDF <span class="sc">%&gt;%</span> </span>
+<span id="cb324-2"><a href="survival-analysis.html#cb324-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">enrolled =</span> <span class="fu">as.Date</span>(enrolled, <span class="at">format =</span> <span class="st">&quot;%Y-%m-%d&quot;</span>),</span>
+<span id="cb324-3"><a href="survival-analysis.html#cb324-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">last_fup =</span> <span class="fu">as.Date</span>(last_fup, <span class="at">format =</span> <span class="st">&quot;%d/%m/%y&quot;</span>))</span>
+<span id="cb324-4"><a href="survival-analysis.html#cb324-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb324-5"><a href="survival-analysis.html#cb324-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(trialDF)</span></code></pre></div>
 <pre><code>##     enrolled   last_fup
 ## 1 2017-05-02 2018-04-15
 ## 2 2017-05-03 2018-07-04
 ## 3 2017-05-17 2018-10-31</code></pre>
 <p>Now that we have the dates in the right format we can calculate the survival time simply by subtracting the enrollment date from the last follow-up date</p>
-<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="survival-analysis.html#cb321-1" aria-hidden="true" tabindex="-1"></a>trialDF<span class="sc">$</span>Surv_time <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(trialDF<span class="sc">$</span>last_fup <span class="sc">-</span> trialDF<span class="sc">$</span>enrolled)</span>
-<span id="cb321-2"><a href="survival-analysis.html#cb321-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb321-3"><a href="survival-analysis.html#cb321-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(trialDF)</span></code></pre></div>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="survival-analysis.html#cb326-1" aria-hidden="true" tabindex="-1"></a>trialDF<span class="sc">$</span>Surv_time <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(trialDF<span class="sc">$</span>last_fup <span class="sc">-</span> trialDF<span class="sc">$</span>enrolled)</span>
+<span id="cb326-2"><a href="survival-analysis.html#cb326-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb326-3"><a href="survival-analysis.html#cb326-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(trialDF)</span></code></pre></div>
 <pre><code>##     enrolled   last_fup Surv_time
 ## 1 2017-05-02 2018-04-15       348
 ## 2 2017-05-03 2018-07-04       427
@@ -406,11 +410,11 @@ neighborhood of time <span class="math inline">\(t\)</span> divided by the proba
 <li><code>rx</code>: treatment group</li>
 <li><code>ecog.ps</code>: ECOG performance status (1 is better)</li>
 </ul>
-<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="survival-analysis.html#cb323-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
-<span id="cb323-2"><a href="survival-analysis.html#cb323-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survminer)</span>
-<span id="cb323-3"><a href="survival-analysis.html#cb323-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb323-4"><a href="survival-analysis.html#cb323-4" aria-hidden="true" tabindex="-1"></a>ovarianDF <span class="ot">&lt;-</span> ovarian</span>
-<span id="cb323-5"><a href="survival-analysis.html#cb323-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ovarianDF)</span></code></pre></div>
+<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="survival-analysis.html#cb328-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb328-2"><a href="survival-analysis.html#cb328-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survminer)</span>
+<span id="cb328-3"><a href="survival-analysis.html#cb328-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb328-4"><a href="survival-analysis.html#cb328-4" aria-hidden="true" tabindex="-1"></a>ovarianDF <span class="ot">&lt;-</span> ovarian</span>
+<span id="cb328-5"><a href="survival-analysis.html#cb328-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ovarianDF)</span></code></pre></div>
 <pre><code>##   futime fustat     age resid.ds rx ecog.ps
 ## 1     59      1 72.3315        2  1       1
 ## 2    115      1 74.4932        2  1       1
@@ -419,10 +423,10 @@ neighborhood of time <span class="math inline">\(t\)</span> divided by the proba
 ## 5    431      1 50.3397        2  1       1
 ## 6    448      0 56.4301        1  1       2</code></pre>
 <p>For downstream analysis we need to transform a few of these variables to the right format, i.e. from numeric to categorical</p>
-<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="survival-analysis.html#cb325-1" aria-hidden="true" tabindex="-1"></a>ovarianDF <span class="ot">&lt;-</span> ovarianDF <span class="sc">%&gt;%</span></span>
-<span id="cb325-2"><a href="survival-analysis.html#cb325-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">resid.ds =</span> <span class="fu">factor</span>(resid.ds, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;no&#39;</span>, <span class="st">&#39;yes&#39;</span>)),</span>
-<span id="cb325-3"><a href="survival-analysis.html#cb325-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">rx =</span> <span class="fu">factor</span>(rx, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;treatment A&#39;</span>, <span class="st">&#39;treatment B&#39;</span>)),</span>
-<span id="cb325-4"><a href="survival-analysis.html#cb325-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">ecog.ps =</span> <span class="fu">factor</span>(ecog.ps))</span></code></pre></div>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="survival-analysis.html#cb330-1" aria-hidden="true" tabindex="-1"></a>ovarianDF <span class="ot">&lt;-</span> ovarianDF <span class="sc">%&gt;%</span></span>
+<span id="cb330-2"><a href="survival-analysis.html#cb330-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">resid.ds =</span> <span class="fu">factor</span>(resid.ds, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;no&#39;</span>, <span class="st">&#39;yes&#39;</span>)),</span>
+<span id="cb330-3"><a href="survival-analysis.html#cb330-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">rx =</span> <span class="fu">factor</span>(rx, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;treatment A&#39;</span>, <span class="st">&#39;treatment B&#39;</span>)),</span>
+<span id="cb330-4"><a href="survival-analysis.html#cb330-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">ecog.ps =</span> <span class="fu">factor</span>(ecog.ps))</span></code></pre></div>
 </div>
 </div>
 <div id="kaplan-meier" class="section level2 hasAnchor" number="7.2">
@@ -438,14 +442,14 @@ with</p>
 </ul>
 <p>and results in a step function, where there is a step down each time an event occurs.</p>
 <p>To implement this in R we first have to create a <em>survival object</em>, which is done by the <code>Surv()</code> function of the <code>survival</code> package.</p>
-<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="survival-analysis.html#cb326-1" aria-hidden="true" tabindex="-1"></a>survObj <span class="ot">&lt;-</span> <span class="fu">Surv</span>(<span class="at">time =</span> ovarianDF<span class="sc">$</span>futime, <span class="at">event =</span> ovarianDF<span class="sc">$</span>fustat)</span>
-<span id="cb326-2"><a href="survival-analysis.html#cb326-2" aria-hidden="true" tabindex="-1"></a>survObj</span></code></pre></div>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="survival-analysis.html#cb331-1" aria-hidden="true" tabindex="-1"></a>survObj <span class="ot">&lt;-</span> <span class="fu">Surv</span>(<span class="at">time =</span> ovarianDF<span class="sc">$</span>futime, <span class="at">event =</span> ovarianDF<span class="sc">$</span>fustat)</span>
+<span id="cb331-2"><a href="survival-analysis.html#cb331-2" aria-hidden="true" tabindex="-1"></a>survObj</span></code></pre></div>
 <pre><code>##  [1]   59   115   156   421+  431   448+  464   475   477+  563   638   744+
 ## [13]  769+  770+  803+  855+ 1040+ 1106+ 1129+ 1206+ 1227+  268   329   353 
 ## [25]  365   377+</code></pre>
 <p>As you can see, some survival times are followed by a ‘+’, which indicates that these individuals were censored. The next step is to fit the Kaplan-Meier curves, which is done by passing the <code>survObj</code> to the <code>survfit()</code> function and can be done in a stratified way, for example by treatment group (<code>rx</code>)</p>
-<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="survival-analysis.html#cb328-1" aria-hidden="true" tabindex="-1"></a>sfit <span class="ot">&lt;-</span> <span class="fu">survfit</span>(survObj <span class="sc">~</span> rx, <span class="at">data =</span> ovarianDF)</span>
-<span id="cb328-2"><a href="survival-analysis.html#cb328-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sfit)</span></code></pre></div>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="survival-analysis.html#cb333-1" aria-hidden="true" tabindex="-1"></a>sfit <span class="ot">&lt;-</span> <span class="fu">survfit</span>(survObj <span class="sc">~</span> rx, <span class="at">data =</span> ovarianDF)</span>
+<span id="cb333-2"><a href="survival-analysis.html#cb333-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sfit)</span></code></pre></div>
 <pre><code>## Call: survfit(formula = survObj ~ rx, data = ovarianDF)
 ## 
 ##                 rx=treatment A 
@@ -467,11 +471,11 @@ with</p>
 ##   563      7       1    0.564  0.1488        0.336        0.946</code></pre>
 <p>From the summary we can see, amongst other things, survival times, the number of patients at risk, the proportion of surviving patients at every time point and the associated confidence intervals.</p>
 <p>Plotting survival curves is equally easy and done by passing the fitted Kaplan-Meier curves to <code>ggsurvplot()</code></p>
-<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="survival-analysis.html#cb330-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(sfit, <span class="at">data =</span> ovarianDF, <span class="at">pval =</span> T) </span></code></pre></div>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="survival-analysis.html#cb335-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(sfit, <span class="at">data =</span> ovarianDF, <span class="at">pval =</span> T) </span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-222-1.png" style="display: block; margin: auto;" /></p>
 <p>The vertical lines indicate the time when censoring occurred and the <span class="math inline">\(P\)</span> value corresponds to a log-rank test, which here indicates that there is non-significant difference between the survival curves for the two different treatment arms, even though patients receiving treatment B appear to be doing better in the first few months of follow-up.</p>
 <p>Note, the log-rank test is a widely used method for comparing survival curves. It is a non-parametric test (i.e. it makes no assumptions about the survival distributions) and compares the observed number of events in each group to the expectation that the null hypothesis (the survival curves are identical) is true. We can get the statistic using the <code>survdiff()</code> function as follow:</p>
-<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="survival-analysis.html#cb331-1" aria-hidden="true" tabindex="-1"></a><span class="fu">survdiff</span>(survObj <span class="sc">~</span> rx, <span class="at">data =</span> ovarianDF)</span></code></pre></div>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="survival-analysis.html#cb336-1" aria-hidden="true" tabindex="-1"></a><span class="fu">survdiff</span>(survObj <span class="sc">~</span> rx, <span class="at">data =</span> ovarianDF)</span></code></pre></div>
 <pre><code>## Call:
 ## survdiff(formula = survObj ~ rx, data = ovarianDF)
 ## 
@@ -498,54 +502,54 @@ Show: Solution
 Solution
 </div>
 <div class="panel-body">
-<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="survival-analysis.html#cb333-1" aria-hidden="true" tabindex="-1"></a>sfit2 <span class="ot">&lt;-</span> <span class="fu">survfit</span>(survObj <span class="sc">~</span> resid.ds, <span class="at">data =</span> ovarianDF)</span>
-<span id="cb333-2"><a href="survival-analysis.html#cb333-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(sfit2, <span class="at">data =</span> ovarianDF, <span class="at">pval =</span> T) </span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-266-1.png" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="survival-analysis.html#cb338-1" aria-hidden="true" tabindex="-1"></a>sfit2 <span class="ot">&lt;-</span> <span class="fu">survfit</span>(survObj <span class="sc">~</span> resid.ds, <span class="at">data =</span> ovarianDF)</span>
+<span id="cb338-2"><a href="survival-analysis.html#cb338-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(sfit2, <span class="at">data =</span> ovarianDF, <span class="at">pval =</span> T) </span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-270-1.png" style="display: block; margin: auto;" /></p>
 Although the <span class="math inline">\(P\)</span> value does not suggest significance at the 0.05 level, the curves clearly diverge early. One could therefore argue that a follow-up study with an increased sample size could validate that patients with negative residual disease status have a better prognosis compared to patients with residual disease.
 </div>
 </div>
 </div>
 <p><br></p>
 <p>Note, the <code>ggsurvplot()</code> function provides a lot more tools to produce highly customised and informative outputs, as shown in the two examples below. As always, please refer to the help function (<code>?ggsurvplot()</code>) or the <a href="https://www.rdocumentation.org/packages/survminer/versions/0.4.9/topics/ggsurvplot">online version</a> for full details.</p>
-<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="survival-analysis.html#cb334-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(sfit,</span>
-<span id="cb334-2"><a href="survival-analysis.html#cb334-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">pval =</span> <span class="cn">TRUE</span>,  <span class="co"># Add P value (log-rank test)</span></span>
-<span id="cb334-3"><a href="survival-analysis.html#cb334-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">pval.size =</span> <span class="dv">4</span>, <span class="co"># Size of P value</span></span>
-<span id="cb334-4"><a href="survival-analysis.html#cb334-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">conf.int =</span> <span class="cn">TRUE</span>,  <span class="co"># Plot confidence intervals</span></span>
-<span id="cb334-5"><a href="survival-analysis.html#cb334-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">risk.table =</span> <span class="cn">TRUE</span>, <span class="co"># Add risk table</span></span>
-<span id="cb334-6"><a href="survival-analysis.html#cb334-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">risk.table.col =</span> <span class="st">&quot;strata&quot;</span>, <span class="co"># Change risk table color by groups</span></span>
-<span id="cb334-7"><a href="survival-analysis.html#cb334-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">linetype =</span> <span class="st">&quot;strata&quot;</span>, <span class="co"># Change line type by groups</span></span>
-<span id="cb334-8"><a href="survival-analysis.html#cb334-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">ggtheme =</span> <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>), <span class="co"># Change ggplot2 theme</span></span>
-<span id="cb334-9"><a href="survival-analysis.html#cb334-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">&quot;darkgreen&quot;</span>, <span class="st">&quot;orange&quot;</span>), <span class="co"># Change colour of strata</span></span>
-<span id="cb334-10"><a href="survival-analysis.html#cb334-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">xlab =</span> <span class="st">&#39;Time (days)&#39;</span>,  <span class="co"># Change label of x-axis</span></span>
-<span id="cb334-11"><a href="survival-analysis.html#cb334-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">legend.title =</span> <span class="st">&#39;Treatment&#39;</span>, <span class="co"># Change title of the legend</span></span>
-<span id="cb334-12"><a href="survival-analysis.html#cb334-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">legend.labs =</span> <span class="fu">c</span>(<span class="st">&#39;A&#39;</span>, <span class="st">&#39;B&#39;</span>))  <span class="co"># Change the name of the legend labels</span></span></code></pre></div>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="survival-analysis.html#cb339-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(sfit,</span>
+<span id="cb339-2"><a href="survival-analysis.html#cb339-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">pval =</span> <span class="cn">TRUE</span>,  <span class="co"># Add P value (log-rank test)</span></span>
+<span id="cb339-3"><a href="survival-analysis.html#cb339-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">pval.size =</span> <span class="dv">4</span>, <span class="co"># Size of P value</span></span>
+<span id="cb339-4"><a href="survival-analysis.html#cb339-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">conf.int =</span> <span class="cn">TRUE</span>,  <span class="co"># Plot confidence intervals</span></span>
+<span id="cb339-5"><a href="survival-analysis.html#cb339-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">risk.table =</span> <span class="cn">TRUE</span>, <span class="co"># Add risk table</span></span>
+<span id="cb339-6"><a href="survival-analysis.html#cb339-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">risk.table.col =</span> <span class="st">&quot;strata&quot;</span>, <span class="co"># Change risk table color by groups</span></span>
+<span id="cb339-7"><a href="survival-analysis.html#cb339-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">linetype =</span> <span class="st">&quot;strata&quot;</span>, <span class="co"># Change line type by groups</span></span>
+<span id="cb339-8"><a href="survival-analysis.html#cb339-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">ggtheme =</span> <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>), <span class="co"># Change ggplot2 theme</span></span>
+<span id="cb339-9"><a href="survival-analysis.html#cb339-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">&quot;darkgreen&quot;</span>, <span class="st">&quot;orange&quot;</span>), <span class="co"># Change colour of strata</span></span>
+<span id="cb339-10"><a href="survival-analysis.html#cb339-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">xlab =</span> <span class="st">&#39;Time (days)&#39;</span>,  <span class="co"># Change label of x-axis</span></span>
+<span id="cb339-11"><a href="survival-analysis.html#cb339-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">legend.title =</span> <span class="st">&#39;Treatment&#39;</span>, <span class="co"># Change title of the legend</span></span>
+<span id="cb339-12"><a href="survival-analysis.html#cb339-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">legend.labs =</span> <span class="fu">c</span>(<span class="st">&#39;A&#39;</span>, <span class="st">&#39;B&#39;</span>))  <span class="co"># Change the name of the legend labels</span></span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-226-1.png" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="survival-analysis.html#cb335-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(sfit,</span>
-<span id="cb335-2"><a href="survival-analysis.html#cb335-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">fun =</span> <span class="st">&quot;event&quot;</span>, <span class="co"># Plot cumulative events</span></span>
-<span id="cb335-3"><a href="survival-analysis.html#cb335-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">conf.int =</span> <span class="cn">TRUE</span>,  <span class="co"># Plot confidence intervals</span></span>
-<span id="cb335-4"><a href="survival-analysis.html#cb335-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">ncensor.plot =</span> <span class="cn">TRUE</span>, <span class="co"># Plot the number of censored subjects at time t</span></span>
-<span id="cb335-5"><a href="survival-analysis.html#cb335-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">linetype =</span> <span class="st">&quot;strata&quot;</span>, <span class="co"># Change line type by groups</span></span>
-<span id="cb335-6"><a href="survival-analysis.html#cb335-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">ggtheme =</span> <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">12</span>), <span class="co"># Change ggplot2 theme</span></span>
-<span id="cb335-7"><a href="survival-analysis.html#cb335-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">&quot;darkgreen&quot;</span>, <span class="st">&quot;orange&quot;</span>), <span class="co"># Change colour of strata</span></span>
-<span id="cb335-8"><a href="survival-analysis.html#cb335-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">xlab =</span> <span class="st">&#39;Time (days)&#39;</span>,  <span class="co"># Change label of x-axis</span></span>
-<span id="cb335-9"><a href="survival-analysis.html#cb335-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">legend.title =</span> <span class="st">&#39;Treatment&#39;</span>, <span class="co"># Change title of the legend</span></span>
-<span id="cb335-10"><a href="survival-analysis.html#cb335-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">legend.labs =</span> <span class="fu">c</span>(<span class="st">&#39;A&#39;</span>, <span class="st">&#39;B&#39;</span>))  <span class="co"># Change the name of the legend labels</span></span></code></pre></div>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="survival-analysis.html#cb340-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(sfit,</span>
+<span id="cb340-2"><a href="survival-analysis.html#cb340-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">fun =</span> <span class="st">&quot;event&quot;</span>, <span class="co"># Plot cumulative events</span></span>
+<span id="cb340-3"><a href="survival-analysis.html#cb340-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">conf.int =</span> <span class="cn">TRUE</span>,  <span class="co"># Plot confidence intervals</span></span>
+<span id="cb340-4"><a href="survival-analysis.html#cb340-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">ncensor.plot =</span> <span class="cn">TRUE</span>, <span class="co"># Plot the number of censored subjects at time t</span></span>
+<span id="cb340-5"><a href="survival-analysis.html#cb340-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">linetype =</span> <span class="st">&quot;strata&quot;</span>, <span class="co"># Change line type by groups</span></span>
+<span id="cb340-6"><a href="survival-analysis.html#cb340-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">ggtheme =</span> <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">12</span>), <span class="co"># Change ggplot2 theme</span></span>
+<span id="cb340-7"><a href="survival-analysis.html#cb340-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">&quot;darkgreen&quot;</span>, <span class="st">&quot;orange&quot;</span>), <span class="co"># Change colour of strata</span></span>
+<span id="cb340-8"><a href="survival-analysis.html#cb340-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">xlab =</span> <span class="st">&#39;Time (days)&#39;</span>,  <span class="co"># Change label of x-axis</span></span>
+<span id="cb340-9"><a href="survival-analysis.html#cb340-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">legend.title =</span> <span class="st">&#39;Treatment&#39;</span>, <span class="co"># Change title of the legend</span></span>
+<span id="cb340-10"><a href="survival-analysis.html#cb340-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">legend.labs =</span> <span class="fu">c</span>(<span class="st">&#39;A&#39;</span>, <span class="st">&#39;B&#39;</span>))  <span class="co"># Change the name of the legend labels</span></span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-227-1.png" style="display: block; margin: auto;" /></p>
 <div id="median-survival-time" class="section level3 hasAnchor" number="7.2.1">
 <h3><span class="header-section-number">7.2.1</span> <strong>Median survival time</strong><a href="survival-analysis.html#median-survival-time" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We can calculate the median survival time, which corresponds to a survival probability of 0.5, directly from the <code>survfit</code> object. This is shown here for unstratified data, i.e. we ignore the two different treatment regimes (note the change in formula)</p>
-<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="survival-analysis.html#cb336-1" aria-hidden="true" tabindex="-1"></a><span class="fu">survfit</span>(survObj <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> ovarianDF)</span></code></pre></div>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="survival-analysis.html#cb341-1" aria-hidden="true" tabindex="-1"></a><span class="fu">survfit</span>(survObj <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> ovarianDF)</span></code></pre></div>
 <pre><code>## Call: survfit(formula = survObj ~ 1, data = ovarianDF)
 ## 
 ##       n events median 0.95LCL 0.95UCL
 ## [1,] 26     12    638     464      NA</code></pre>
 <p>which we can also indicate on the graph</p>
-<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="survival-analysis.html#cb338-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(<span class="fu">survfit</span>(survObj <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> ovarianDF),</span>
-<span id="cb338-2"><a href="survival-analysis.html#cb338-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">conf.int =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb338-3"><a href="survival-analysis.html#cb338-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">risk.table =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb338-4"><a href="survival-analysis.html#cb338-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">surv.median.line =</span> <span class="st">&quot;hv&quot;</span>, <span class="co"># specify horizontal and vertical line</span></span>
-<span id="cb338-5"><a href="survival-analysis.html#cb338-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">xlab =</span> <span class="st">&#39;Time (days)&#39;</span>,</span>
-<span id="cb338-6"><a href="survival-analysis.html#cb338-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">legend =</span> <span class="st">&#39;none&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="survival-analysis.html#cb343-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(<span class="fu">survfit</span>(survObj <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> ovarianDF),</span>
+<span id="cb343-2"><a href="survival-analysis.html#cb343-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">conf.int =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb343-3"><a href="survival-analysis.html#cb343-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">risk.table =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb343-4"><a href="survival-analysis.html#cb343-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">surv.median.line =</span> <span class="st">&quot;hv&quot;</span>, <span class="co"># specify horizontal and vertical line</span></span>
+<span id="cb343-5"><a href="survival-analysis.html#cb343-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">xlab =</span> <span class="st">&#39;Time (days)&#39;</span>,</span>
+<span id="cb343-6"><a href="survival-analysis.html#cb343-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">legend =</span> <span class="st">&#39;none&#39;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-229-1.png" style="display: block; margin: auto;" /></p>
 <div class="panel panel-default">
 <div class="panel-heading">
@@ -564,7 +568,7 @@ Show: Solution
 Solution
 </div>
 <div class="panel-body">
-<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="survival-analysis.html#cb339-1" aria-hidden="true" tabindex="-1"></a><span class="fu">survfit</span>(survObj <span class="sc">~</span> resid.ds, <span class="at">data =</span> ovarianDF)</span></code></pre></div>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="survival-analysis.html#cb344-1" aria-hidden="true" tabindex="-1"></a><span class="fu">survfit</span>(survObj <span class="sc">~</span> resid.ds, <span class="at">data =</span> ovarianDF)</span></code></pre></div>
 <pre><code>## Call: survfit(formula = survObj ~ resid.ds, data = ovarianDF)
 ## 
 ##               n events median 0.95LCL 0.95UCL
@@ -584,11 +588,11 @@ The <code>NA</code> indicates that we do not have enough data to robustly infer 
 <span class="math display">\[ h(t|X_i) = h_0(t) e^{\beta_1 X_{i1}+ ... + \beta_p X_{ip}} \]</span>
 with <span class="math inline">\(h(t)\)</span> being the <em>hazard</em>, or the instantaneous rate at which an events occur, and <span class="math inline">\(h_0(t)\)</span> being the underlying baseline hazard.</p>
 <p>Without going deeper into the mathematical details, here we show how to fit Cox proportional hazard models to survival data using the <code>coxph()</code> function, which takes a survival object as the response variable and otherwise follows common syntax for regression models as we have used before. Here we are interested in the effect of all four covariates: <code>age</code>, <code>rx</code>, <code>resid.ds</code> and <code>ecog.ps</code></p>
-<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="survival-analysis.html#cb341-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit cox proportional hazard ratio</span></span>
-<span id="cb341-2"><a href="survival-analysis.html#cb341-2" aria-hidden="true" tabindex="-1"></a>cph <span class="ot">&lt;-</span> <span class="fu">coxph</span>(survObj <span class="sc">~</span> age <span class="sc">+</span> rx <span class="sc">+</span> resid.ds <span class="sc">+</span> ecog.ps, <span class="at">data =</span> ovarianDF)</span>
-<span id="cb341-3"><a href="survival-analysis.html#cb341-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb341-4"><a href="survival-analysis.html#cb341-4" aria-hidden="true" tabindex="-1"></a><span class="co"># get model summary</span></span>
-<span id="cb341-5"><a href="survival-analysis.html#cb341-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cph)</span></code></pre></div>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="survival-analysis.html#cb346-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit cox proportional hazard ratio</span></span>
+<span id="cb346-2"><a href="survival-analysis.html#cb346-2" aria-hidden="true" tabindex="-1"></a>cph <span class="ot">&lt;-</span> <span class="fu">coxph</span>(survObj <span class="sc">~</span> age <span class="sc">+</span> rx <span class="sc">+</span> resid.ds <span class="sc">+</span> ecog.ps, <span class="at">data =</span> ovarianDF)</span>
+<span id="cb346-3"><a href="survival-analysis.html#cb346-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb346-4"><a href="survival-analysis.html#cb346-4" aria-hidden="true" tabindex="-1"></a><span class="co"># get model summary</span></span>
+<span id="cb346-5"><a href="survival-analysis.html#cb346-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cph)</span></code></pre></div>
 <pre><code>## Call:
 ## coxph(formula = survObj ~ age + rx + resid.ds + ecog.ps, data = ovarianDF)
 ## 
@@ -620,7 +624,7 @@ with <span class="math inline">\(h(t)\)</span> being the <em>hazard</em>, or the
 </ul>
 <p>Note, the quantity <code>exp(coef)</code> is known as the <strong>hazard ratio (HR)</strong>. It is best explained for categorical predictors, where it represents the ratio hazard between two groups at any point in time. A hazard ratio of HR&gt;1 indicates increased hazard of an event, whereas HR&lt;1 indicates a lower hazard. From the example above, the HR for treatment B was 0.4, which means that individuals in treatment group B had a 0.4 times lower rate of dying at any given time.</p>
 <p>We can extract the regression results and put them into a nice table format using the <code>tbl_regression()</code> function from the <code>gtsummary</code> library</p>
-<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="survival-analysis.html#cb343-1" aria-hidden="true" tabindex="-1"></a>gtsummary<span class="sc">::</span><span class="fu">tbl_regression</span>(cph, <span class="at">exp=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="survival-analysis.html#cb348-1" aria-hidden="true" tabindex="-1"></a>gtsummary<span class="sc">::</span><span class="fu">tbl_regression</span>(cph, <span class="at">exp=</span><span class="cn">TRUE</span>)</span></code></pre></div>
 <div id="lemohrnkoh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
@@ -1093,22 +1097,22 @@ with <span class="math inline">\(h(t)\)</span> being the <em>hazard</em>, or the
 </table>
 </div>
 <p>A nicer way to display the results from a Cox regression model is by using the <code>ggforest()</code> function, which creates a <em>forest plot</em> that plots the hazard ratios, together with their associated confidence intervals and <span class="math inline">\(P\)</span> values for all model covariates and stratified for those that are categorical (indicating the level used as reference).</p>
-<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="survival-analysis.html#cb344-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggforest</span>(cph, <span class="at">data =</span> ovarianDF)</span></code></pre></div>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="survival-analysis.html#cb349-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggforest</span>(cph, <span class="at">data =</span> ovarianDF)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-234-1.png" style="display: block; margin: auto;" /></p>
 <p>As a final step we show you how to get prediction based on our Cox proportional hazard model. As before we can use the <code>predict()</code> function but unfortunately this is slightly more complicated before as it does not work on vectors but rather individual parameter values, which need to be provided as a <code>list</code>. For example, to predict the survival probability of a 72 year old at time <span class="math inline">\(t=300\)</span></p>
-<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="survival-analysis.html#cb345-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit cox proportional hazard ratio based on age only</span></span>
-<span id="cb345-2"><a href="survival-analysis.html#cb345-2" aria-hidden="true" tabindex="-1"></a>cph <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(futime, fustat) <span class="sc">~</span> age, <span class="at">data =</span> ovarianDF)</span>
-<span id="cb345-3"><a href="survival-analysis.html#cb345-3" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(cph, <span class="at">newdata =</span> <span class="fu">list</span>(<span class="at">age =</span> <span class="dv">80</span>, <span class="at">futime =</span> <span class="dv">300</span>, <span class="at">fustat =</span> <span class="dv">0</span>), <span class="at">type=</span><span class="st">&#39;survival&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="survival-analysis.html#cb350-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit cox proportional hazard ratio based on age only</span></span>
+<span id="cb350-2"><a href="survival-analysis.html#cb350-2" aria-hidden="true" tabindex="-1"></a>cph <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(futime, fustat) <span class="sc">~</span> age, <span class="at">data =</span> ovarianDF)</span>
+<span id="cb350-3"><a href="survival-analysis.html#cb350-3" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(cph, <span class="at">newdata =</span> <span class="fu">list</span>(<span class="at">age =</span> <span class="dv">80</span>, <span class="at">futime =</span> <span class="dv">300</span>, <span class="at">fustat =</span> <span class="dv">0</span>), <span class="at">type=</span><span class="st">&#39;survival&#39;</span>)</span></code></pre></div>
 <pre><code>## [1] 0.03909436</code></pre>
 <p>And to get survival curves for all ages between 50 and 80 years</p>
-<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="survival-analysis.html#cb347-1" aria-hidden="true" tabindex="-1"></a>age <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="dv">50</span><span class="sc">:</span><span class="dv">80</span>, <span class="at">ncol=</span><span class="dv">1</span>)</span>
-<span id="cb347-2"><a href="survival-analysis.html#cb347-2" aria-hidden="true" tabindex="-1"></a>pred_surv <span class="ot">&lt;-</span> <span class="fu">apply</span>(age, <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="fu">predict</span>(cph, <span class="at">newdata =</span> <span class="fu">list</span>(<span class="at">age =</span> x, <span class="at">futime =</span> <span class="dv">300</span>, <span class="at">fustat =</span> <span class="dv">0</span>), <span class="at">type=</span><span class="st">&#39;survival&#39;</span>))</span>
-<span id="cb347-3"><a href="survival-analysis.html#cb347-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb347-4"><a href="survival-analysis.html#cb347-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">Age =</span> age,</span>
-<span id="cb347-5"><a href="survival-analysis.html#cb347-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">Survival =</span> pred_surv) <span class="sc">%&gt;%</span></span>
-<span id="cb347-6"><a href="survival-analysis.html#cb347-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> Survival)) <span class="sc">+</span></span>
-<span id="cb347-7"><a href="survival-analysis.html#cb347-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb347-8"><a href="survival-analysis.html#cb347-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&#39;Survival probability at t=300&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="survival-analysis.html#cb352-1" aria-hidden="true" tabindex="-1"></a>age <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="dv">50</span><span class="sc">:</span><span class="dv">80</span>, <span class="at">ncol=</span><span class="dv">1</span>)</span>
+<span id="cb352-2"><a href="survival-analysis.html#cb352-2" aria-hidden="true" tabindex="-1"></a>pred_surv <span class="ot">&lt;-</span> <span class="fu">apply</span>(age, <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="fu">predict</span>(cph, <span class="at">newdata =</span> <span class="fu">list</span>(<span class="at">age =</span> x, <span class="at">futime =</span> <span class="dv">300</span>, <span class="at">fustat =</span> <span class="dv">0</span>), <span class="at">type=</span><span class="st">&#39;survival&#39;</span>))</span>
+<span id="cb352-3"><a href="survival-analysis.html#cb352-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb352-4"><a href="survival-analysis.html#cb352-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">Age =</span> age,</span>
+<span id="cb352-5"><a href="survival-analysis.html#cb352-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">Survival =</span> pred_surv) <span class="sc">%&gt;%</span></span>
+<span id="cb352-6"><a href="survival-analysis.html#cb352-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> Survival)) <span class="sc">+</span></span>
+<span id="cb352-7"><a href="survival-analysis.html#cb352-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb352-8"><a href="survival-analysis.html#cb352-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&#39;Survival probability at t=300&#39;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-236-1.png" style="display: block; margin: auto;" /></p>
 <div class="panel panel-default">
 <div class="panel-heading">

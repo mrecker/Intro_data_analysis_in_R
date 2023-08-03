@@ -233,7 +233,7 @@ Being able to work with (vector or matrix) indices is crucial for effective data
     2. add the 1st and 2nd elements of `myvec`
     3. multiply the 1st, 3rd and 5th element of `myvec`
     4. assing the first four elents of `myvec` to a new vector call `myvec_new`
-    5. using the above defined vectors `x` and `names`, assign a name with the corresponding age (matched by index, i.e. 1. name to the 1. number), such that a message "Neil is 2 years old" is printed out.   </div></div>
+    5. (advanced) using the above defined vectors `x` and `names`, assign a name with the corresponding age (matched by index, i.e. 1. name to the 1. number), such that a message "Neil is 2 years old" is printed out.   </div></div>
 
 <button id="displayTextunnamed-chunk-14" onclick="javascript:toggle('unnamed-chunk-14');">Show: Solution</button>
 
@@ -445,7 +445,36 @@ Use this function to create the following sequences:
 <button id="displayTextunnamed-chunk-26" onclick="javascript:toggle('unnamed-chunk-26');">Show: Solution</button>
 
 <div id="toggleTextunnamed-chunk-26" style="display: none"><div class="panel panel-default"><div class="panel-heading panel-heading1"> Solution </div><div class="panel-body">
-myseq <- seq(2, -2, by = 0.1)</div></div></div>
+
+1. sequence 2, 4, 6, ... 30
+
+```r
+seq(2, 30, by = 2)
+```
+
+```
+##  [1]  2  4  6  8 10 12 14 16 18 20 22 24 26 28 30
+```
+
+2. A sequence of 14 numbers starting at -2.5 and ending at 15.34.
+
+```r
+myseq <- seq(-2.5, 15.34, length.out=14)
+```
+
+3. A sequence of 7 numbers starting at 0, increasing in increments of 0.04.
+  
+
+```r
+myseq <- seq(0, by = 0.04, length.out = 7)
+```
+
+4. A sequence starting at 101, ending at -20, in decrements of 11.
+
+```r
+myseq <- seq(101, -20, by =-11)
+```
+</div></div></div>
 
 
 $~$
@@ -1121,7 +1150,7 @@ ggplot(irisDF, aes(x = Species, y = Sepal.Length, col = Species)) +
 
 <img src="_main_files/figure-html/unnamed-chunk-62-1.png" style="display: block; margin: auto;" />
 
-Note that providing a legend in this case is not strictly necessary. Unfortunately, `ggplot` adds a legend by default. If you want to remove the legend, you have various options. The two most intuitive ones are
+Note that providing a legend in this case is not strictly necessary, but `ggplot` adds a legend by default. If you want to remove the legend, you have various options. The two most intuitive ones are
 
 
 ```r
@@ -1135,6 +1164,7 @@ ggplot(irisDF, aes(x = Species, y = Sepal.Length, col = Species)) +
 ```
 
 <img src="_main_files/figure-html/unnamed-chunk-63-1.png" style="display: block; margin: auto;" />
+
 or
 
 ```
@@ -1178,7 +1208,7 @@ ggplot(irisDF, aes(x = Sepal.Length, fill = Species)) +
          fill = 'Iris species')
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-245-1.png" style="display: block; margin: auto;" />
+<img src="_main_files/figure-html/unnamed-chunk-249-1.png" style="display: block; margin: auto;" />
 </div></div></div>
 
 $~$
@@ -1237,7 +1267,7 @@ ggplot(irisDF, aes(x = Sepal.Width, fill = Species)) +
     facet_wrap(~ Species)
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-246-1.png" style="display: block; margin: auto;" />
+<img src="_main_files/figure-html/unnamed-chunk-250-1.png" style="display: block; margin: auto;" />
 </div></div></div>
 
 $~$
@@ -1295,7 +1325,7 @@ ggplot(irisDF, aes(x = Sepal.Length, y = Sepal.Width, col = Species)) +
 ## `geom_smooth()` using formula = 'y ~ x'
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-247-1.png" style="display: block; margin: auto;" />
+<img src="_main_files/figure-html/unnamed-chunk-251-1.png" style="display: block; margin: auto;" />
 
 This is an example of [Simpson’s Paradox](https://en.wikipedia.org/wiki/Simpson%27s_paradox), where an apparent trend in the data disappears or even reverses (as in our case) when the trend is explored in subsets of the data. </div></div></div>
 
@@ -1663,7 +1693,9 @@ And here is how easy and hopefully by now intuitively this can be done using the
 
 
 ```r
-LifeExp %>% select(Country, Continent, Life.expectancy, GDP, Population) %>% head()
+LifeExp %>% 
+    select(Country, Continent, Life.expectancy, GDP, Population) %>% 
+    head()
 ```
 
 ```
@@ -1676,13 +1708,15 @@ LifeExp %>% select(Country, Continent, Life.expectancy, GDP, Population) %>% hea
 ## 6 Afghanistan      Asia            58.8 553.32894    2883167
 ```
 
-> **Note:** notice that we added one extra pipe at the end `%>% head(.)`. Remember that the `head()` function displays the first few rows of a data.frame. What we are doing here is that we first take the data.frame `LifeExp`, the apply the `filter()` function and then use the results of this as the argument in `head()` 
+> **Note:** notice that we added one extra pipe at the end `%>% head()`. Remember that the `head()` function displays the first few rows of a data.frame. What we are doing here is that we first take the data.frame `LifeExp`, the apply the `filter()` function and then use the results of this as the argument in `head()` 
 
 De-selection, or filtering out particular columns follows a similar structure but in this case the column to be removed is preceded by a '-'; for example
 
 
 ```r
-LifeExp %>% select(-Adult.Mortality) %>% head()
+LifeExp %>% 
+    select(-Adult.Mortality) %>% 
+    head()
 ```
 
 As you will have noticed, we can easy combine various data manipulation functions using pipes without having to store any intermediate results or use excessive parenthesis. Let's try this out
@@ -1776,8 +1810,8 @@ LifeExp %>%
 ```
 
 ```
-## `summarise()` has grouped output by 'Continent'. You can override using the `.groups`
-## argument.
+## `summarise()` has grouped output by 'Continent'. You can override using the
+## `.groups` argument.
 ```
 
 ```
@@ -1997,9 +2031,9 @@ head(EI_long, n=10)
   1. produce a `ggplot` line graph of the mean exposure index against time (2000 to 2010)
   2. show the distribution of the expsoure index over time by means of box-and-whisker plots
 
-<infobutton id="displayTextunnamed-chunk-251" onclick="javascript:toggle('unnamed-chunk-251');">Show: Hint</infobutton>
+<infobutton id="displayTextunnamed-chunk-255" onclick="javascript:toggle('unnamed-chunk-255');">Show: Hint</infobutton>
 
-<div id="toggleTextunnamed-chunk-251" style="display: none"><div class="panel panel-default"><div class="panel-body">
+<div id="toggleTextunnamed-chunk-255" style="display: none"><div class="panel panel-default"><div class="panel-body">
 Hint: the first task involves a combination of `group_by()` and `summarise()`, and for the second task you might need to mutate the `Year` column into a categorical variable. Also, you can do this by either creating a new data.frame for each task, or by using the pipe to send your modified data.frame straight to `ggplot`, in which case you do not need to specifiy the data in the `ggplot()` function.</div></div></div>
  </div></div>
 
@@ -2017,7 +2051,7 @@ EI_long %>%
     geom_line()
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-252-1.png" style="display: block; margin: auto;" />
+<img src="_main_files/figure-html/unnamed-chunk-256-1.png" style="display: block; margin: auto;" />
 
   2. distribution of the expsoure index over time by means of box-and-whisker plots
 
@@ -2028,7 +2062,7 @@ EI_long %>%
     geom_boxplot()
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-253-1.png" style="display: block; margin: auto;" />
+<img src="_main_files/figure-html/unnamed-chunk-257-1.png" style="display: block; margin: auto;" />
 </div></div></div>
 
 $~$
@@ -2225,7 +2259,6 @@ As they say in English: *"there is more than one way to skin a cat"*.
 
 The focus of this part of the workshop is how to fit statistical models in R. We will not go into underlying mathematics but instead introduce key concepts in statistical data analysis and how to do this in R. The internet is full of free and useful tutorials and resources related to statistics and statistical modelling in R. If you prefer physical books instead of computer screens, here is a list of recommendations:
 
-  - [Statistics: An Introduction using R](https://www.wiley.com/en-gb/Statistics%3A+An+Introduction+using+R-p-9780470022986)
   - [Linear models with R](https://www.crcpress.com/Linear-Models-with-R/Faraway/p/book/9781439887332)
   - [Data Analysis Using Regression and Multilevel/Hierarchical Models](http://www.stat.columbia.edu/~gelman/arm/)
   - [An Introduction to Statistical Learning](http://www-bcf.usc.edu/~gareth/ISL/)
@@ -2327,7 +2360,7 @@ print(c(mean(expSample), median(expSample)))
 
 We can see that for the first two samples, both the mean and median are fairly similar. For the sample based on an exponential distribution, however, they are very different. In order to understand why this is the case, we have to look at how the data in each data sample are spread. Specifically, we will look at the *variance / standard deviation*, *interquartile range*, *skewness* and *kurtosis*.
 
-#### Standard deviation
+### **Standard deviation** {-}
 
 The standard deviation (SD) is a measure of the dispersal of a set of values and how much these values vary from the sample mean. A low standard variation means that most values are close to the mean, whereas a high standrad deviation means that values are spread far way from the mean (which in itself should give you an indication of the usefulness of using the mean to describe your samples in the first case). Relatedly, the variance is the square of the standard deviation. Mathematically, the standard deviation, usually denoted $\sigma^2$, is given as
 $$ \sigma^2 = \frac{1}{n} \sum (y_i - \mu)^2 $$
@@ -2755,7 +2788,7 @@ ggplot(df, aes(x, y)) +
 ## `geom_smooth()` using formula = 'y ~ x'
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-255-1.png" style="display: block; margin: auto;" />
+<img src="_main_files/figure-html/unnamed-chunk-259-1.png" style="display: block; margin: auto;" />
 
 ```r
 # test for correlation
@@ -3097,7 +3130,7 @@ predict(fit, data.frame(height=187), interval = 'prediction', level = 0.95)
 
 As you can see, the prediction interval is significantly larger than the confidence interval.
 
-#### **Confidence vs prediction interval**
+### **Confidence vs prediction interval** {-}
 
 The *confidence interval* corresponds to the uncertainty surrounding our estimate of an **average individual**; it represents the uncertainty in the mean (i.e. in our case the regression line): $y = \beta_0 + \beta_1 x$. In contrast, the *prediction interval* corresponds to the uncertainty surrounding an **Individual observation**. 
 
@@ -3151,7 +3184,7 @@ ggplot(mapping = aes(x = height, y = weight)) +
     geom_line(data = newdata_ci, col = 'blue', linewidth=1) 
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-256-1.png" style="display: block; margin: auto;" />
+<img src="_main_files/figure-html/unnamed-chunk-260-1.png" style="display: block; margin: auto;" />
 </div></div></div>
 
 $~$
@@ -3404,7 +3437,7 @@ ggplot(epiData, aes(x = Age, y = Episodes, col = Bednet)) +
     geom_smooth(method = 'lm', se=F)
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-259-1.png" style="display: block; margin: auto;" />
+<img src="_main_files/figure-html/unnamed-chunk-263-1.png" style="display: block; margin: auto;" />
 
 This graph looks very different to the one we preduced earlier. Although it still shows higher incidence for individuals without bednets, it suggests that the slopes are different (i.e. dependent on bednet use). Why this might be is subject of the next part dealing with interactions between predictor variables. </div></div></div>
 
@@ -3600,7 +3633,7 @@ sleepstudy %>%
     facet_wrap(~Subject)
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-260-1.png" style="display: block; margin: auto;" />
+<img src="_main_files/figure-html/unnamed-chunk-264-1.png" style="display: block; margin: auto;" />
 </div></div></div>
 
 $~$
@@ -4108,7 +4141,7 @@ p2 <- ggplot(haberman, aes(x = Nodes, col = Survival)) +
 p1 / p2
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-261-1.png" style="display: block; margin: auto;" />
+<img src="_main_files/figure-html/unnamed-chunk-265-1.png" style="display: block; margin: auto;" />
 
 **Option 2:** box-and-whisker plots
 
@@ -4124,7 +4157,7 @@ p2 <- ggplot(haberman, aes(y = Nodes, x = Survival, fill = Survival)) +
 p1 + p2
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-262-1.png" style="display: block; margin: auto;" />
+<img src="_main_files/figure-html/unnamed-chunk-266-1.png" style="display: block; margin: auto;" />
 </div></div></div>
 
 $~$
@@ -4344,7 +4377,7 @@ ggplot(mapping = aes(x = Age, y = Survived, col = Sex)) +
     geom_line(data = newdata)
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-265-1.png" style="display: block; margin: auto;" />
+<img src="_main_files/figure-html/unnamed-chunk-269-1.png" style="display: block; margin: auto;" />
 </div></div></div>
 
 <!--chapter:end:6-Generalised_linear_models.Rmd-->
@@ -4589,7 +4622,7 @@ sfit2 <- survfit(survObj ~ resid.ds, data = ovarianDF)
 ggsurvplot(sfit2, data = ovarianDF, pval = T) 
 ```
 
-<img src="_main_files/figure-html/unnamed-chunk-266-1.png" style="display: block; margin: auto;" />
+<img src="_main_files/figure-html/unnamed-chunk-270-1.png" style="display: block; margin: auto;" />
 
 Although the $P$ value does not suggest significance at the 0.05 level, the curves clearly diverge early. One could therefore argue that a follow-up study with an increased sample size could validate that patients with negative residual disease status have a better prognosis compared to patients with residual disease.</div></div></div>
 

@@ -244,6 +244,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.1" data-path="introduction-to-statistical-modelling-in-r.html"><a href="introduction-to-statistical-modelling-in-r.html#univariate-analysis"><i class="fa fa-check"></i><b>3.1</b> Univariate analysis</a>
 <ul>
 <li class="chapter" data-level="" data-path="introduction-to-statistical-modelling-in-r.html"><a href="introduction-to-statistical-modelling-in-r.html#mean-vs.-median"><i class="fa fa-check"></i><strong>Mean vs. median</strong></a></li>
+<li class="chapter" data-level="" data-path="introduction-to-statistical-modelling-in-r.html"><a href="introduction-to-statistical-modelling-in-r.html#standard-deviation"><i class="fa fa-check"></i><strong>Standard deviation</strong></a></li>
 <li class="chapter" data-level="" data-path="introduction-to-statistical-modelling-in-r.html"><a href="introduction-to-statistical-modelling-in-r.html#interquartile-range"><i class="fa fa-check"></i><strong>Interquartile range</strong></a></li>
 <li class="chapter" data-level="" data-path="introduction-to-statistical-modelling-in-r.html"><a href="introduction-to-statistical-modelling-in-r.html#skewness"><i class="fa fa-check"></i><strong>Skewness</strong></a></li>
 <li class="chapter" data-level="" data-path="introduction-to-statistical-modelling-in-r.html"><a href="introduction-to-statistical-modelling-in-r.html#kurtosis"><i class="fa fa-check"></i><strong>Kurtosis</strong></a></li>
@@ -270,7 +271,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="linear-models-lm.html"><a href="linear-models-lm.html#scale-location"><i class="fa fa-check"></i><strong>Scale-Location</strong></a></li>
 <li class="chapter" data-level="" data-path="linear-models-lm.html"><a href="linear-models-lm.html#residuals-vs-leverage"><i class="fa fa-check"></i><strong>Residuals vs Leverage</strong></a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="linear-models-lm.html"><a href="linear-models-lm.html#prediction"><i class="fa fa-check"></i><b>4.4</b> Prediction</a></li>
+<li class="chapter" data-level="4.4" data-path="linear-models-lm.html"><a href="linear-models-lm.html#prediction"><i class="fa fa-check"></i><b>4.4</b> Prediction</a>
+<ul>
+<li class="chapter" data-level="" data-path="linear-models-lm.html"><a href="linear-models-lm.html#confidence-vs-prediction-interval"><i class="fa fa-check"></i><strong>Confidence vs prediction interval</strong></a></li>
+</ul></li>
 <li class="chapter" data-level="4.5" data-path="linear-models-lm.html"><a href="linear-models-lm.html#multiple-linear-regression"><i class="fa fa-check"></i><b>4.5</b> Multiple linear regression</a></li>
 <li class="chapter" data-level="4.6" data-path="linear-models-lm.html"><a href="linear-models-lm.html#categorical-explanatory-variables"><i class="fa fa-check"></i><b>4.6</b> Categorical explanatory variables</a></li>
 <li class="chapter" data-level="4.7" data-path="linear-models-lm.html"><a href="linear-models-lm.html#interactions"><i class="fa fa-check"></i><b>4.7</b> Interactions</a></li>
@@ -341,11 +345,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>Subject</code>: subject number on which observation was made</li>
 </ul>
 <p>You can find out more about this study through the help function <code>?sleepstudy</code>.</p>
-<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="mixed-effect-models-mem.html#cb273-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load library for mixed effect modelling</span></span>
-<span id="cb273-2"><a href="mixed-effect-models-mem.html#cb273-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
-<span id="cb273-3"><a href="mixed-effect-models-mem.html#cb273-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb273-4"><a href="mixed-effect-models-mem.html#cb273-4" aria-hidden="true" tabindex="-1"></a><span class="co"># get a summary of the sleep study dataset</span></span>
-<span id="cb273-5"><a href="mixed-effect-models-mem.html#cb273-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sleepstudy)</span></code></pre></div>
+<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="mixed-effect-models-mem.html#cb278-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load library for mixed effect modelling</span></span>
+<span id="cb278-2"><a href="mixed-effect-models-mem.html#cb278-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
+<span id="cb278-3"><a href="mixed-effect-models-mem.html#cb278-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb278-4"><a href="mixed-effect-models-mem.html#cb278-4" aria-hidden="true" tabindex="-1"></a><span class="co"># get a summary of the sleep study dataset</span></span>
+<span id="cb278-5"><a href="mixed-effect-models-mem.html#cb278-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sleepstudy)</span></code></pre></div>
 <pre><code>##     Reaction          Days        Subject   
 ##  Min.   :194.3   Min.   :0.0   308    : 10  
 ##  1st Qu.:255.4   1st Qu.:2.0   309    : 10  
@@ -354,8 +358,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  3rd Qu.:336.8   3rd Qu.:7.0   331    : 10  
 ##  Max.   :466.4   Max.   :9.0   332    : 10  
 ##                                (Other):120</code></pre>
-<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="mixed-effect-models-mem.html#cb275-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get the number of study participants</span></span>
-<span id="cb275-2"><a href="mixed-effect-models-mem.html#cb275-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&quot;Number of participants: &quot;</span>,<span class="fu">length</span>(<span class="fu">unique</span>(sleepstudy<span class="sc">$</span>Subject))))</span></code></pre></div>
+<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="mixed-effect-models-mem.html#cb280-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get the number of study participants</span></span>
+<span id="cb280-2"><a href="mixed-effect-models-mem.html#cb280-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&quot;Number of participants: &quot;</span>,<span class="fu">length</span>(<span class="fu">unique</span>(sleepstudy<span class="sc">$</span>Subject))))</span></code></pre></div>
 <pre><code>## [1] &quot;Number of participants: 18&quot;</code></pre>
 <p>From the data summary we see that there were 10 observations made for 18 individuals. Therefore, <code>Subject</code> fits our definition of a *random effect`: we believe that there is a difference between study participants but we do not care about the individuals themselves.</p>
 <p>We can convince ourselves about the difference between study participants by plotting the data for two subjects:</p>
@@ -377,24 +381,24 @@ Show: Solution
 Solution
 </div>
 <div class="panel-body">
-<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="mixed-effect-models-mem.html#cb277-1" aria-hidden="true" tabindex="-1"></a>sleepstudy <span class="sc">%&gt;%</span></span>
-<span id="cb277-2"><a href="mixed-effect-models-mem.html#cb277-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Subject <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">308</span>, <span class="dv">309</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb277-3"><a href="mixed-effect-models-mem.html#cb277-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Days, <span class="at">y =</span> Reaction)) <span class="sc">+</span></span>
-<span id="cb277-4"><a href="mixed-effect-models-mem.html#cb277-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">col =</span> <span class="st">&#39;red&#39;</span>, <span class="at">linetype =</span> <span class="st">&#39;dashed&#39;</span>) <span class="sc">+</span></span>
-<span id="cb277-5"><a href="mixed-effect-models-mem.html#cb277-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb277-6"><a href="mixed-effect-models-mem.html#cb277-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">9</span>) <span class="sc">+</span>  <span class="co"># make scale discrete</span></span>
-<span id="cb277-7"><a href="mixed-effect-models-mem.html#cb277-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>Subject)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-260-1.png" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="mixed-effect-models-mem.html#cb282-1" aria-hidden="true" tabindex="-1"></a>sleepstudy <span class="sc">%&gt;%</span></span>
+<span id="cb282-2"><a href="mixed-effect-models-mem.html#cb282-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Subject <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">308</span>, <span class="dv">309</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb282-3"><a href="mixed-effect-models-mem.html#cb282-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Days, <span class="at">y =</span> Reaction)) <span class="sc">+</span></span>
+<span id="cb282-4"><a href="mixed-effect-models-mem.html#cb282-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">col =</span> <span class="st">&#39;red&#39;</span>, <span class="at">linetype =</span> <span class="st">&#39;dashed&#39;</span>) <span class="sc">+</span></span>
+<span id="cb282-5"><a href="mixed-effect-models-mem.html#cb282-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb282-6"><a href="mixed-effect-models-mem.html#cb282-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">9</span>) <span class="sc">+</span>  <span class="co"># make scale discrete</span></span>
+<span id="cb282-7"><a href="mixed-effect-models-mem.html#cb282-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>Subject)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-264-1.png" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 </div>
 <p><span class="math inline">\(~\)</span></p>
 <p>How do we model this data? There are principally three approaches: (1) pool all the data and don’t care about individual-level differences, (2) add <code>Subject</code> as a fixed effect as well as the interaction term <code>Days:Subject</code>, and (3) treat <code>Subject</code> as a <em>random effect</em>. Here we are only going to compare (1) and (3) and leave (2) as an exercise.</p>
 <p>Before we start we need to make some minor modification to the data. First, we want to make sure that <code>Subject</code> is being treated like a categorical and not a continuous variable. Second, the first two days (day 0 and day 1) were for adaptation and training, meaning that sleep deprivation started counting at day 2 so we discard the first two days and then recode to make sure we start with day 0.</p>
-<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="mixed-effect-models-mem.html#cb278-1" aria-hidden="true" tabindex="-1"></a>sleep <span class="ot">&lt;-</span> sleepstudy <span class="sc">%&gt;%</span></span>
-<span id="cb278-2"><a href="mixed-effect-models-mem.html#cb278-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Subject =</span> <span class="fu">factor</span>(Subject)) <span class="sc">%&gt;%</span></span>
-<span id="cb278-3"><a href="mixed-effect-models-mem.html#cb278-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Days =</span> Days <span class="sc">-</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb278-4"><a href="mixed-effect-models-mem.html#cb278-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Days<span class="sc">&gt;=</span><span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="mixed-effect-models-mem.html#cb283-1" aria-hidden="true" tabindex="-1"></a>sleep <span class="ot">&lt;-</span> sleepstudy <span class="sc">%&gt;%</span></span>
+<span id="cb283-2"><a href="mixed-effect-models-mem.html#cb283-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Subject =</span> <span class="fu">factor</span>(Subject)) <span class="sc">%&gt;%</span></span>
+<span id="cb283-3"><a href="mixed-effect-models-mem.html#cb283-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Days =</span> Days <span class="sc">-</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb283-4"><a href="mixed-effect-models-mem.html#cb283-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Days<span class="sc">&gt;=</span><span class="dv">0</span>)</span></code></pre></div>
 The <code>lmer()</code> function (from the <code>lme4</code> package) uses a very similar syntax as the by now familiar <code>lm()</code> function but where the model formula now takes on the form
 <center>
 <code>response ~ fixed1 + fixed2 + ... + (ran1 + ran2 + ...| ran_factor1) + ...</code>
@@ -406,8 +410,8 @@ The <code>lmer()</code> function (from the <code>lme4</code> package) uses a ver
 <li><em>random slope and intersect</em>: <code>Response ~ Days + (Days | Subject)</code></li>
 </ul>
 <p>The most reasonable model would be the last, which allows for both the intercept and the slope to vary between individuals. So let’s fit this model</p>
-<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="mixed-effect-models-mem.html#cb279-1" aria-hidden="true" tabindex="-1"></a>fit_mm <span class="ot">&lt;-</span> <span class="fu">lmer</span>(Reaction <span class="sc">~</span> Days <span class="sc">+</span> (Days<span class="sc">|</span>Subject), <span class="at">data =</span> sleep)</span>
-<span id="cb279-2"><a href="mixed-effect-models-mem.html#cb279-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_mm)</span></code></pre></div>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="mixed-effect-models-mem.html#cb284-1" aria-hidden="true" tabindex="-1"></a>fit_mm <span class="ot">&lt;-</span> <span class="fu">lmer</span>(Reaction <span class="sc">~</span> Days <span class="sc">+</span> (Days<span class="sc">|</span>Subject), <span class="at">data =</span> sleep)</span>
+<span id="cb284-2"><a href="mixed-effect-models-mem.html#cb284-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_mm)</span></code></pre></div>
 <pre><code>## Linear mixed model fit by REML [&#39;lmerMod&#39;]
 ## Formula: Reaction ~ Days + (Days | Subject)
 ##    Data: sleep
@@ -437,7 +441,7 @@ The <code>lmer()</code> function (from the <code>lme4</code> package) uses a ver
 <div id="fixed-effects" class="section level4 unnumbered hasAnchor">
 <h4><strong>Fixed effects</strong><a href="mixed-effect-models-mem.html#fixed-effects" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>There are two fixed effects: <code>(Intercept)</code> and <code>Days</code> which tell us the average reaction time without any sleep deprivation and the increase in reaction time with each day of sleep deprivation. You will notice that compared to the simpler modelling framework, <em>P</em> values are not provided anymore, and there are various reasons as to why. However, if you wish to make statements regarding the statistical significance of these estimates, you can either look at the confidence intervals (based on parametric boostrapping)</p>
-<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="mixed-effect-models-mem.html#cb281-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(fit_mm, <span class="at">level=</span><span class="fl">0.95</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="mixed-effect-models-mem.html#cb286-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(fit_mm, <span class="at">level=</span><span class="fl">0.95</span>)</span></code></pre></div>
 <pre><code>## Computing profile confidence intervals ...</code></pre>
 <pre><code>##                   2.5 %      97.5 %
 ## .sig01       19.0979934  46.3366599
@@ -448,8 +452,8 @@ The <code>lmer()</code> function (from the <code>lme4</code> package) uses a ver
 ## Days          7.7245247  15.1463328</code></pre>
 <p>The ones you are most interested in are the two bottom ones, and as neither crosses 0 you can be sure that the effects are statistically significant.</p>
 <p>The other option is to calculate <em>P</em> values from the <em>t</em> values (the underlying maths goes beyon the scope of this workshop)</p>
-<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="mixed-effect-models-mem.html#cb284-1" aria-hidden="true" tabindex="-1"></a>tvals <span class="ot">&lt;-</span> <span class="fu">fixef</span>(fit_mm) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(<span class="fu">vcov</span>(fit_mm)))</span>
-<span id="cb284-2"><a href="mixed-effect-models-mem.html#cb284-2" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="fu">abs</span>(tvals)))</span></code></pre></div>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="mixed-effect-models-mem.html#cb289-1" aria-hidden="true" tabindex="-1"></a>tvals <span class="ot">&lt;-</span> <span class="fu">fixef</span>(fit_mm) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(<span class="fu">vcov</span>(fit_mm)))</span>
+<span id="cb289-2"><a href="mixed-effect-models-mem.html#cb289-2" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="fu">abs</span>(tvals)))</span></code></pre></div>
 <pre><code>## (Intercept)        Days 
 ## 0.00000e+00 5.75197e-10</code></pre>
 <p>This again provides strong evidence for rejecting the null hypotheses that sleep deprivation does not effect reaction time.</p>
@@ -458,7 +462,7 @@ The <code>lmer()</code> function (from the <code>lme4</code> package) uses a ver
 <h4><strong>Random effects</strong><a href="mixed-effect-models-mem.html#random-effects" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>This part of the summary looks more unfamiliar and explaining each part of this is beyond this workshop, as it requires more indepth knowledge about variance and covariance matrices and stats in general. So the only part you might want to take a look at is the <code>Variance</code> of the two <code>Groups</code> entries <code>Subject</code> and <code>Residual</code>. This tells you how much of the total variance in your data is being absorbed by the random effects (on slope and intercept). In this case this amounts to <span class="math inline">\(\sim 61\)</span>% (100% * (958.35 + 45.78)/(958.35 + 45.78 + 651.60)), meaning that inter-subject variation explain the majority of the ‘noise’ in your data.</p>
 <p>If we are interested in the estimated random effects, these can be pulled out using <code>ranef()</code> (similar to <code>fixef()</code> for accessing estimates of the fixed effects)</p>
-<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="mixed-effect-models-mem.html#cb286-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ranef</span>(fit_mm) </span></code></pre></div>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="mixed-effect-models-mem.html#cb291-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ranef</span>(fit_mm) </span></code></pre></div>
 <pre><code>## $Subject
 ##     (Intercept)        Days
 ## 308  24.4992891   8.6020000
@@ -509,12 +513,12 @@ Task
 <ol style="list-style-type: decimal">
 <li>A simple plot of residuals against fitted values, irrespective of random effects (note we have to do this “by hand” here):</li>
 </ol>
-<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="mixed-effect-models-mem.html#cb288-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit_mm)</span></code></pre></div>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="mixed-effect-models-mem.html#cb293-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit_mm)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-191-1.png" style="display: block; margin: auto;" /></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Plotting the residuals against the fitted values, separately for each level of the random effect, using the <code>coplot()</code> function:</li>
 </ol>
-<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="mixed-effect-models-mem.html#cb289-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coplot</span>(<span class="fu">resid</span>(fit_mm) <span class="sc">~</span> <span class="fu">fitted</span>(fit_mm) <span class="sc">|</span> sleep<span class="sc">$</span>Subject)</span></code></pre></div>
+<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="mixed-effect-models-mem.html#cb294-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coplot</span>(<span class="fu">resid</span>(fit_mm) <span class="sc">~</span> <span class="fu">fitted</span>(fit_mm) <span class="sc">|</span> sleep<span class="sc">$</span>Subject)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-192-1.png" style="display: block; margin: auto;" /></p>
 </div>
 <div id="further-reading" class="section level2 hasAnchor" number="5.2">

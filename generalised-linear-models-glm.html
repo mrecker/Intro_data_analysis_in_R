@@ -244,6 +244,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.1" data-path="introduction-to-statistical-modelling-in-r.html"><a href="introduction-to-statistical-modelling-in-r.html#univariate-analysis"><i class="fa fa-check"></i><b>3.1</b> Univariate analysis</a>
 <ul>
 <li class="chapter" data-level="" data-path="introduction-to-statistical-modelling-in-r.html"><a href="introduction-to-statistical-modelling-in-r.html#mean-vs.-median"><i class="fa fa-check"></i><strong>Mean vs. median</strong></a></li>
+<li class="chapter" data-level="" data-path="introduction-to-statistical-modelling-in-r.html"><a href="introduction-to-statistical-modelling-in-r.html#standard-deviation"><i class="fa fa-check"></i><strong>Standard deviation</strong></a></li>
 <li class="chapter" data-level="" data-path="introduction-to-statistical-modelling-in-r.html"><a href="introduction-to-statistical-modelling-in-r.html#interquartile-range"><i class="fa fa-check"></i><strong>Interquartile range</strong></a></li>
 <li class="chapter" data-level="" data-path="introduction-to-statistical-modelling-in-r.html"><a href="introduction-to-statistical-modelling-in-r.html#skewness"><i class="fa fa-check"></i><strong>Skewness</strong></a></li>
 <li class="chapter" data-level="" data-path="introduction-to-statistical-modelling-in-r.html"><a href="introduction-to-statistical-modelling-in-r.html#kurtosis"><i class="fa fa-check"></i><strong>Kurtosis</strong></a></li>
@@ -270,7 +271,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="linear-models-lm.html"><a href="linear-models-lm.html#scale-location"><i class="fa fa-check"></i><strong>Scale-Location</strong></a></li>
 <li class="chapter" data-level="" data-path="linear-models-lm.html"><a href="linear-models-lm.html#residuals-vs-leverage"><i class="fa fa-check"></i><strong>Residuals vs Leverage</strong></a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="linear-models-lm.html"><a href="linear-models-lm.html#prediction"><i class="fa fa-check"></i><b>4.4</b> Prediction</a></li>
+<li class="chapter" data-level="4.4" data-path="linear-models-lm.html"><a href="linear-models-lm.html#prediction"><i class="fa fa-check"></i><b>4.4</b> Prediction</a>
+<ul>
+<li class="chapter" data-level="" data-path="linear-models-lm.html"><a href="linear-models-lm.html#confidence-vs-prediction-interval"><i class="fa fa-check"></i><strong>Confidence vs prediction interval</strong></a></li>
+</ul></li>
 <li class="chapter" data-level="4.5" data-path="linear-models-lm.html"><a href="linear-models-lm.html#multiple-linear-regression"><i class="fa fa-check"></i><b>4.5</b> Multiple linear regression</a></li>
 <li class="chapter" data-level="4.6" data-path="linear-models-lm.html"><a href="linear-models-lm.html#categorical-explanatory-variables"><i class="fa fa-check"></i><b>4.6</b> Categorical explanatory variables</a></li>
 <li class="chapter" data-level="4.7" data-path="linear-models-lm.html"><a href="linear-models-lm.html#interactions"><i class="fa fa-check"></i><b>4.7</b> Interactions</a></li>
@@ -352,9 +356,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <blockquote>
 <p><strong>Note:</strong> The simple linear regression model is a special case of a GLM, i.e. </p>
 </blockquote>
-<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="generalised-linear-models-glm.html#cb290-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(weight <span class="sc">~</span> height)</span></code></pre></div>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="generalised-linear-models-glm.html#cb295-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(weight <span class="sc">~</span> height)</span></code></pre></div>
 <p>is equivalent to</p>
-<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="generalised-linear-models-glm.html#cb291-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glm</span>(weight <span class="sc">~</span> height, <span class="at">family=</span><span class="fu">gaussian</span>(<span class="at">link=</span>identity))</span></code></pre></div>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="generalised-linear-models-glm.html#cb296-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glm</span>(weight <span class="sc">~</span> height, <span class="at">family=</span><span class="fu">gaussian</span>(<span class="at">link=</span>identity))</span></code></pre></div>
 <p>Compared to the <code>lm()</code> function, the <code>glm()</code> function takes an extra argument <code>family</code>, which identifies the <strong>error structure</strong> and the <strong>link function</strong>.</p>
 <p>The default link function for the normal (Gaussian) error structure is the <em>identity</em> function (equivalent to no transformation). In fact, we often do not need to specify the link function explicitly and instead use the defaults for the various families. Commonly used error structures and associated link functions are (defaults highlighted in <strong>bold</strong>)</p>
 <table>
@@ -461,48 +465,48 @@ This means that we are effectively modelling the observed count data using an ex
 <div id="poisson-regression-in-r" class="section level3 hasAnchor" number="6.2.2">
 <h3><span class="header-section-number">6.2.2</span> Poisson regression in R<a href="generalised-linear-models-glm.html#poisson-regression-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Now we know what is behind the Poisson model and understand what link functions do we can concentrate on how to perform Poisson regression in R. For this we use our previous malaria episodes example but with a slightly modified dataset, where we discard the effect of different transmission settings(EIR).</p>
-<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="generalised-linear-models-glm.html#cb292-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create random data points for age and EIR</span></span>
-<span id="cb292-2"><a href="generalised-linear-models-glm.html#cb292-2" aria-hidden="true" tabindex="-1"></a>Age <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>, <span class="dv">2</span>, <span class="dv">10</span>)</span>
-<span id="cb292-3"><a href="generalised-linear-models-glm.html#cb292-3" aria-hidden="true" tabindex="-1"></a>Bednet <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&#39;yes&#39;</span>, <span class="st">&#39;no&#39;</span>), <span class="dv">100</span>, <span class="at">replace =</span> T)</span>
-<span id="cb292-4"><a href="generalised-linear-models-glm.html#cb292-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb292-5"><a href="generalised-linear-models-glm.html#cb292-5" aria-hidden="true" tabindex="-1"></a><span class="co"># assume there is an interaction between age and bednet use, which influences the number of episodes</span></span>
-<span id="cb292-6"><a href="generalised-linear-models-glm.html#cb292-6" aria-hidden="true" tabindex="-1"></a>episodes <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">exp</span>(<span class="fu">ifelse</span>(Bednet<span class="sc">==</span><span class="st">&#39;no&#39;</span>, <span class="fl">0.32</span><span class="sc">*</span>Age, <span class="fl">0.22</span><span class="sc">*</span>Age) <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="dv">0</span>, <span class="fl">0.3</span>)))</span>
-<span id="cb292-7"><a href="generalised-linear-models-glm.html#cb292-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb292-8"><a href="generalised-linear-models-glm.html#cb292-8" aria-hidden="true" tabindex="-1"></a><span class="co"># put into new data.frame</span></span>
-<span id="cb292-9"><a href="generalised-linear-models-glm.html#cb292-9" aria-hidden="true" tabindex="-1"></a>epiData <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Age =</span> Age, <span class="at">Episodes =</span> episodes, <span class="at">Bednet =</span> <span class="fu">factor</span>(Bednet))</span>
-<span id="cb292-10"><a href="generalised-linear-models-glm.html#cb292-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb292-11"><a href="generalised-linear-models-glm.html#cb292-11" aria-hidden="true" tabindex="-1"></a><span class="co"># plot data</span></span>
-<span id="cb292-12"><a href="generalised-linear-models-glm.html#cb292-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(epiData, <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> Episodes, <span class="at">col =</span> Bednet)) <span class="sc">+</span></span>
-<span id="cb292-13"><a href="generalised-linear-models-glm.html#cb292-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() </span></code></pre></div>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="generalised-linear-models-glm.html#cb297-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create random data points for age and EIR</span></span>
+<span id="cb297-2"><a href="generalised-linear-models-glm.html#cb297-2" aria-hidden="true" tabindex="-1"></a>Age <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>, <span class="dv">2</span>, <span class="dv">10</span>)</span>
+<span id="cb297-3"><a href="generalised-linear-models-glm.html#cb297-3" aria-hidden="true" tabindex="-1"></a>Bednet <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&#39;yes&#39;</span>, <span class="st">&#39;no&#39;</span>), <span class="dv">100</span>, <span class="at">replace =</span> T)</span>
+<span id="cb297-4"><a href="generalised-linear-models-glm.html#cb297-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb297-5"><a href="generalised-linear-models-glm.html#cb297-5" aria-hidden="true" tabindex="-1"></a><span class="co"># assume there is an interaction between age and bednet use, which influences the number of episodes</span></span>
+<span id="cb297-6"><a href="generalised-linear-models-glm.html#cb297-6" aria-hidden="true" tabindex="-1"></a>episodes <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">exp</span>(<span class="fu">ifelse</span>(Bednet<span class="sc">==</span><span class="st">&#39;no&#39;</span>, <span class="fl">0.32</span><span class="sc">*</span>Age, <span class="fl">0.22</span><span class="sc">*</span>Age) <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="dv">0</span>, <span class="fl">0.3</span>)))</span>
+<span id="cb297-7"><a href="generalised-linear-models-glm.html#cb297-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb297-8"><a href="generalised-linear-models-glm.html#cb297-8" aria-hidden="true" tabindex="-1"></a><span class="co"># put into new data.frame</span></span>
+<span id="cb297-9"><a href="generalised-linear-models-glm.html#cb297-9" aria-hidden="true" tabindex="-1"></a>epiData <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Age =</span> Age, <span class="at">Episodes =</span> episodes, <span class="at">Bednet =</span> <span class="fu">factor</span>(Bednet))</span>
+<span id="cb297-10"><a href="generalised-linear-models-glm.html#cb297-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb297-11"><a href="generalised-linear-models-glm.html#cb297-11" aria-hidden="true" tabindex="-1"></a><span class="co"># plot data</span></span>
+<span id="cb297-12"><a href="generalised-linear-models-glm.html#cb297-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(epiData, <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> Episodes, <span class="at">col =</span> Bednet)) <span class="sc">+</span></span>
+<span id="cb297-13"><a href="generalised-linear-models-glm.html#cb297-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() </span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-197-1.png" style="display: block; margin: auto;" /></p>
 <p>There is a clear relationship between age and the number of recorded episodes, and we might be tempted to fit a linear regression to this data. So let’s do this and then add the regression lines to this graph.</p>
-<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="generalised-linear-models-glm.html#cb293-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit the model wuth lm() and consider an interaction term </span></span>
-<span id="cb293-2"><a href="generalised-linear-models-glm.html#cb293-2" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Episodes <span class="sc">~</span> Age<span class="sc">*</span>Bednet, <span class="at">data =</span> epiData)</span>
-<span id="cb293-3"><a href="generalised-linear-models-glm.html#cb293-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb293-4"><a href="generalised-linear-models-glm.html#cb293-4" aria-hidden="true" tabindex="-1"></a><span class="co"># make model predictions</span></span>
-<span id="cb293-5"><a href="generalised-linear-models-glm.html#cb293-5" aria-hidden="true" tabindex="-1"></a>newdata <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">Age =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">10</span>,<span class="at">length.out=</span><span class="dv">20</span>),</span>
-<span id="cb293-6"><a href="generalised-linear-models-glm.html#cb293-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">Bednet =</span> <span class="fu">c</span>(<span class="st">&#39;no&#39;</span>, <span class="st">&#39;yes&#39;</span>))</span>
-<span id="cb293-7"><a href="generalised-linear-models-glm.html#cb293-7" aria-hidden="true" tabindex="-1"></a>newdata <span class="ot">&lt;-</span> <span class="fu">mutate</span>(newdata, <span class="at">Bednet =</span> <span class="fu">factor</span>(Bednet))</span>
-<span id="cb293-8"><a href="generalised-linear-models-glm.html#cb293-8" aria-hidden="true" tabindex="-1"></a>newdata<span class="sc">$</span>Episodes <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit, <span class="at">newdata =</span> newdata)</span>
-<span id="cb293-9"><a href="generalised-linear-models-glm.html#cb293-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb293-10"><a href="generalised-linear-models-glm.html#cb293-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> Episodes, <span class="at">col =</span> Bednet)) <span class="sc">+</span></span>
-<span id="cb293-11"><a href="generalised-linear-models-glm.html#cb293-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> epiData) <span class="sc">+</span></span>
-<span id="cb293-12"><a href="generalised-linear-models-glm.html#cb293-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data =</span> newdata)</span></code></pre></div>
+<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="generalised-linear-models-glm.html#cb298-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit the model wuth lm() and consider an interaction term </span></span>
+<span id="cb298-2"><a href="generalised-linear-models-glm.html#cb298-2" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Episodes <span class="sc">~</span> Age<span class="sc">*</span>Bednet, <span class="at">data =</span> epiData)</span>
+<span id="cb298-3"><a href="generalised-linear-models-glm.html#cb298-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb298-4"><a href="generalised-linear-models-glm.html#cb298-4" aria-hidden="true" tabindex="-1"></a><span class="co"># make model predictions</span></span>
+<span id="cb298-5"><a href="generalised-linear-models-glm.html#cb298-5" aria-hidden="true" tabindex="-1"></a>newdata <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">Age =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">10</span>,<span class="at">length.out=</span><span class="dv">20</span>),</span>
+<span id="cb298-6"><a href="generalised-linear-models-glm.html#cb298-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">Bednet =</span> <span class="fu">c</span>(<span class="st">&#39;no&#39;</span>, <span class="st">&#39;yes&#39;</span>))</span>
+<span id="cb298-7"><a href="generalised-linear-models-glm.html#cb298-7" aria-hidden="true" tabindex="-1"></a>newdata <span class="ot">&lt;-</span> <span class="fu">mutate</span>(newdata, <span class="at">Bednet =</span> <span class="fu">factor</span>(Bednet))</span>
+<span id="cb298-8"><a href="generalised-linear-models-glm.html#cb298-8" aria-hidden="true" tabindex="-1"></a>newdata<span class="sc">$</span>Episodes <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit, <span class="at">newdata =</span> newdata)</span>
+<span id="cb298-9"><a href="generalised-linear-models-glm.html#cb298-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb298-10"><a href="generalised-linear-models-glm.html#cb298-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> Episodes, <span class="at">col =</span> Bednet)) <span class="sc">+</span></span>
+<span id="cb298-11"><a href="generalised-linear-models-glm.html#cb298-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> epiData) <span class="sc">+</span></span>
+<span id="cb298-12"><a href="generalised-linear-models-glm.html#cb298-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data =</span> newdata)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-198-1.png" style="display: block; margin: auto;" /></p>
 <p>Now we can start to appreciate the problem with fitting a linear model to count data: the intersects (number of episodes at age 0) are both negative in this case, which is biologically not feasible.</p>
 <p>We can also see from the model diagnostics that the residuals do follow the assumptions of a linear model, as there are clear signs of <em>heteroscedasticiy</em> (here indicated by an increasing variance with increasing values of the fitted response variable).</p>
-<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="generalised-linear-models-glm.html#cb294-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot model diagnostics</span></span>
-<span id="cb294-2"><a href="generalised-linear-models-glm.html#cb294-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit, <span class="at">which =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="generalised-linear-models-glm.html#cb299-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot model diagnostics</span></span>
+<span id="cb299-2"><a href="generalised-linear-models-glm.html#cb299-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit, <span class="at">which =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-199-1.png" style="display: block; margin: auto;" /></p>
 <p>Now we fit a GLM to the data instead, assuming a Poisson error structure and using the (default) log link function.</p>
-<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="generalised-linear-models-glm.html#cb295-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit data using Poisson regression with default link function</span></span>
-<span id="cb295-2"><a href="generalised-linear-models-glm.html#cb295-2" aria-hidden="true" tabindex="-1"></a>fit_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(Episodes <span class="sc">~</span> Age<span class="sc">*</span>Bednet, <span class="at">data =</span> epiData, <span class="at">family =</span> <span class="fu">poisson</span>(<span class="at">link =</span> log))</span>
-<span id="cb295-3"><a href="generalised-linear-models-glm.html#cb295-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb295-4"><a href="generalised-linear-models-glm.html#cb295-4" aria-hidden="true" tabindex="-1"></a><span class="co"># when using default link functions, we can also call</span></span>
-<span id="cb295-5"><a href="generalised-linear-models-glm.html#cb295-5" aria-hidden="true" tabindex="-1"></a><span class="co"># fit_glm &lt;- glm(Episodes ~ Age*Bednet, data = epiData, family = &quot;poisson&quot;)</span></span>
-<span id="cb295-6"><a href="generalised-linear-models-glm.html#cb295-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb295-7"><a href="generalised-linear-models-glm.html#cb295-7" aria-hidden="true" tabindex="-1"></a><span class="co"># get model summary</span></span>
-<span id="cb295-8"><a href="generalised-linear-models-glm.html#cb295-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_glm)</span></code></pre></div>
+<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="generalised-linear-models-glm.html#cb300-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit data using Poisson regression with default link function</span></span>
+<span id="cb300-2"><a href="generalised-linear-models-glm.html#cb300-2" aria-hidden="true" tabindex="-1"></a>fit_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(Episodes <span class="sc">~</span> Age<span class="sc">*</span>Bednet, <span class="at">data =</span> epiData, <span class="at">family =</span> <span class="fu">poisson</span>(<span class="at">link =</span> log))</span>
+<span id="cb300-3"><a href="generalised-linear-models-glm.html#cb300-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb300-4"><a href="generalised-linear-models-glm.html#cb300-4" aria-hidden="true" tabindex="-1"></a><span class="co"># when using default link functions, we can also call</span></span>
+<span id="cb300-5"><a href="generalised-linear-models-glm.html#cb300-5" aria-hidden="true" tabindex="-1"></a><span class="co"># fit_glm &lt;- glm(Episodes ~ Age*Bednet, data = epiData, family = &quot;poisson&quot;)</span></span>
+<span id="cb300-6"><a href="generalised-linear-models-glm.html#cb300-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb300-7"><a href="generalised-linear-models-glm.html#cb300-7" aria-hidden="true" tabindex="-1"></a><span class="co"># get model summary</span></span>
+<span id="cb300-8"><a href="generalised-linear-models-glm.html#cb300-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_glm)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = Episodes ~ Age * Bednet, family = poisson(link = log), 
@@ -534,12 +538,12 @@ One thing we need to remember is that we are still working on the log-scale. Tha
 Episodes = exp(-0.0277 + 5 <span class="math inline">\(\times\)</span> 0.3425 - 0.1575 - 5 <span class="math inline">\(\times\)</span> 0.0889) = 2.952
 </center>
 <p>In reality we would use the <code>predict()</code> function for this. But beware, as we are dealing with a link function that is not the <em>identity</em> function, we need to set an extra argument <code>type = 'response'</code> to back-transform the predicted values to the scale of our response variable.</p>
-<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="generalised-linear-models-glm.html#cb297-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make model predictions</span></span>
-<span id="cb297-2"><a href="generalised-linear-models-glm.html#cb297-2" aria-hidden="true" tabindex="-1"></a>newdata<span class="sc">$</span>Episodes <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_glm, <span class="at">newdata =</span> newdata, <span class="at">type=</span><span class="st">&#39;response&#39;</span>)</span>
-<span id="cb297-3"><a href="generalised-linear-models-glm.html#cb297-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb297-4"><a href="generalised-linear-models-glm.html#cb297-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> Episodes, <span class="at">col =</span> Bednet)) <span class="sc">+</span></span>
-<span id="cb297-5"><a href="generalised-linear-models-glm.html#cb297-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> epiData) <span class="sc">+</span></span>
-<span id="cb297-6"><a href="generalised-linear-models-glm.html#cb297-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data =</span> newdata)</span></code></pre></div>
+<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="generalised-linear-models-glm.html#cb302-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make model predictions</span></span>
+<span id="cb302-2"><a href="generalised-linear-models-glm.html#cb302-2" aria-hidden="true" tabindex="-1"></a>newdata<span class="sc">$</span>Episodes <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_glm, <span class="at">newdata =</span> newdata, <span class="at">type=</span><span class="st">&#39;response&#39;</span>)</span>
+<span id="cb302-3"><a href="generalised-linear-models-glm.html#cb302-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb302-4"><a href="generalised-linear-models-glm.html#cb302-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> Episodes, <span class="at">col =</span> Bednet)) <span class="sc">+</span></span>
+<span id="cb302-5"><a href="generalised-linear-models-glm.html#cb302-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> epiData) <span class="sc">+</span></span>
+<span id="cb302-6"><a href="generalised-linear-models-glm.html#cb302-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data =</span> newdata)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-201-1.png" style="display: block; margin: auto;" /></p>
 <p>This looks like a much better fit to the data and also satisfies the necessary condition of a non-negative intersect.</p>
 <p><span class="math inline">\(~\)</span></p>
@@ -577,8 +581,8 @@ Again, note that we are still fitting straight lines through our data, but this 
 <li><code>Nodes</code>: number of positive axillary nodes detected</li>
 <li><code>Survivial</code>: survival status (1 = survived for more than 5 years, 2 = died within 5 years)</li>
 </ol>
-<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="generalised-linear-models-glm.html#cb298-1" aria-hidden="true" tabindex="-1"></a>haberman <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;haberman.csv&#39;</span>)</span>
-<span id="cb298-2"><a href="generalised-linear-models-glm.html#cb298-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(haberman)</span></code></pre></div>
+<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="generalised-linear-models-glm.html#cb303-1" aria-hidden="true" tabindex="-1"></a>haberman <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;haberman.csv&#39;</span>)</span>
+<span id="cb303-2"><a href="generalised-linear-models-glm.html#cb303-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(haberman)</span></code></pre></div>
 <pre><code>##   Age Year Nodes Survival
 ## 1  30 1964     1        1
 ## 2  30 1962     3        1
@@ -587,7 +591,7 @@ Again, note that we are still fitting straight lines through our data, but this 
 ## 5  31 1965     4        1
 ## 6  33 1958    10        1</code></pre>
 <p>As you will notice, <code>Survival</code> is currently treated like a numerical variable, so the first thing we need to do is turn this into a categorical one, which indicates whether the patient survived for more than 5 years or not</p>
-<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="generalised-linear-models-glm.html#cb300-1" aria-hidden="true" tabindex="-1"></a>haberman <span class="ot">&lt;-</span> <span class="fu">mutate</span>(haberman, <span class="at">Survival =</span> <span class="fu">factor</span>(<span class="fu">ifelse</span>(Survival<span class="sc">==</span><span class="dv">1</span>, <span class="st">&#39;yes&#39;</span>, <span class="st">&#39;no&#39;</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="generalised-linear-models-glm.html#cb305-1" aria-hidden="true" tabindex="-1"></a>haberman <span class="ot">&lt;-</span> <span class="fu">mutate</span>(haberman, <span class="at">Survival =</span> <span class="fu">factor</span>(<span class="fu">ifelse</span>(Survival<span class="sc">==</span><span class="dv">1</span>, <span class="st">&#39;yes&#39;</span>, <span class="st">&#39;no&#39;</span>)))</span></code></pre></div>
 <p>Our intuition would be that the predictor variables of interest are <code>Age</code> and <code>Nodes</code>; so let’s see how they relate with survival.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
@@ -607,36 +611,36 @@ Solution
 </div>
 <div class="panel-body">
 <p><strong>Option 1:</strong> histograms</p>
-<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="generalised-linear-models-glm.html#cb301-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(haberman, <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">col =</span> Survival)) <span class="sc">+</span></span>
-<span id="cb301-2"><a href="generalised-linear-models-glm.html#cb301-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">10</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb301-3"><a href="generalised-linear-models-glm.html#cb301-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>Survival) <span class="sc">+</span></span>
-<span id="cb301-4"><a href="generalised-linear-models-glm.html#cb301-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;&#39;</span>)</span>
-<span id="cb301-5"><a href="generalised-linear-models-glm.html#cb301-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb301-6"><a href="generalised-linear-models-glm.html#cb301-6" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(haberman, <span class="fu">aes</span>(<span class="at">x =</span> Nodes, <span class="at">col =</span> Survival)) <span class="sc">+</span></span>
-<span id="cb301-7"><a href="generalised-linear-models-glm.html#cb301-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb301-8"><a href="generalised-linear-models-glm.html#cb301-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>Survival) <span class="sc">+</span></span>
-<span id="cb301-9"><a href="generalised-linear-models-glm.html#cb301-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;&#39;</span>)</span>
-<span id="cb301-10"><a href="generalised-linear-models-glm.html#cb301-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb301-11"><a href="generalised-linear-models-glm.html#cb301-11" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">/</span> p2</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-261-1.png" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="generalised-linear-models-glm.html#cb306-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(haberman, <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">col =</span> Survival)) <span class="sc">+</span></span>
+<span id="cb306-2"><a href="generalised-linear-models-glm.html#cb306-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">10</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb306-3"><a href="generalised-linear-models-glm.html#cb306-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>Survival) <span class="sc">+</span></span>
+<span id="cb306-4"><a href="generalised-linear-models-glm.html#cb306-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;&#39;</span>)</span>
+<span id="cb306-5"><a href="generalised-linear-models-glm.html#cb306-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb306-6"><a href="generalised-linear-models-glm.html#cb306-6" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(haberman, <span class="fu">aes</span>(<span class="at">x =</span> Nodes, <span class="at">col =</span> Survival)) <span class="sc">+</span></span>
+<span id="cb306-7"><a href="generalised-linear-models-glm.html#cb306-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb306-8"><a href="generalised-linear-models-glm.html#cb306-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>Survival) <span class="sc">+</span></span>
+<span id="cb306-9"><a href="generalised-linear-models-glm.html#cb306-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;&#39;</span>)</span>
+<span id="cb306-10"><a href="generalised-linear-models-glm.html#cb306-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb306-11"><a href="generalised-linear-models-glm.html#cb306-11" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">/</span> p2</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-265-1.png" style="display: block; margin: auto;" /></p>
 <p><strong>Option 2:</strong> box-and-whisker plots</p>
-<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="generalised-linear-models-glm.html#cb302-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(haberman, <span class="fu">aes</span>(<span class="at">y =</span> Age, <span class="at">x =</span> Survival, <span class="at">fill =</span> Survival)) <span class="sc">+</span></span>
-<span id="cb302-2"><a href="generalised-linear-models-glm.html#cb302-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb302-3"><a href="generalised-linear-models-glm.html#cb302-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;&#39;</span>)</span>
-<span id="cb302-4"><a href="generalised-linear-models-glm.html#cb302-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb302-5"><a href="generalised-linear-models-glm.html#cb302-5" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(haberman, <span class="fu">aes</span>(<span class="at">y =</span> Nodes, <span class="at">x =</span> Survival, <span class="at">fill =</span> Survival)) <span class="sc">+</span></span>
-<span id="cb302-6"><a href="generalised-linear-models-glm.html#cb302-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb302-7"><a href="generalised-linear-models-glm.html#cb302-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;&#39;</span>)</span>
-<span id="cb302-8"><a href="generalised-linear-models-glm.html#cb302-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb302-9"><a href="generalised-linear-models-glm.html#cb302-9" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-262-1.png" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="generalised-linear-models-glm.html#cb307-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(haberman, <span class="fu">aes</span>(<span class="at">y =</span> Age, <span class="at">x =</span> Survival, <span class="at">fill =</span> Survival)) <span class="sc">+</span></span>
+<span id="cb307-2"><a href="generalised-linear-models-glm.html#cb307-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb307-3"><a href="generalised-linear-models-glm.html#cb307-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;&#39;</span>)</span>
+<span id="cb307-4"><a href="generalised-linear-models-glm.html#cb307-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb307-5"><a href="generalised-linear-models-glm.html#cb307-5" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(haberman, <span class="fu">aes</span>(<span class="at">y =</span> Nodes, <span class="at">x =</span> Survival, <span class="at">fill =</span> Survival)) <span class="sc">+</span></span>
+<span id="cb307-6"><a href="generalised-linear-models-glm.html#cb307-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb307-7"><a href="generalised-linear-models-glm.html#cb307-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;&#39;</span>)</span>
+<span id="cb307-8"><a href="generalised-linear-models-glm.html#cb307-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb307-9"><a href="generalised-linear-models-glm.html#cb307-9" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-266-1.png" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 </div>
 <p><span class="math inline">\(~\)</span></p>
 <p>From these graphs it is difficult to say if and by how much these variables had an influence on patient survival. But we cannot always trust our eyes so we are going to test this statistically by means of logistic regression. The syntax should be very familiar to you by now. In fact, the only argument we need to change from the previous GLM is to set the family to <code>binomial</code> and the link to <code>logit</code> (although this is not strictly necessary as it is the default link for this family).</p>
-<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="generalised-linear-models-glm.html#cb303-1" aria-hidden="true" tabindex="-1"></a>fit_bin <span class="ot">&lt;-</span> <span class="fu">glm</span>(Survival <span class="sc">~</span> Age <span class="sc">+</span> Nodes, <span class="at">data =</span> haberman, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&#39;logit&#39;</span>))</span>
-<span id="cb303-2"><a href="generalised-linear-models-glm.html#cb303-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_bin)</span></code></pre></div>
+<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="generalised-linear-models-glm.html#cb308-1" aria-hidden="true" tabindex="-1"></a>fit_bin <span class="ot">&lt;-</span> <span class="fu">glm</span>(Survival <span class="sc">~</span> Age <span class="sc">+</span> Nodes, <span class="at">data =</span> haberman, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&#39;logit&#39;</span>))</span>
+<span id="cb308-2"><a href="generalised-linear-models-glm.html#cb308-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_bin)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = Survival ~ Age + Nodes, family = binomial(link = &quot;logit&quot;), 
@@ -662,8 +666,8 @@ Solution
 ## 
 ## Number of Fisher Scoring iterations: 4</code></pre>
 <p>This suggests that patient age is not a statistically significant predictor of patient survival. We can also test this directly by comparing models with and without this predictor using <code>anova</code></p>
-<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="generalised-linear-models-glm.html#cb305-1" aria-hidden="true" tabindex="-1"></a>fit_bin_b <span class="ot">&lt;-</span> <span class="fu">glm</span>(Survival <span class="sc">~</span> Nodes, <span class="at">data =</span> haberman, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&#39;logit&#39;</span>))</span>
-<span id="cb305-2"><a href="generalised-linear-models-glm.html#cb305-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fit_bin, fit_bin_b, <span class="at">test =</span> <span class="st">&quot;Chisq&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="generalised-linear-models-glm.html#cb310-1" aria-hidden="true" tabindex="-1"></a>fit_bin_b <span class="ot">&lt;-</span> <span class="fu">glm</span>(Survival <span class="sc">~</span> Nodes, <span class="at">data =</span> haberman, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&#39;logit&#39;</span>))</span>
+<span id="cb310-2"><a href="generalised-linear-models-glm.html#cb310-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fit_bin, fit_bin_b, <span class="at">test =</span> <span class="st">&quot;Chisq&quot;</span>)</span></code></pre></div>
 <pre><code>## Analysis of Deviance Table
 ## 
 ## Model 1: Survival ~ Age + Nodes
@@ -672,7 +676,7 @@ Solution
 ## 1       303     328.31                     
 ## 2       304     330.72 -1  -2.4132   0.1203</code></pre>
 <p>This confirms that there is no statistical significant effect of Age, so we will drop this explanatory variable and proceed with the less complex model. Let’s have a look at the model summary</p>
-<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="generalised-linear-models-glm.html#cb307-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_bin_b)</span></code></pre></div>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="generalised-linear-models-glm.html#cb312-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_bin_b)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = Survival ~ Nodes, family = binomial(link = &quot;logit&quot;), 
@@ -727,16 +731,16 @@ Solution
 <ol style="list-style-type: decimal">
 <li>The probability of survivial for a patient with 3 positive axillery nodes</li>
 </ol>
-<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="generalised-linear-models-glm.html#cb309-1" aria-hidden="true" tabindex="-1"></a>lin_mean <span class="ot">&lt;-</span> <span class="fu">exp</span>(fit_bin_b<span class="sc">$</span>coefficients[[<span class="dv">1</span>]] <span class="sc">+</span> <span class="dv">3</span><span class="sc">*</span>fit_bin_b<span class="sc">$</span>coefficients[[<span class="dv">2</span>]])</span>
-<span id="cb309-2"><a href="generalised-linear-models-glm.html#cb309-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> lin_mean <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> lin_mean)</span>
-<span id="cb309-3"><a href="generalised-linear-models-glm.html#cb309-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p)</span></code></pre></div>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="generalised-linear-models-glm.html#cb314-1" aria-hidden="true" tabindex="-1"></a>lin_mean <span class="ot">&lt;-</span> <span class="fu">exp</span>(fit_bin_b<span class="sc">$</span>coefficients[[<span class="dv">1</span>]] <span class="sc">+</span> <span class="dv">3</span><span class="sc">*</span>fit_bin_b<span class="sc">$</span>coefficients[[<span class="dv">2</span>]])</span>
+<span id="cb314-2"><a href="generalised-linear-models-glm.html#cb314-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> lin_mean <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> lin_mean)</span>
+<span id="cb314-3"><a href="generalised-linear-models-glm.html#cb314-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p)</span></code></pre></div>
 <pre><code>## [1] 0.7604547</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>The decrease in survivial probability for one additional positive axillery node</li>
 </ol>
-<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="generalised-linear-models-glm.html#cb311-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_bin_b, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">Nodes =</span> <span class="dv">3</span>), <span class="at">type =</span> <span class="st">&#39;response&#39;</span>)</span>
-<span id="cb311-2"><a href="generalised-linear-models-glm.html#cb311-2" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_bin_b, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">Nodes =</span> <span class="dv">4</span>), <span class="at">type =</span> <span class="st">&#39;response&#39;</span>)</span>
-<span id="cb311-3"><a href="generalised-linear-models-glm.html#cb311-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(p2<span class="sc">-</span>p1,<span class="dv">4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="generalised-linear-models-glm.html#cb316-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_bin_b, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">Nodes =</span> <span class="dv">3</span>), <span class="at">type =</span> <span class="st">&#39;response&#39;</span>)</span>
+<span id="cb316-2"><a href="generalised-linear-models-glm.html#cb316-2" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_bin_b, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">Nodes =</span> <span class="dv">4</span>), <span class="at">type =</span> <span class="st">&#39;response&#39;</span>)</span>
+<span id="cb316-3"><a href="generalised-linear-models-glm.html#cb316-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(p2<span class="sc">-</span>p1,<span class="dv">4</span>)</span></code></pre></div>
 <pre><code>##      1 
 ## -0.016</code></pre>
 </div>
@@ -744,14 +748,14 @@ Solution
 </div>
 <p><span class="math inline">\(~\)</span></p>
 <p>The next thing we would like do is to plot the regression line. As before this involves making a new dataset for prediction and then add this to our graph of survival vs. nodes. Also, we need to make sure that the original response variable (<code>Survival</code>) is projected onto the same probability scale 0 to 1.</p>
-<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="generalised-linear-models-glm.html#cb313-1" aria-hidden="true" tabindex="-1"></a>newdata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Nodes =</span> <span class="fu">seq</span>(<span class="fu">min</span>(haberman<span class="sc">$</span>Nodes), <span class="fu">max</span>(haberman<span class="sc">$</span>Nodes)))</span>
-<span id="cb313-2"><a href="generalised-linear-models-glm.html#cb313-2" aria-hidden="true" tabindex="-1"></a>newdata<span class="sc">$</span>pSurvival <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_bin_b, <span class="at">newdata =</span> newdata, <span class="at">type =</span> <span class="st">&#39;response&#39;</span>)</span>
-<span id="cb313-3"><a href="generalised-linear-models-glm.html#cb313-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb313-4"><a href="generalised-linear-models-glm.html#cb313-4" aria-hidden="true" tabindex="-1"></a>haberman2 <span class="ot">&lt;-</span> <span class="fu">mutate</span>(haberman, <span class="at">pSurvival =</span> <span class="fu">ifelse</span>(<span class="fu">as.numeric</span>(Survival)<span class="sc">==</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb313-5"><a href="generalised-linear-models-glm.html#cb313-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb313-6"><a href="generalised-linear-models-glm.html#cb313-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Nodes, <span class="at">y =</span> pSurvival)) <span class="sc">+</span></span>
-<span id="cb313-7"><a href="generalised-linear-models-glm.html#cb313-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> haberman2, <span class="fu">aes</span>(<span class="at">col =</span> Survival)) <span class="sc">+</span></span>
-<span id="cb313-8"><a href="generalised-linear-models-glm.html#cb313-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data =</span> newdata)</span></code></pre></div>
+<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="generalised-linear-models-glm.html#cb318-1" aria-hidden="true" tabindex="-1"></a>newdata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Nodes =</span> <span class="fu">seq</span>(<span class="fu">min</span>(haberman<span class="sc">$</span>Nodes), <span class="fu">max</span>(haberman<span class="sc">$</span>Nodes)))</span>
+<span id="cb318-2"><a href="generalised-linear-models-glm.html#cb318-2" aria-hidden="true" tabindex="-1"></a>newdata<span class="sc">$</span>pSurvival <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_bin_b, <span class="at">newdata =</span> newdata, <span class="at">type =</span> <span class="st">&#39;response&#39;</span>)</span>
+<span id="cb318-3"><a href="generalised-linear-models-glm.html#cb318-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb318-4"><a href="generalised-linear-models-glm.html#cb318-4" aria-hidden="true" tabindex="-1"></a>haberman2 <span class="ot">&lt;-</span> <span class="fu">mutate</span>(haberman, <span class="at">pSurvival =</span> <span class="fu">ifelse</span>(<span class="fu">as.numeric</span>(Survival)<span class="sc">==</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb318-5"><a href="generalised-linear-models-glm.html#cb318-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb318-6"><a href="generalised-linear-models-glm.html#cb318-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Nodes, <span class="at">y =</span> pSurvival)) <span class="sc">+</span></span>
+<span id="cb318-7"><a href="generalised-linear-models-glm.html#cb318-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> haberman2, <span class="fu">aes</span>(<span class="at">col =</span> Survival)) <span class="sc">+</span></span>
+<span id="cb318-8"><a href="generalised-linear-models-glm.html#cb318-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data =</span> newdata)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-211-1.png" style="display: block; margin: auto;" /></p>
 </div>
 <div id="odds-ratios" class="section level3 unnumbered hasAnchor">
@@ -781,10 +785,10 @@ Solution
 </div>
 <div class="panel-body">
 <p>There are plenty of way this dataset can and should be analyed. Here we just show one example for a logistic regression analysis examining the survival probability as dependent on sex and age and their interaction.</p>
-<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="generalised-linear-models-glm.html#cb314-1" aria-hidden="true" tabindex="-1"></a>titanic <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;titanic.csv&#39;</span>)</span>
-<span id="cb314-2"><a href="generalised-linear-models-glm.html#cb314-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb314-3"><a href="generalised-linear-models-glm.html#cb314-3" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(Survived <span class="sc">~</span> Age <span class="sc">*</span> Sex, <span class="at">data =</span> titanic, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>)</span>
-<span id="cb314-4"><a href="generalised-linear-models-glm.html#cb314-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code></pre></div>
+<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="generalised-linear-models-glm.html#cb319-1" aria-hidden="true" tabindex="-1"></a>titanic <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;titanic.csv&#39;</span>)</span>
+<span id="cb319-2"><a href="generalised-linear-models-glm.html#cb319-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb319-3"><a href="generalised-linear-models-glm.html#cb319-3" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(Survived <span class="sc">~</span> Age <span class="sc">*</span> Sex, <span class="at">data =</span> titanic, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>)</span>
+<span id="cb319-4"><a href="generalised-linear-models-glm.html#cb319-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = Survived ~ Age * Sex, family = &quot;binomial&quot;, data = titanic)
@@ -809,14 +813,14 @@ Solution
 ## AIC: 911.49
 ## 
 ## Number of Fisher Scoring iterations: 4</code></pre>
-<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="generalised-linear-models-glm.html#cb316-1" aria-hidden="true" tabindex="-1"></a>newdata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Age =</span> <span class="fu">rep</span>(<span class="fu">seq</span>(<span class="fu">min</span>(titanic<span class="sc">$</span>Age), <span class="fu">max</span>(titanic<span class="sc">$</span>Age), <span class="at">length.out =</span> <span class="dv">50</span>),<span class="dv">2</span>),</span>
-<span id="cb316-2"><a href="generalised-linear-models-glm.html#cb316-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">Sex =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&#39;male&#39;</span>, <span class="st">&#39;female&#39;</span>), <span class="at">each =</span> <span class="dv">50</span>))</span>
-<span id="cb316-3"><a href="generalised-linear-models-glm.html#cb316-3" aria-hidden="true" tabindex="-1"></a>newdata<span class="sc">$</span>Survived <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit, <span class="at">newdata =</span> newdata, <span class="at">type =</span> <span class="st">&#39;response&#39;</span>)</span>
-<span id="cb316-4"><a href="generalised-linear-models-glm.html#cb316-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb316-5"><a href="generalised-linear-models-glm.html#cb316-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> Survived, <span class="at">col =</span> Sex)) <span class="sc">+</span></span>
-<span id="cb316-6"><a href="generalised-linear-models-glm.html#cb316-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> titanic) <span class="sc">+</span></span>
-<span id="cb316-7"><a href="generalised-linear-models-glm.html#cb316-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data =</span> newdata)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-265-1.png" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="generalised-linear-models-glm.html#cb321-1" aria-hidden="true" tabindex="-1"></a>newdata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Age =</span> <span class="fu">rep</span>(<span class="fu">seq</span>(<span class="fu">min</span>(titanic<span class="sc">$</span>Age), <span class="fu">max</span>(titanic<span class="sc">$</span>Age), <span class="at">length.out =</span> <span class="dv">50</span>),<span class="dv">2</span>),</span>
+<span id="cb321-2"><a href="generalised-linear-models-glm.html#cb321-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">Sex =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&#39;male&#39;</span>, <span class="st">&#39;female&#39;</span>), <span class="at">each =</span> <span class="dv">50</span>))</span>
+<span id="cb321-3"><a href="generalised-linear-models-glm.html#cb321-3" aria-hidden="true" tabindex="-1"></a>newdata<span class="sc">$</span>Survived <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit, <span class="at">newdata =</span> newdata, <span class="at">type =</span> <span class="st">&#39;response&#39;</span>)</span>
+<span id="cb321-4"><a href="generalised-linear-models-glm.html#cb321-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb321-5"><a href="generalised-linear-models-glm.html#cb321-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> Survived, <span class="at">col =</span> Sex)) <span class="sc">+</span></span>
+<span id="cb321-6"><a href="generalised-linear-models-glm.html#cb321-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> titanic) <span class="sc">+</span></span>
+<span id="cb321-7"><a href="generalised-linear-models-glm.html#cb321-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data =</span> newdata)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-269-1.png" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 </div>
